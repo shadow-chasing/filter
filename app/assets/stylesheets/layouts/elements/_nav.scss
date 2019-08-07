@@ -1,0 +1,35 @@
+nav{
+  @include clearfix();
+  top:0;
+  position: absolute;
+  z-index: index($elements, nav);
+  background-color:color(elements, nav);
+  border-bottom: 1px solid color(comp, border-dark);
+  box-shadow: .1rem .1rem 1rem .4rem color(comp, shade);
+}
+
+nav > .logo{
+  @include span(4);
+  @include box-sizing(border-box);
+  margin: 1rem 0;
+}
+
+nav > ul{
+  @include span(8);
+  @include box-sizing(border-box);
+  text-align: right;
+  display: inline-block;
+}
+
+nav > ul > li{
+  padding: .5rem;
+  display: inline;
+}
+
+nav > ul > li.current{
+  border-bottom: 1px solid color(comp, border-light)
+}
+
+nav > ul > li > a{
+  color:color(blue-color);
+}

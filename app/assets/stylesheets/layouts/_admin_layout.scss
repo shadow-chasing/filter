@@ -1,0 +1,7 @@
+header.admin, main.admin{
+  @include span(9);
+}
+
+aside.admin{
+  @include span(3);
+}

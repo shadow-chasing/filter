@@ -1,0 +1,19 @@
+<p>
+  <strong>Word:</strong>
+  <%= @subtitle.word %>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @subtitle.title %>
+</p>
+
+<p>
+  <strong>Counter:</strong>
+  <%= @subtitle.counter %>
+</p>
+
+<div class="link-button link-button--info">
+  <%= link_to 'Back', articles_path(category: @article.category_id) %>
+</div>
+<%= link_to 'Edit', edit_subtitle_path(@subtitle) %> |

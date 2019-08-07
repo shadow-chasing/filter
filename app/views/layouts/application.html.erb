@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= full_title(yield(:title)) %></title>
+  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <%= csrf_meta_tags %>
+</head>
+  <body>
+    <%= render 'layouts/nav' %>
+    <%= render 'layouts/flashmessages' %>
+    <% unless params[:controller].split("/").first == "admin" %>
+      <div class="container">
+        <%= yield %>
+      </div>
+    <% else %>
+      <div class="container-admin">
+        <%= yield %>
+      </div>
+    <% end %>
+
+  </body>
+</html>

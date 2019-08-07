@@ -1,0 +1,45 @@
+<header class="subtitle-index-header">
+  <h1>Listing Subtitles</h1>
+</header>
+
+<br>
+
+<div class="link-button link-button--info">
+  <%= link_to 'New Subtitle', new_subtitle_path %>
+</div>
+
+<br>
+
+<table>
+  <thead>
+    <tr>
+      <th>Word</th>
+      <th>Title</th>
+      <th>Counter</th>
+      <th>syllable</th>
+      <th>rank one</th>
+      <th>rank two</th>
+      <th>group</th>
+      <th>predicate</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @subtitles.each do |subtitle| %>
+      <tr>
+        <td><%= subtitle.word %></td>
+        <td><%= subtitle.title %></td>
+        <td><%= subtitle.counter %></td>
+        <td><%= subtitle.syllable %></td>
+        <% if subtitle.word_group_results.present? %>
+            <td><%= subtitle.word_group_results.first.rank_one %></td>
+            <td><%= subtitle.word_group_results.first.rank_two %></td>
+            <td><%= subtitle.word_group_results.first.group %></td>
+            <td><%= subtitle.word_group_results.first.predicate %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>

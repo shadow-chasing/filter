@@ -177,10 +177,4 @@ ActiveRecord::Schema.define(version: 2019_08_05_134146) do
     t.index ["word_group_rank_two_id"], name: "index_word_rank_two_records_on_word_group_rank_two_id"
   end
 
-  create_table "words", force: :cascade do |t|
-    t.string "word"
-    t.integer "node_id"
-    t.index ["node_id"], name: "index_words_on_node_id"
-  end
-
 end

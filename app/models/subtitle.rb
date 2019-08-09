@@ -10,7 +10,6 @@ class Subtitle < ApplicationRecord
   has_many :word_group_results
   has_many :filter_group_results
 
-
   def self.word_length(operand="==", size)
     where("length" + operand + "?", size)
   end

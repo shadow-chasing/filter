@@ -1,0 +1,10 @@
+<% @subtitles.each do |subtitle| %>
+    <tr>
+        <td><%= subtitle.word %></td>
+        <td><%= subtitle.title %></td>
+        <td><%= subtitle.counter %></td>
+        <td><%= subtitle.syllable %></td>
+    </tr>
+<% end %>
+
+<%= will_paginate @subtitles %>

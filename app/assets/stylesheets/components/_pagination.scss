@@ -2,8 +2,8 @@
 // shared style extends
 //------------------------------------------------------------------------------
 %shared_button_style{
-  background-color: color(red-color);
-  border:.1rem solid color(red-color, dark);
+  background-color: color(blue-color);
+  border:.1rem solid color(blue-color, dark);
   padding:1rem;
   border-radius: .2rem;
   color: color(greyscale-color);
@@ -11,7 +11,7 @@
 
 %a_style{
   &:hover, &:focus {
-      background-color: transparentize(color(red-color), .2);
+      background-color: transparentize(color(blue-color), .2);
       color: color(greyscale-color);
       transition:  all .6s ease;
     }

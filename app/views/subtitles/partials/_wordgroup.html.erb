@@ -1,0 +1,15 @@
+<% @wordgroups.each do |wordgroup| %>
+    <tr>
+        <td><%= wordgroup.subtitle.word %></td>
+        <td><%= wordgroup.subtitle.title %></td>
+        <td><%= wordgroup.subtitle.counter %></td>
+        <td><%= wordgroup.subtitle.syllable %></td>
+
+        <td><%= wordgroup.rank_one %></td>
+        <td><%= wordgroup.rank_two %></td>
+        <td><%= wordgroup.group %></td>
+        <td><%= wordgroup.predicate %></td>
+    </tr>
+<% end %>
+
+<%= will_paginate @wordgroups %>

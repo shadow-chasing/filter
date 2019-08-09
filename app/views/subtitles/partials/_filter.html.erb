@@ -1,0 +1,14 @@
+<% @filters.each do |filter| %>
+    <tr>
+        <td><%= filter.subtitle.word %></td>
+        <td><%= filter.subtitle.title %></td>
+        <td><%= filter.subtitle.counter %></td>
+        <td><%= filter.subtitle.syllable %></td>
+        <td><%= filter.rank_one %></td>
+        <td><%= filter.rank_two %></td>
+        <td><%= filter.group %></td>
+        <td><%= filter.predicate %></td>
+    </tr>
+<% end %>
+
+<%= will_paginate @filters %>

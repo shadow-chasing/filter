@@ -1,0 +1,15 @@
+<% @predicates.each do |predicate| %>
+    <tr>
+        <td><%= predicate.subtitle.word %></td>
+        <td><%= predicate.subtitle.title %></td>
+        <td><%= predicate.subtitle.counter %></td>
+        <td><%= predicate.subtitle.syllable %></td>
+        <td><%= predicate.rank_one %></td>
+        <td><%= predicate.rank_two %></td>
+        <td><%= predicate.group %></td>
+        <td><%= predicate.predicate %></td>
+    </tr>
+<% end %>
+
+
+<%= will_paginate @predicates %>

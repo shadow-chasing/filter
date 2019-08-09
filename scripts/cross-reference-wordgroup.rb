@@ -30,18 +30,13 @@ end
 word_group_ranks("one").each do |results|
   results.word_datasets.each do |file_contents|
     Subtitle.where(word: file_contents.word).each do |word|
-binding.pry
-      unless Subtitle.find(word.id).word_group_results.present?
+      if Subtitle.find(word.id).word_group_results.present?
         group_title = WordGroup.find(results.word_group_id).category
         Subtitle.find(word.id).word_group_results.find_or_create_by(group: group_title, rank_one: results.category)
 
-        # add all wordgroup subtitles to the category wordgroup
-        # TODO this needs fixing its not being added to the category.
-        binding.pry
         mysub = Subtitle.find(word.id)
-        mysub.category_id << Category.find_or_create_by(name: :"word group").id
-        binding.pry
-
+        myid = Category.find_or_create_by(name: :"word group").id
+        mysub.update(category_id: myid)
       end
     end
   end
@@ -60,14 +55,13 @@ word_group_ranks("two").each do |results|
   results.word_group_rank_twos.each do |sub_files|
     sub_files.word_datasets.each do |file_contents|
       Subtitle.where(word: file_contents.word).each do |word|
-        unless Subtitle.find(word.id).word_group_results.present?
+        if Subtitle.find(word.id).word_group_results.present?
           group_title = WordGroup.find(results.word_group_id).category
           Subtitle.find(word.id).word_group_results.find_or_create_by(group: group_title, rank_one: results.category, rank_two: sub_files.category)
 
-          # add all wordgroup subtitles to the category wordgroup
-        # TODO this needs fixing its not being added to the category.
           mysub = Subtitle.find(word.id)
-          mysub.category_id << Category.find_or_create_by(name: :"word group").id
+          myid = Category.find_or_create_by(name: :"word group").id
+          mysub.update(category_id: myid)
         end
       end
     end

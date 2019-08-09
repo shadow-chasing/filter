@@ -5,12 +5,14 @@ class SubtitlesController < ApplicationController
   # GET /subtitles.json
   def index
   if params[:category]
-    @subtitles = category_attributes
+    @subtitles = category_attributes.paginate(page: params[:page], per_page: 30)
+    @wordgroups = WordGroupResult.all.paginate(page: params[:page], per_page: 30)
+    @filters = FilterGroupResult.all.paginate(page: params[:page], per_page: 30)
+    @predicates = PredicateResult.all.paginate(page: params[:page], per_page: 30)
   else
     @subtitles = Subtitle.all.order(syllable: :desc, counter: :desc)
   end
 end
-
 
   # GET /subtitles/1
   # GET /subtitles/1.json

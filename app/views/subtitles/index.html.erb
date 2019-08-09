@@ -24,22 +24,30 @@
     </tr>
   </thead>
 
-  <tbody>
-    <% @subtitles.each do |subtitle| %>
-      <tr>
-        <td><%= subtitle.word %></td>
-        <td><%= subtitle.title %></td>
-        <td><%= subtitle.counter %></td>
-        <td><%= subtitle.syllable %></td>
-        <% if subtitle.word_group_results.present? %>
-            <td><%= subtitle.word_group_results.first.rank_one %></td>
-            <td><%= subtitle.word_group_results.first.rank_two %></td>
-            <td><%= subtitle.word_group_results.first.group %></td>
-            <td><%= subtitle.word_group_results.first.predicate %></td>
-        <% end %>
-      </tr>
-    <% end %>
-  </tbody>
+      <!--begin category subtitles--> 
+      <% if params[:category] == "1" %>
+        <tbody>
+          <%= render "subtitles/partials/subtitle" %>
+        </tbody>
+
+      <!--begin category filter--> 
+      <% elsif params[:category] == "2" %>
+        <tbody>
+          <%= render "subtitles/partials/filter" %>
+        </tbody>
+
+      <!--begin category predicates--> 
+      <% elsif params[:category] == "3" %>
+        <tbody>
+          <%= render "subtitles/partials/predicate" %>
+        </tbody>
+
+      <!--begin category wordgroup--> 
+      <% elsif params[:category] == "4" %>
+        <tbody>
+          <%= render "subtitles/partials/wordgroup" %>
+        </tbody>
+      <% end%>
 </table>
 
 <br>

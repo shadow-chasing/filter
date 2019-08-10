@@ -31,17 +31,18 @@
           <%= render "subtitles/partials/filter" %>
         </tbody>
 
-      <!--begin category predicates--> 
+      <!--begin category wordgroup--> 
       <% elsif params[:category] == "3" %>
+        <tbody>
+          <%= render "subtitles/partials/wordgroup" %>
+        </tbody>
+
+      <!--begin category predicates--> 
+      <% elsif params[:category] == "4" %>
         <tbody>
           <%= render "subtitles/partials/predicate" %>
         </tbody>
 
-      <!--begin category wordgroup--> 
-      <% elsif params[:category] == "4" %>
-        <tbody>
-          <%= render "subtitles/partials/wordgroup" %>
-        </tbody>
       <% end%>
 </table>
 

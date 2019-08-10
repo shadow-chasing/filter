@@ -67,7 +67,8 @@ class GenerateTranscript
   def build_bd(*args)
     hashed_count_order(args[0]).each {|key, value|
       unless key.blank?
-        my_sub = Subtitle.find_or_create_by(word: key, counter: value, category_id: 1)
+        mycat = Category.find_by(name: :subtitles)
+        my_sub = Subtitle.find_or_create_by(word: key, counter: value, category_id: mycat.id)
         my_sub.update(title: args[1])
       end
     }
@@ -92,8 +93,21 @@ class GenerateTranscript
 
 end
 
+#------------------------------------------------------------------------------
+# build categorys
+#------------------------------------------------------------------------------
+# create category first, this is because subtitles expects the foreign key to
+# be added to which category it belongs, the rest are used by the
+# cross-refernce.
+cat = ["subtitles", "filter", "word group", "predicate"]
+
+cat.each do |c|
+    Category.find_or_create_by(name: c)
+end
+#------------------------------------------------------------------------------
+
 transcript = GenerateTranscript.new
-transcript.youtube_playlist("https://www.youtube.com/watch?v=-VZEcwBCNwM")
+transcript.youtube_playlist("https://www.youtube.com/watch?v=2dLN3cvOEZg")
 # iterates over the dir_list method, which when called creates an arrray of absolute
 # file paths. spliting the variable on the / creating a array. title[5] being the filename
 # and video being the absolut path. the absolute path is then passed into the File.readlines
@@ -105,9 +119,6 @@ transcript.youtube_playlist("https://www.youtube.com/watch?v=-VZEcwBCNwM")
 # the build_bd method.
 $arry = []
 
-# create category first, this is because subtitles expects the foreign key to
-# be added for which category they belong.
-Category.find_or_create_by(name: :subtitles)
 
 transcript.dir_list.each do |video|
   title = video.split("/")

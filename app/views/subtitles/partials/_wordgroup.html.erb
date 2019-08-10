@@ -1,15 +1,16 @@
-<% @wordgroups.each do |wordgroup| %>
+<% @wordgroups.each do |subtitle| %>
     <tr>
-        <td><%= wordgroup.subtitle.word %></td>
-        <td><%= wordgroup.subtitle.title %></td>
-        <td><%= wordgroup.subtitle.counter %></td>
-        <td><%= wordgroup.subtitle.syllable %></td>
+        <td><%= subtitle.word %></td>
+        <td><%= subtitle.title %></td>
+        <td><%= subtitle.counter %></td>
+        <td><%= 313 / subtitle.counter %> mins</td>
+        <td><%= subtitle.syllable %></td>
 
-        <td><%= wordgroup.rank_one %></td>
-        <td><%= wordgroup.rank_two %></td>
-        <td><%= wordgroup.group %></td>
-        <td><%= wordgroup.predicate %></td>
+        <td><%= subtitle.word_group_results.first.rank_one %></td>
+        <td><%= subtitle.word_group_results.first.rank_two %></td>
+        <td><%= subtitle.word_group_results.first.group %></td>
+        <td><%= subtitle.word_group_results.first.predicate %></td>
     </tr>
 <% end %>
 
-<%= will_paginate @wordgroups %>
+<%= will_paginate @wordgroup %>

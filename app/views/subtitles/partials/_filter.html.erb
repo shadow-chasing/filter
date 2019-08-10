@@ -1,13 +1,14 @@
-<% @filters.each do |filter| %>
+<% @filters.each do |subtitle| %>
     <tr>
-        <td><%= filter.subtitle.word %></td>
-        <td><%= filter.subtitle.title %></td>
-        <td><%= filter.subtitle.counter %></td>
-        <td><%= filter.subtitle.syllable %></td>
-        <td><%= filter.rank_one %></td>
-        <td><%= filter.rank_two %></td>
-        <td><%= filter.group %></td>
-        <td><%= filter.predicate %></td>
+        <td><%= subtitle.word %></td>
+        <td><%= subtitle.title %></td>
+        <td><%= subtitle.counter %></td>
+        <td><%= 313 / subtitle.counter %> mins</td>
+        <td><%= subtitle.syllable %></td>
+        <td><%= subtitle.filter_group_results.first.rank_one %></td>
+        <td><%= subtitle.filter_group_results.first.rank_two %></td>
+        <td><%= subtitle.filter_group_results.first.group %></td>
+        <td><%= subtitle.filter_group_results.first.predicate %></td>
     </tr>
 <% end %>
 

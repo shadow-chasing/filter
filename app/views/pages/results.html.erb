@@ -10,12 +10,22 @@
         <td><%= @subtitles.count %> </td>
     </tr>
     <tr>
-        <td>total occurrences of words</td>
+        <td>total occurrences of all words</td>
         <td><%= @subtitles.sum(:counter) %> </td>
     </tr>
     <tr>
         <td>longest word</td>
         <td><%= @subtitles.maximum('length') %> </td>
+        <td><%= @subtitles.find_by(length: @subtitles.maximum('length')).word %> </td>
+    </tr>
+    <tr>
+        <td>most occurrences of a word</td>
+        <td><%= @subtitles.maximum('counter') %> </td>
+        <td><%= @subtitles.find_by(counter: @subtitles.maximum('counter')).word %> </td>
+    </tr>
+    <tr>
+        <td>least occurrences of a word</td>
+        <td><%= @subtitles.minimum('counter') %> </td>
     </tr>
     <tr>
         <td>longest syllable</td>

@@ -5,10 +5,14 @@ class SubtitlesController < ApplicationController
   # GET /subtitles.json
   def index
   if params[:category]
-    @subtitles = category_attributes.paginate(page: params[:page], per_page: 30)
-    @wordgroups = WordGroupResult.all.paginate(page: params[:page], per_page: 30)
-    @filters = FilterGroupResult.all.paginate(page: params[:page], per_page: 30)
-    @predicates = PredicateResult.all.paginate(page: params[:page], per_page: 30)
+    @subtitles = category_attributes.paginate(page: params[:page], per_page: 20).order('counter DESC')
+    @wordgroups = Subtitle.where(id: WordGroupResult.pluck(:subtitle_id)).order('counter DESC').paginate(page: params[:page], per_page: 20)
+    @filters = Subtitle.where(id: FilterGroupResult.pluck(:subtitle_id)).order('counter DESC').paginate(page: params[:page], per_page: 20)
+    @predicates = Subtitle.where(id: PredicateResult.pluck(:subtitle_id)).order('counter DESC').paginate(page: params[:page], per_page: 20)
+
+    #@predicates = PredicateResult.all.paginate(page: params[:page], per_page: 20)
+    #@wordgroups = WordGroupResult.all.paginate(page: params[:page], per_page: 20)
+    #@filters = FilterGroupResult.all.paginate(page: params[:page], per_page: 20)
   else
     @subtitles = Subtitle.all.order(syllable: :desc, counter: :desc)
   end

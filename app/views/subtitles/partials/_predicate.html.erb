@@ -1,13 +1,14 @@
-<% @predicates.each do |predicate| %>
+<% @predicates.each do |subtitle| %>
     <tr>
-        <td><%= predicate.subtitle.word %></td>
-        <td><%= predicate.subtitle.title %></td>
-        <td><%= predicate.subtitle.counter %></td>
-        <td><%= predicate.subtitle.syllable %></td>
-        <td><%= predicate.rank_one %></td>
-        <td><%= predicate.rank_two %></td>
-        <td><%= predicate.group %></td>
-        <td><%= predicate.predicate %></td>
+        <td><%= subtitle.word %></td>
+        <td><%= subtitle.title %></td>
+        <td><%= subtitle.counter %></td>
+        <td><%= 313 / subtitle.counter %> mins</td>
+        <td><%= subtitle.syllable %></td>
+        <td><%= subtitle.predicate_results.first.rank_one %></td>
+        <td><%= subtitle.predicate_results.first.rank_two %></td>
+        <td><%= subtitle.predicate_results.first.group %></td>
+        <td><%= subtitle.predicate_results.first.predicate %></td>
     </tr>
 <% end %>
 

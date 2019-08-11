@@ -15,15 +15,10 @@ end
   # GET /subtitles/1
   # GET /subtitles/1.json
   def show
-      if params[:category]
         @subtitles = category_attributes.paginate(page: params[:page], per_page: 12).order('counter DESC')
         @wordgroups = Subtitle.where(id: WordGroupResult.pluck(:subtitle_id)).order('counter DESC').paginate(page: params[:page], per_page: 12)
         @filters = Subtitle.where(id: FilterGroupResult.pluck(:subtitle_id)).order('counter DESC').paginate(page: params[:page], per_page: 12)
         @predicates = Subtitle.where(id: PredicateResult.pluck(:subtitle_id)).order('counter DESC').paginate(page: params[:page], per_page: 12)
-      else
-        @title = Subtitle.find(params[:id])
-        @subtitle = Subtitle.where(title: @title.title)
-      end
   end
 
   # GET /subtitles/new
@@ -79,7 +74,8 @@ end
 
     # find all categorys matching id
     def category_attributes
-        subtitle  = Subtitle.where(category_id: params[:category])
+        title = Subtitle.find(params[:id]).title
+        subtitle  = Subtitle.where(category_id: params[:category], title: title )
     end
 
     # Use callbacks to share common setup or constraints between actions.

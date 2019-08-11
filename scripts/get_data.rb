@@ -23,11 +23,12 @@ end
 
 class GenerateTranscript
 
-  def initialize
+  def initialize(address)
+    @address = address
     @results = Array.new
     @arry = Array.new
     @multi = Array.new
-    @dur = duration("https://www.youtube.com/watch?v=2dLN3cvOEZg")
+    @dur = duration(@address)
   end
 
   # creates and array of absolute filepaths.
@@ -36,21 +37,16 @@ class GenerateTranscript
   end
 
   # uses youtube-dl's auto sub generate downloader. downloads to ~/Downloads/Youtube
-  def youtube_playlist(arg)
-    puts blue("downloading #{arg} from youtube.com")
-    binding.pry
-    system("youtube-dl --write-auto-sub --sub-lang en --skip-download \'#{arg}\'")
+  def youtube_playlist
+    puts blue("downloading #{@address} from youtube.com")
+    system("youtube-dl --write-auto-sub --sub-lang en --skip-download \'#{@address}\'")
   end
 
   # TODO needs to get playlists of durations
   def duration(url)
-      binding.pry
       system("youtube-dl --get-duration --skip-download \'#{url}\' | grep -e ETA -e \"[0-9]*\" >duration.txt")
       File.open('duration.txt').read.chomp
-      text.gsub(/\:/, ".")
   end
-
-
 
   def read_file(arg)
     File.readlines(arg).each do |line|
@@ -77,12 +73,24 @@ class GenerateTranscript
 
   # iterates over a hash k,v pair. creating a word and its count of repatitions.
   def build_bd(*args)
+    d = @dur.split("\n")
     hashed_count_order(args[0]).each {|key, value|
       unless key.blank?
         mycat = Category.find_by(name: :subtitles)
         my_sub = Subtitle.find_or_create_by(word: key, counter: value, category_id: mycat.id)
-        my_sub.update(title: args[1], duration: @dur)
+        my_sub.update(title: args[1])
+        unless Subtitle.find_by(title: args[1]).duration.present?
+            my_sub.update(title: args[1], duration: d[0])
+            d.shift
+        end
       end
+
+      # find_by gets the first occuranece of the record. in this case the first
+      # record is the only record per individual subtitle that has a duration,
+      # the duration is then saved as a variable. the subtitle is then found by
+      # title and mapped, adding a duration to each with the same title.
+      new_duration = Subtitle.find_by(title: args[1]).duration
+      Subtitle.where(title: args[1]).map {|i| i.update(duration: new_duration) }
     }
   end
 
@@ -117,11 +125,24 @@ cat.each do |c|
     Category.find_or_create_by(name: c)
 end
 #------------------------------------------------------------------------------
+# Take a user input
+#------------------------------------------------------------------------------
 
-transcript = GenerateTranscript.new
+puts "Enter URL:\n"
 
-#NOTE add the duration url too.
-transcript.youtube_playlist("https://www.youtube.com/watch?v=2dLN3cvOEZg")
+user_input = gets
+
+
+#------------------------------------------------------------------------------
+# 
+#------------------------------------------------------------------------------
+transcript = GenerateTranscript.new(user_input.chomp)
+
+if transcript.youtube_playlist.present? 
+    transcript.youtube_playlist
+else
+    exit
+end
 # iterates over the dir_list method, which when called creates an arrray of absolute
 # file paths. spliting the variable on the / creating a array. title[5] being the filename
 # and video being the absolut path. the absolute path is then passed into the File.readlines
@@ -134,12 +155,17 @@ transcript.youtube_playlist("https://www.youtube.com/watch?v=2dLN3cvOEZg")
 $arry = []
 
 
+
 transcript.dir_list.each do |video|
+
+  # to avoid there being no title join the uniq id to the video name.
   title = video.split("/")
-  puts green("creating #{title[5]}")
+binding.pry
+
+  puts green("creating #{title[7]}")
   transcript.read_file(video)
   dialouge = $arry.uniq.join.split("\n").join(" ")
-  data = TranscriptData.new(title: title[5], script: dialouge)
+  data = TranscriptData.new(title: title[7], script: dialouge)
 
   initial_table = Subtitle.all.uniq{|t| t[:title]}
   transcript.build_bd(data.script, data.title)
@@ -150,6 +176,6 @@ transcript.dir_list.each do |video|
   if title_list.count > initial_table.count
     puts green("database now contains #{title_list.count} title(s)")
   else
-    puts red("database already contains #{title[5]}")
+    puts red("database already contains #{title[7]}")
   end
 end

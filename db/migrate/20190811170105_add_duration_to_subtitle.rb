@@ -1,5 +1,5 @@
 class AddDurationToSubtitle < ActiveRecord::Migration[5.2]
   def change
-    add_column :subtitles, :duration, :string
+    add_column :subtitles, :duration, :time
   end
 end

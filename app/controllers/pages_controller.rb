@@ -1,9 +1,5 @@
 class PagesController < ApplicationController
   def results
-
-    # subtitles counts
-    @subtitles = Subtitle.all
-
     # scoping group categories to sum results
     @religion = scope_group(FilterGroupResult, :"religion-and-spirituality")
     @profanity = scope_group(FilterGroupResult, :profanity)
@@ -21,6 +17,11 @@ class PagesController < ApplicationController
     @visual = scope_predicate(:visual)
     @kinesthetic = scope_predicate(:kinesthetic)
     @gustatory = scope_predicate(:gustatory)
+  end
+
+  def titles
+    # subtitles counts
+    @subtitles = Subtitle.group(:title)
   end
 
   # takes two args groupresult and category of group

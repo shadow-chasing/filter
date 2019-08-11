@@ -1,53 +1,82 @@
 //------------------------------------------------------------------------------
-// sign in
+// 
 //------------------------------------------------------------------------------
-//NOTE span 9 is for edit registration.
-.sign-in-wrapper{
-  padding: 0 2rem;
-  @include span(9);
-  @include breakpoint(large){
-    padding: 0 20rem;
-  }
-  @include breakpoint(medium){
-    padding: 0 10rem;
-  }
+aside{
+    padding:0;
 }
 
-//------------------------------------------------------------------------------
-// pages welcome
-//------------------------------------------------------------------------------
-
-.hero{
-  height: $hero-height-xl;
-  @extend %flex-center-item;
+aside > h4{
+    text-align:center;
+    font-weight:100;
+    background-color: black;
+    border-bottom: 1px solid color(blue-color);
+    padding-bottom: .5rem;
+    margin-bottom: 0;
 }
 
-.welcome-header {
-  background-image: image-url('/assets/ny.jpg');
-  @extend .hero-commons;
+aside > ul{
+    padding:0;
 }
 
-.article-show {
-  background-image: image-url('/assets/hoff.jpg');
-  @extend .hero-commons;
-}
-.box {
-  @include vertical-rhythm(5.2rem, $use-height: true);
-  background-color: blue;
-  width: 200px;
-}
-//------------------------------------------------------------------------------
-// pages about
-//------------------------------------------------------------------------------
 
-/* code for gallery show */
+aside > ul > li{
+    border-top: 1px solid black;
+    display: flex;
+    flex-direction: row;
+    justify-content:center;
+    align-items: center;
+    font-weight: 300;
+    &:hover{
+        background:color(greyscale-color, blackest);
+        border-top:1px solid black;
+        transition:  all .5s ease;
+    }
+}
 
+
+li > i{
+    color: color(blue-color);
+    display: flex;
+    padding-left:1rem;
+    //flex-direction: row;
+    //flex-direction: column;
+}
+
+li:last-child{
+    border-bottom: 1px solid color(greyscale-color, blackest);
+
+}
+
+aside > ul > li > a{
+    color: color(greyscale-color);
+    text-transform: capitalize;
+    //padding-left:.5rem;
+    padding: 1rem;
+    width:100%;
+}
+
+aside > ul > li > a.active{
+    color: color(blue-color);
+    text-transform: capitalize;
+}
 //------------------------------------------------------------------------------
-// article index
+// subtitle index
 //------------------------------------------------------------------------------
 
 /* code for article index */
 
+//------------------------------------------------------------------------------
+// subtitle show
+//------------------------------------------------------------------------------
+
+td.sub-word{
+    color: color(greyscale-color);
+    font-weight:300;
+}
+
+span.mins{
+    font-weight:300;
+}
 //------------------------------------------------------------------------------
 // article show
 //------------------------------------------------------------------------------

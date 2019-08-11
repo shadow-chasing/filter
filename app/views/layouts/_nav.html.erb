@@ -1,15 +1,10 @@
 <nav>
   <div class="logo">
-    my blog
+    <%= image_tag("ninja.png", class: "span-3", id: "ninja-img") %>
+    <div class="span-9" id="logo-text">filter</div>
   </div>
-  <ul>
-    <li> <%= nav_link "results", pages_results_path %> </li>
-
-    <% Category.all.each do |category| %>
-        <li>
-            <%= nav_link category.name, subtitles_path(category: category.id) %>
-        </li>
-    <% end %>
-
-  </ul>
+    <div class="span-8">
+        <li> <%= nav_link "subtitles", subtitles_path %> </li>
+    </div>
 </nav>
+

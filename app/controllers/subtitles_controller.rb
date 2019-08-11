@@ -1,26 +1,29 @@
 class SubtitlesController < ApplicationController
-  before_action :set_subtitle, only: [:show, :edit, :update, :destroy]
+  before_action :set_subtitle, only: [:edit, :update, :destroy]
 
   # GET /subtitles
   # GET /subtitles.json
   def index
-  if params[:category]
-    @subtitles = category_attributes.paginate(page: params[:page], per_page: 20).order('counter DESC')
-    @wordgroups = Subtitle.where(id: WordGroupResult.pluck(:subtitle_id)).order('counter DESC').paginate(page: params[:page], per_page: 20)
-    @filters = Subtitle.where(id: FilterGroupResult.pluck(:subtitle_id)).order('counter DESC').paginate(page: params[:page], per_page: 20)
-    @predicates = Subtitle.where(id: PredicateResult.pluck(:subtitle_id)).order('counter DESC').paginate(page: params[:page], per_page: 20)
+    @titles = Subtitle.group(:title)
+
 
     #@predicates = PredicateResult.all.paginate(page: params[:page], per_page: 20)
     #@wordgroups = WordGroupResult.all.paginate(page: params[:page], per_page: 20)
     #@filters = FilterGroupResult.all.paginate(page: params[:page], per_page: 20)
-  else
-    @subtitles = Subtitle.all.order(syllable: :desc, counter: :desc)
-  end
 end
 
   # GET /subtitles/1
   # GET /subtitles/1.json
   def show
+      if params[:category]
+        @subtitles = category_attributes.paginate(page: params[:page], per_page: 12).order('counter DESC')
+        @wordgroups = Subtitle.where(id: WordGroupResult.pluck(:subtitle_id)).order('counter DESC').paginate(page: params[:page], per_page: 12)
+        @filters = Subtitle.where(id: FilterGroupResult.pluck(:subtitle_id)).order('counter DESC').paginate(page: params[:page], per_page: 12)
+        @predicates = Subtitle.where(id: PredicateResult.pluck(:subtitle_id)).order('counter DESC').paginate(page: params[:page], per_page: 12)
+      else
+        @title = Subtitle.find(params[:id])
+        @subtitle = Subtitle.where(title: @title.title)
+      end
   end
 
   # GET /subtitles/new

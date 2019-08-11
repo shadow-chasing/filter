@@ -7,43 +7,19 @@
 <table>
   <thead>
     <tr>
-      <th>Word</th>
       <th>Title</th>
-      <th>Counter</th>
-      <th>frequency</th>
-      <th>syllable</th>
-      <th>rank one</th>
-      <th>rank two</th>
-      <th>group</th>
-      <th>predicate</th>
     </tr>
   </thead>
 
-      <!--begin category subtitles--> 
-      <% if params[:category] == "1" %>
-        <tbody>
-          <%= render "subtitles/partials/subtitle" %>
-        </tbody>
+  <tbody>
+    <% @titles.each do |subtitle| %>
+        <tr> 
+            <td><%= link_to subtitle.title, subtitle_path(subtitle) %></td> 
+        </tr>
+    <% end %>
+  <tbody>
 
-      <!--begin category filter--> 
-      <% elsif params[:category] == "2" %>
-        <tbody>
-          <%= render "subtitles/partials/filter" %>
-        </tbody>
 
-      <!--begin category wordgroup--> 
-      <% elsif params[:category] == "3" %>
-        <tbody>
-          <%= render "subtitles/partials/wordgroup" %>
-        </tbody>
-
-      <!--begin category predicates--> 
-      <% elsif params[:category] == "4" %>
-        <tbody>
-          <%= render "subtitles/partials/predicate" %>
-        </tbody>
-
-      <% end%>
 </table>
 
 <br>

@@ -1,19 +1,42 @@
-<p>
-  <strong>Word:</strong>
-  <%= @subtitle.word %>
-</p>
+<aside>
+    <h4> categories </h4>
+        <ul>
+            <% Category.all.each do |category| %>
+                <li>
+                <i class="material-icons"> list </i>
+                    <!--Active Link abit ropey-->
+                    <%= link_to category.name, subtitle_path(category: category.id), class: active_class(category: category.id) %>
+                </li>
+            <% end %>
+        </ul>
+</aside>
+<main class="small">
+    <!--begin category subtitles-->
+      <% if params[:category] == "1" %>
+        <tbody>
+          <%= render "subtitles/partials/subtitle" %>
+        </tbody>
 
-<p>
-  <strong>Title:</strong>
-  <%= @subtitle.title %>
-</p>
+      <!--begin category filter-->
+      <% elsif params[:category] == "2" %>
+        <tbody>
+          <%= render "subtitles/partials/filter" %>
+        </tbody>
 
-<p>
-  <strong>Counter:</strong>
-  <%= @subtitle.counter %>
-</p>
+      <!--begin category wordgroup-->
+      <% elsif params[:category] == "3" %>
+        <tbody>
+          <%= render "subtitles/partials/wordgroup" %>
+        </tbody>
 
-<div class="link-button link-button--info">
-  <%= link_to 'Back', articles_path(category: @article.category_id) %>
-</div>
-<%= link_to 'Edit', edit_subtitle_path(@subtitle) %> |
+      <!--begin category predicates-->
+      <% elsif params[:category] == "4" %>
+        <tbody>
+          <%= render "subtitles/partials/predicate" %>
+        </tbody>
+
+      <% end%>
+</main>
+
+
+

@@ -1,35 +1,54 @@
 nav{
   @include clearfix();
   top:0;
+  height: $nav-height-xl;
   position: absolute;
   z-index: index($elements, nav);
   background-color:color(elements, nav);
-  border-bottom: 1px solid color(comp, border-dark);
+  border-bottom: 1px solid color(blue-color);
   box-shadow: .1rem .1rem 1rem .4rem color(comp, shade);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 nav > .logo{
   @include span(4);
   @include box-sizing(border-box);
   margin: 1rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
 }
 
-nav > ul{
-  @include span(8);
+.logo > #logo-text{
+  font-weight: 300;
+  text-transform: uppercase;
+}
+
+img#ninja-img{
+  height: 3.5rem;
+}
+
+nav > .span-8{
   @include box-sizing(border-box);
   text-align: right;
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-nav > ul > li{
+nav > .span-8 > li{
   padding: .5rem;
-  display: inline;
+  list-style: none;
+  text-transform: uppercase;
 }
 
-nav > ul > li.current{
+nav > .span-8 > li.current{
   border-bottom: 1px solid color(comp, border-light)
 }
 
-nav > ul > li > a{
-  color:color(blue-color);
+nav > .span-8 > li > a{
+  color:color(greyscale-color);
 }

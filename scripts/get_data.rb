@@ -27,6 +27,7 @@ class GenerateTranscript
     @results = Array.new
     @arry = Array.new
     @multi = Array.new
+    @dur = duration("https://www.youtube.com/watch?v=2dLN3cvOEZg")
   end
 
   # creates and array of absolute filepaths.
@@ -37,8 +38,19 @@ class GenerateTranscript
   # uses youtube-dl's auto sub generate downloader. downloads to ~/Downloads/Youtube
   def youtube_playlist(arg)
     puts blue("downloading #{arg} from youtube.com")
+    binding.pry
     system("youtube-dl --write-auto-sub --sub-lang en --skip-download \'#{arg}\'")
   end
+
+  # TODO needs to get playlists of durations
+  def duration(url)
+      binding.pry
+      system("youtube-dl --get-duration --skip-download \'#{url}\' | grep -e ETA -e \"[0-9]*\" >duration.txt")
+      File.open('duration.txt').read.chomp
+      text.gsub(/\:/, ".")
+  end
+
+
 
   def read_file(arg)
     File.readlines(arg).each do |line|
@@ -69,7 +81,7 @@ class GenerateTranscript
       unless key.blank?
         mycat = Category.find_by(name: :subtitles)
         my_sub = Subtitle.find_or_create_by(word: key, counter: value, category_id: mycat.id)
-        my_sub.update(title: args[1])
+        my_sub.update(title: args[1], duration: @dur)
       end
     }
   end
@@ -107,6 +119,8 @@ end
 #------------------------------------------------------------------------------
 
 transcript = GenerateTranscript.new
+
+#NOTE add the duration url too.
 transcript.youtube_playlist("https://www.youtube.com/watch?v=2dLN3cvOEZg")
 # iterates over the dir_list method, which when called creates an arrray of absolute
 # file paths. spliting the variable on the / creating a array. title[5] being the filename

@@ -16,7 +16,7 @@ body{
   margin:0;
   @include linx(color(blue-color));
   color:color(greyscale-color, dark);
-  background-color: color(greyscale-color, base);
+  background-color: color(greyscale-color, blackest);
 }
 
 * {

@@ -1,16 +1,34 @@
-<% @predicates.each do |subtitle| %>
+<table>
+    <thead>
+        <tr>
+            <th> word </th>
+            <th> counter </th>
+            <th> frequencey </th>
+            <th> syllable </th>
+            <th> group </th>
+            <th> rank one </th>
+            <th> rank two </th>
+            <th> predicate </th>
+            
+        </tr> 
+    </thead>
+    <tbody>
+
+    <tbody>
+    <% @predicates.each do |subtitle| %>
     <tr>
-        <td><%= subtitle.word %></td>
-        <td><%= subtitle.title %></td>
+        <td class="sub-word"><%= subtitle.word %></td>
         <td><%= subtitle.counter %></td>
-        <td><%= 313 / subtitle.counter %> mins</td>
+        <td><%= subtitle.duration.to_f / subtitle.counter %><span class="mins"> mins</span></td>
         <td><%= subtitle.syllable %></td>
+        <td><%= subtitle.predicate_results.first.group %></td>
         <td><%= subtitle.predicate_results.first.rank_one %></td>
         <td><%= subtitle.predicate_results.first.rank_two %></td>
-        <td><%= subtitle.predicate_results.first.group %></td>
         <td><%= subtitle.predicate_results.first.predicate %></td>
     </tr>
-<% end %>
+    <% end %>
+    </tbody>
+</table>
 
 
-<%= will_paginate @predicates %>
+<%= will_paginate @predicates, inner_window: 1, outer_window: 1 %>

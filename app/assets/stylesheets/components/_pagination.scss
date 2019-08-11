@@ -44,6 +44,17 @@
   text-align: center;
 }
 
+.pagination > em{
+  padding: 1rem;
+  border: 1px solid #4192d9;
+  background-color: color(blue-color);
+  color: color(greyscale-color);
+}
+
+.pagination > a{
+  padding: 1rem;
+  border: 1px solid #4192d9;
+}
 //------------------------------------------------------------------------------
 // Links
 //------------------------------------------------------------------------------

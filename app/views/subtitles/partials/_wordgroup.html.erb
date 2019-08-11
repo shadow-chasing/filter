@@ -1,16 +1,32 @@
-<% @wordgroups.each do |subtitle| %>
-    <tr>
-        <td><%= subtitle.word %></td>
-        <td><%= subtitle.title %></td>
-        <td><%= subtitle.counter %></td>
-        <td><%= 313 / subtitle.counter %> mins</td>
-        <td><%= subtitle.syllable %></td>
-
-        <td><%= subtitle.word_group_results.first.rank_one %></td>
-        <td><%= subtitle.word_group_results.first.rank_two %></td>
-        <td><%= subtitle.word_group_results.first.group %></td>
-        <td><%= subtitle.word_group_results.first.predicate %></td>
-    </tr>
-<% end %>
+<table>
+    <thead>
+        <tr>
+            <th> word </th>
+            <th> counter </th>
+            <th> frequencey </th>
+            <th> syllable </th>
+            <th> group </th>
+            <th> rank one </th>
+            <th> rank two </th>
+            <th> predicate </th>
+            
+        </tr> 
+    </thead>
+    <tbody>
+        <% @wordgroups.each do |subtitle| %>
+            <tr>
+                <td class="sub-word"><%= subtitle.word %></td>
+                <td><%= subtitle.counter %></td>
+                <td><%= subtitle.duration.to_f / subtitle.counter %><span class="mins"> mins</span></td>
+                <td><%= subtitle.syllable %></td>
+                <td><%= subtitle.word_group_results.first.group %></td>
+                <td><%= subtitle.word_group_results.first.rank_one %></td>
+                <td><%= subtitle.word_group_results.first.rank_two %></td>
+                <td><%= subtitle.word_group_results.first.predicate %></td>
+            </tr>
+        <% end %>
+    </tbody>
+    
+</table>
 
 <%= will_paginate @wordgroup %>

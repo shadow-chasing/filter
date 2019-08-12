@@ -1,81 +1,76 @@
 class SubtitlesController < ApplicationController
   before_action :set_subtitle, only: [:edit, :update, :destroy]
 
-  # GET /subtitles
-  # GET /subtitles.json
-  def index
-    @titles = Subtitle.group(:title)
-
-
-    #@predicates = PredicateResult.all.paginate(page: params[:page], per_page: 20)
-    #@wordgroups = WordGroupResult.all.paginate(page: params[:page], per_page: 20)
-    #@filters = FilterGroupResult.all.paginate(page: params[:page], per_page: 20)
-end
-
-  # GET /subtitles/1
-  # GET /subtitles/1.json
-  def show
-        @subtitles = category_attributes.paginate(page: params[:page], per_page: 12).order('counter DESC')
-        @wordgroups = Subtitle.where(id: WordGroupResult.pluck(:subtitle_id)).order('counter DESC').paginate(page: params[:page], per_page: 12)
-        @filters = Subtitle.where(id: FilterGroupResult.pluck(:subtitle_id)).order('counter DESC').paginate(page: params[:page], per_page: 12)
-        @predicates = Subtitle.where(id: PredicateResult.pluck(:subtitle_id)).order('counter DESC').paginate(page: params[:page], per_page: 12)
-  end
-
-  # GET /subtitles/new
-  def new
-    @subtitle = Subtitle.new
-  end
-
-  # GET /subtitles/1/edit
-  def edit
-  end
-
-  # POST /subtitles
-  # POST /subtitles.json
-  def create
-    @subtitle = Subtitle.new(subtitle_params)
-
-    respond_to do |format|
-      if @subtitle.save
-        format.html { redirect_to @subtitle, notice: 'Subtitle was successfully created.' }
-        format.json { render :show, status: :created, location: @subtitle }
-      else
-        format.html { render :new }
-        format.json { render json: @subtitle.errors, status: :unprocessable_entity }
-      end
+    # GET /subtitles
+    # GET /subtitles.json
+    def index
+        @titles = Subtitle.group(:title)
     end
-  end
 
-  # PATCH/PUT /subtitles/1
-  # PATCH/PUT /subtitles/1.json
-  def update
-    respond_to do |format|
-      if @subtitle.update(subtitle_params)
-        format.html { redirect_to @subtitle, notice: 'Subtitle was successfully updated.' }
-        format.json { render :show, status: :ok, location: @subtitle }
-      else
-        format.html { render :edit }
-        format.json { render json: @subtitle.errors, status: :unprocessable_entity }
-      end
+    # GET /subtitles/1
+    # GET /subtitles/1.json
+    def show
+        @subtitles = category_subtitles.paginate(page: params[:page], per_page: 12).order('counter DESC')
+        @wordgroups = initial_filter(WordGroupResult).where(title: category_title)
+        @filters = initial_filter(FilterGroupResult).where(title: category_title)
+        @predicates = initial_filter(PredicateResult).where(title: category_title)
     end
-  end
 
-  # DELETE /subtitles/1
-  # DELETE /subtitles/1.json
-  def destroy
-    @subtitle.destroy
-    respond_to do |format|
-      format.html { redirect_to subtitles_url, notice: 'Subtitle was successfully destroyed.' }
-      format.json { head :no_content }
+
+    # GET /subtitles/new
+    def new
+        @subtitle = Subtitle.new
     end
-  end
+
+    # GET /subtitles/1/edit
+    def edit
+    end
+
+    # POST /subtitles
+    def create
+        @subtitle = Subtitle.new(subtitle_params)
+
+        respond_to do |format|
+        if @subtitle.save
+            format.html { redirect_to @subtitle, notice: 'Subtitle was successfully created.' }
+        else
+            format.html { render :new }
+        end
+        end
+    end
+
+    # PATCH/PUT /subtitles/1
+    def update
+        respond_to do |format|
+        if @subtitle.update(subtitle_params)
+            format.html { redirect_to @subtitle, notice: 'Subtitle was successfully updated.' }
+        else
+            format.html { render :edit }
+        end
+        end
+    end
+
+    # DELETE /subtitles/1
+    def destroy
+        @subtitle.destroy
+        respond_to do |format|
+        format.html { redirect_to subtitles_url, notice: 'Subtitle was successfully destroyed.' }
+        end
+    end
 
   private
 
+    def initial_filter(model)
+        Subtitle.where(id: model.pluck(:subtitle_id)).order('counter DESC').paginate(page: params[:page], per_page: 12)
+    end
+
+    def category_title
+        @title = Subtitle.find(params[:id]).title
+    end
+
     # find all categorys matching id
-    def category_attributes
-        title = Subtitle.find(params[:id]).title
-        subtitle  = Subtitle.where(category_id: params[:category], title: title )
+    def category_subtitles
+        subtitle  = Subtitle.where(category_id: params[:category], title: category_title)
     end
 
     # Use callbacks to share common setup or constraints between actions.

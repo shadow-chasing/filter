@@ -1,9 +1,10 @@
+<% title controller_name + " " + action_name %>
 <table>
     <thead>
         <tr>
             <th> word </th>
             <th> counter </th>
-            <th> frequencey </th>
+            <th> frequency </th>
             <th> syllable </th>
             <th> group </th>
             <th> rank one </th>
@@ -29,4 +30,4 @@
     
 </table>
 
-<%= will_paginate @wordgroups %>
+<%= will_paginate @wordgroups, inner_window: 1, outer_window: 1 %>

@@ -11,11 +11,10 @@ class SubtitlesController < ApplicationController
     # GET /subtitles/1.json
     def show
         @subtitles = category_subtitles.paginate(page: params[:page], per_page: 12).order('counter DESC')
-        @wordgroups = initial_filter(WordGroupResult).where(title: category_title)
-        @filters = initial_filter(FilterGroupResult).where(title: category_title)
-        @predicates = initial_filter(PredicateResult).where(title: category_title)
+        @wordgroups = category_filter(WordGroupResult).where(title: category_title)
+        @filters = category_filter(FilterGroupResult).where(title: category_title)
+        @predicates = category_filter(PredicateResult).where(title: category_title)
     end
-
 
     # GET /subtitles/new
     def new
@@ -60,7 +59,7 @@ class SubtitlesController < ApplicationController
 
   private
 
-    def initial_filter(model)
+    def category_filter(model)
         Subtitle.where(id: model.pluck(:subtitle_id)).order('counter DESC').paginate(page: params[:page], per_page: 12)
     end
 

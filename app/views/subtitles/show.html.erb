@@ -1,15 +1,5 @@
-<aside>
-    <h4> categories </h4>
-        <ul>
-            <% Category.all.each do |category| %>
-                <li>
-                <i class="material-icons"> list </i>
-                    <!--Active Link abit ropey-->
-                    <%= link_to category.name, subtitle_path(category: category.id), class: active_class(category: category.id) %>
-                </li>
-            <% end %>
-        </ul>
-</aside>
+<%= render "subtitles/partials/aside" %>
+
 <main class="small">
     <!--begin category subtitles-->
       <% if params[:category] == "4" %>
@@ -34,7 +24,6 @@
         <tbody>
           <%= render "subtitles/partials/predicate" %>
         </tbody>
-
       <% end%>
 </main>
 

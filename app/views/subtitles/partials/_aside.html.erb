@@ -1,0 +1,17 @@
+<aside>
+    <h4> categories </h4>
+        <ul>
+            <% Category.all.each do |category| %>
+                <li>
+                <i class="material-icons"> list </i>
+                    <!--Active Link abit ropey-->
+                    <%= link_to category.name, subtitle_path(category: category.id), class: active_class(category: category.id) %>
+                </li>
+            <% end %>
+            <li>
+                <i class="material-icons"> list </i>
+                <!--Active Link abit ropey-->
+                <%= link_to "results", pages_results_path(params[:id]) %>
+            </li>
+        </ul>
+</aside>

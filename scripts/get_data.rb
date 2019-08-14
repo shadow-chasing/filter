@@ -143,6 +143,7 @@ if transcript.youtube_playlist.present?
 else
     exit
 end
+
 # iterates over the dir_list method, which when called creates an arrray of absolute
 # file paths. spliting the variable on the / creating a array. title[5] being the filename
 # and video being the absolut path. the absolute path is then passed into the File.readlines
@@ -160,7 +161,6 @@ transcript.dir_list.each do |video|
 
   # to avoid there being no title join the uniq id to the video name.
   title = video.split("/")
-binding.pry
 
   puts green("creating #{title[7]}")
   transcript.read_file(video)

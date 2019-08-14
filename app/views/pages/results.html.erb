@@ -1,102 +1,108 @@
 <h1>Pages#results</h1>
 
-<table>
-  <tbody>
-    <tr>
-        <th>SUBTITLES</th>
-    </tr>
-    <tr>
-        <td>individual word count</td>
-        <td><%= @subtitles.count %> </td>
-    </tr>
-    <tr>
-        <td>total occurrences of all words</td>
-        <td><%= @subtitles.sum(:counter) %> </td>
-    </tr>
-    <tr>
-        <td>longest word</td>
-        <td><%= @subtitles.maximum('length') %> </td>
-        <td><%= @subtitles.find_by(length: @subtitles.maximum('length')).word %> </td>
-    </tr>
-    <tr>
-        <td>most occurrences of a word</td>
-        <td><%= @subtitles.maximum('counter') %> </td>
-        <td><%= @subtitles.find_by(counter: @subtitles.maximum('counter')).word %> </td>
-    </tr>
-    <tr>
-        <td>least occurrences of a word</td>
-        <td><%= @subtitles.minimum('counter') %> </td>
-    </tr>
-    <tr>
-        <td>longest syllable</td>
-        <td><%= @subtitles.maximum('syllable') %> </td>
-    </tr>
-    <tr>
-        <td>syllable average</td>
-        <td><%= @subtitles.average(:syllable) %> </td>
-    </tr>
+<main class="small">
+    
+    <table>
+    <tbody>
+        <tr>
+            <th>SUBTITLES</th>
+        </tr>
+        <tr>
+            <td>individual word count</td>
+            <td><%= @subtitles.count %> </td>
+        </tr>
+        <tr>
+            <td>total occurrences of all words</td>
+            <td><%= @subtitles.sum(:counter) %> </td>
+        </tr>
+        <tr>
+            <td>longest word</td>
+            <td><%= @subtitles.maximum('length') %> </td>
+            <td><%= @subtitles.find_by(length: @subtitles.maximum('length')).word %> </td>
+        </tr>
+        <tr>
+            <td>most occurrences of a word</td>
+            <td><%= @subtitles.maximum('counter') %> </td>
+            <td><%= @subtitles.find_by(counter: @subtitles.maximum('counter')).word %> </td>
+        </tr>
+        <tr>
+            <td>least occurrences of a word</td>
+            <td><%= @subtitles.minimum('counter') %> </td>
+        </tr>
+        <tr>
+            <td>longest syllable</td>
+            <td><%= @subtitles.maximum('syllable') %> </td>
+        </tr>
+        <tr>
+            <td>syllable average</td>
+            <td><%= @subtitles.average(:syllable) %> </td>
+        </tr>
 
-    <tr>
-        <th>FILTER GROUP</th>
-    </tr>
+        <tr>
+            <th>FILTER GROUP</th>
+        </tr>
 
-    <tr>
-        <td>profanity</td>
-        <td><%= @profanity.sum(:counter) %> </td>
-    </tr>
-    <tr>
-        <td>religion and spirituality</td>
-        <td> <%= @religion.sum(:counter) %> </td>
-    </tr>
+        <tr>
+            <td>profanity</td>
+            <td><%= @profanity.sum(:counter) %> </td>
+        </tr>
+        <tr>
+            <td>religion and spirituality</td>
+            <td> <%= @religion.sum(:counter) %> </td>
+        </tr>
+        <tr>
+            <td>political</td>
+            <td> <%= @political.sum(:counter) %> </td>
+        </tr>
 
-    <tr>
-        <th>WORDGROUP</th>
-    </tr>
-    <tr>
-        <td>verb</td>
-        <td> <%= @verb.sum(:counter) %> </td>
-    </tr>
-    <tr>
-        <td>conjunction</td>
-        <td> <%= @conjunction.sum(:counter) %> </td>
-    </tr>
-    <tr>
-        <td>noun</td>
-        <td> <%= @noun.sum(:counter) %> </td>
-    </tr>
-    <tr>
-        <td>pronoun</td>
-        <td> <%= @pronoun.sum(:counter) %> </td>
-    </tr>
-    <tr>
-        <td>adjective</td>
-        <td> <%= @adjective.sum(:counter) %> </td>
-    </tr>
+        <tr>
+            <th>WORDGROUP</th>
+        </tr>
+        <tr>
+            <td>verb</td>
+            <td> <%= @verb.sum(:counter) %> </td>
+        </tr>
+        <tr>
+            <td>conjunction</td>
+            <td> <%= @conjunction.sum(:counter) %> </td>
+        </tr>
+        <tr>
+            <td>noun</td>
+            <td> <%= @noun.sum(:counter) %> </td>
+        </tr>
+        <tr>
+            <td>pronoun</td>
+            <td> <%= @pronoun.sum(:counter) %> </td>
+        </tr>
+        <tr>
+            <td>adjective</td>
+            <td> <%= @adjective.sum(:counter) %> </td>
+        </tr>
 
-    <tr>
-        <th>PREDICATES</th>
-    </tr>
-    <tr>
-        <td>audio</td>
-        <td> <%= @audio.sum(:counter) %> </td>
-    </tr>
-    <tr>
-        <td>olfactory</td>
-        <td> <%= @olfactory.sum(:counter) %> </td>
-    </tr>
-    <tr>
-        <td>visual</td>
-        <td> <%= @visual.sum(:counter) %> </td>
-    </tr>
-    <tr>
-        <td>kinesthetic</td>
-        <td> <%= @kinesthetic.sum(:counter) %> </td>
-    </tr>
-    <tr>
-        <td>gustatory</td>
-        <td> <%= @gustatory.sum(:counter) %> </td>
-    </tr>
-  </tbody>
-</table>
+        <tr>
+            <th>PREDICATES</th>
+        </tr>
+        <tr>
+            <td>audio</td>
+            <td> <%= @audio.sum(:counter) %> </td>
+        </tr>
+        <tr>
+            <td>olfactory</td>
+            <td> <%= @olfactory.sum(:counter) %> </td>
+        </tr>
+        <tr>
+            <td>visual</td>
+            <td> <%= @visual.sum(:counter) %> </td>
+        </tr>
+        <tr>
+            <td>kinesthetic</td>
+            <td> <%= @kinesthetic.sum(:counter) %> </td>
+        </tr>
+        <tr>
+            <td>gustatory</td>
+            <td> <%= @gustatory.sum(:counter) %> </td>
+        </tr>
+    </tbody>
+    </table>
 
-<br>
+</main>

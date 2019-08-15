@@ -36,7 +36,7 @@ filter_group_ranks("one").each do |results|
         Subtitle.find(word.id).filter_group_results.find_or_create_by(group: group_title, rank_one: results.category)
 
         # add new foreign key
-        mycat = Category.find_or_create_by(name: :filter).id
+        mycat = Category.find_or_create_by(name: :filters).id
         Subtitle.find(word.id).update(category_id: mycat)
       end
     end
@@ -58,11 +58,11 @@ filter_group_ranks("two").each do |results|
       Subtitle.where(word: file_contents.word).each do |word|
         unless Subtitle.find(word.id).filter_group_results.present?
           group_title = FilterGroup.find(results.filter_group_id).category
-          Category.find_or_create_by(name: :filter)
+          Category.find_or_create_by(name: :filters)
           Subtitle.find(word.id).filter_group_results.find_or_create_by(group: group_title, rank_one: results.category, rank_two: sub_files.category)
 
           # add new foreign key
-          mycat = Category.find_or_create_by(name: :filter).id
+          mycat = Category.find_or_create_by(name: :filters).id
           Subtitle.find(word.id).update(category_id: mycat)
         end
       end

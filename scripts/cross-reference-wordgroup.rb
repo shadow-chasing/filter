@@ -35,7 +35,7 @@ word_group_ranks("one").each do |results|
         Subtitle.find(word.id).word_group_results.find_or_create_by(group: group_title, rank_one: results.category)
 
         mysub = Subtitle.find(word.id)
-        myid = Category.find_or_create_by(name: :"word group").id
+        myid = Category.find_or_create_by(name: :wordgroups).id
         mysub.update(category_id: myid)
       end
     end
@@ -60,7 +60,7 @@ word_group_ranks("two").each do |results|
           Subtitle.find(word.id).word_group_results.find_or_create_by(group: group_title, rank_one: results.category, rank_two: sub_files.category)
 
           mysub = Subtitle.find(word.id)
-          myid = Category.find_or_create_by(name: :"word group").id
+          myid = Category.find_or_create_by(name: :wordgroups).id
           mysub.update(category_id: myid)
         end
       end

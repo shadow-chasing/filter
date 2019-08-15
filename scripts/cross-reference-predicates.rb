@@ -23,7 +23,7 @@ def build_predicate_result(arg)
       word_array.each do |subtitle_word|
         subtitle_word.predicate_results.find_or_create_by(group: :predicate, predicate: get_title(dataset.predicate_group_id))
 
-        mycat = Category.find_or_create_by(name: :predicate)
+        mycat = Category.find_or_create_by(name: :predicates)
         # add the new category id to the spercific predicate group
         subtitle_word.update(category_id: mycat.id)
       end

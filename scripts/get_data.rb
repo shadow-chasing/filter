@@ -28,7 +28,7 @@ class GenerateTranscript
     @results = Array.new
     @arry = Array.new
     @multi = Array.new
-    @dur = duration(@address)
+    @category_title = Category.find_by(name: :subtitles)
   end
 
   # creates and array of absolute filepaths.
@@ -38,14 +38,55 @@ class GenerateTranscript
 
   # uses youtube-dl's auto sub generate downloader. downloads to ~/Downloads/Youtube
   def youtube_playlist
-    puts blue("downloading #{@address} from youtube.com")
     system("youtube-dl --write-auto-sub --sub-lang en --skip-download \'#{@address}\'")
+  end
+
+  # two arguments are passed, 
+  # a string which it splits on a space as a delimiter, and a title.
+  # NOTE needs to skip of title exists from the start rather than try all the
+  # words.
+  def create_subtitle_words(*args)
+      args[0].split.each {|word| Subtitle.create(word: word, title: args[1], category_id: @category_title.id) }
+  end
+
+  # build_db
+  # iterates over a hash k,v pair. creating a word and its count of repatitions.
+  def count_subtitles(arg)
+    sub_collection = Subtitle.where(title: arg.title)
+    sub_count = sub_collection.group(:word).count
+
+    # add the count to the record 
+    sub_count.each {|k,v| sub_collection.find_by(word: k).update(counter: v) }
+  end
+
+  def remove_subtitle_words(arg)
+      binding.pry
+    sub_collection = Subtitle.where(title: arg.title)
+    binding.pry
+    sub_collection.where.not(id: Subtitle.group(:word).select("min(id)")).destroy_all
   end
 
   # TODO needs to get playlists of durations
   def duration(url)
       system("youtube-dl --get-duration --skip-download \'#{url}\' | grep -e ETA -e \"[0-9]*\" >duration.txt")
       File.open('duration.txt').read.chomp
+  end
+
+  # plucks the id and word of each subtitle item
+  def word_length
+    Subtitle.pluck([:id, :word]).each {|item| Subtitle.find(item[0]).update(length: item[1].length) }
+  end
+
+  def syllable_count(word)
+    word.downcase!
+    return 1 if word.length <= 3
+    word.sub!(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, '')
+    word.sub!(/^y/, '')
+    word.scan(/[aeiouy]{1,2}/).size
+  end
+
+  def sylables
+    Subtitle.all.each { |item| item.update(syllable: syllable_count(item.word)) }
   end
 
   def read_file(arg)
@@ -56,60 +97,6 @@ class GenerateTranscript
     end
   end
 
-  def paragraph(arg)
-    file = File.read(arg)
-    file.chomp
-  end
-
-  # takes one argument, a string which it splits on a space as a delimiter.
-  # creates a hash with default values of 0 then uses the word as the key
-  # and incrments a count for each reptition.
-  def hashed_count_order(string)
-      words = string.split(' ')
-      frequency = Hash.new(0)
-      words.each { |word| frequency[word.downcase] += 1 }
-      Hash[frequency.sort_by {|k,v| v.to_i }]
-  end
-
-  # iterates over a hash k,v pair. creating a word and its count of repatitions.
-  def build_bd(*args)
-    d = @dur.split("\n")
-    hashed_count_order(args[0]).each {|key, value|
-      unless key.blank?
-        mycat = Category.find_by(name: :subtitles)
-        my_sub = Subtitle.find_or_create_by(word: key, counter: value, category_id: mycat.id)
-        my_sub.update(title: args[1])
-        unless Subtitle.find_by(title: args[1]).duration.present?
-            my_sub.update(title: args[1], duration: d[0])
-            d.shift
-        end
-      end
-
-      # find_by gets the first occuranece of the record. in this case the first
-      # record is the only record per individual subtitle that has a duration,
-      # the duration is then saved as a variable. the subtitle is then found by
-      # title and mapped, adding a duration to each with the same title.
-      new_duration = Subtitle.find_by(title: args[1]).duration
-      Subtitle.where(title: args[1]).map {|i| i.update(duration: new_duration) }
-    }
-  end
-
-  # plucks the id and word of each subtitle item
-  def word_length
-    Subtitle.pluck([:id, :word]).each {|item| Subtitle.find(item[0]).update(length: item[1].length) }
-  end
-
-  def new_count(word)
-    word.downcase!
-    return 1 if word.length <= 3
-    word.sub!(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, '')
-    word.sub!(/^y/, '')
-    word.scan(/[aeiouy]{1,2}/).size
-  end
-
-  def sylables
-    Subtitle.all.each { |item| item.update(syllable: new_count(item.word)) }
-  end
 
 end
 
@@ -134,7 +121,7 @@ user_input = gets
 
 
 #------------------------------------------------------------------------------
-# 
+# create the initial subtitle downloads
 #------------------------------------------------------------------------------
 transcript = GenerateTranscript.new(user_input.chomp)
 
@@ -144,38 +131,64 @@ else
     exit
 end
 
-# iterates over the dir_list method, which when called creates an arrray of absolute
-# file paths. spliting the variable on the / creating a array. title[5] being the filename
-# and video being the absolut path. the absolute path is then passed into the File.readlines
-# removing timestamps and braces and creating an array. The array is then pushed to an array,
-# @multi as @multi[0]. These are the two variales used by the class TranscriptData as a hash.
-# which is pushed to an array @results and retriveable as variable.title and variable.script when
-# iterated over.
-# iterates over the @result array. joining the index array into a string needed to pass
-# the build_bd method.
 $arry = []
 
-
-
+#------------------------------------------------------------------------------
+# iterates over the dir_list method, which when called creates an arrray of absolute
+# file paths. spliting the variable on the / creating a array.
+#------------------------------------------------------------------------------
 transcript.dir_list.each do |video|
 
-  # to avoid there being no title join the uniq id to the video name.
+  # create and array from the file path. seperating on the seperator /.
   title = video.split("/")
 
   puts green("creating #{title[7]}")
+
+  #----------------------------------------------------------------------------
+  # remove tags
+  #----------------------------------------------------------------------------
+  # read in the subtitle and strip out the bad tags.
   transcript.read_file(video)
+
+  #----------------------------------------------------------------------------
+  # create a words list
+  #----------------------------------------------------------------------------
+  # join all lines then split the lines on the \n charactor, rejoining to create a
+  # string containing indevidual words seperated by space. This is important
+  # because they will later be seperated on that space.
   dialouge = $arry.uniq.join.split("\n").join(" ")
+
+  #----------------------------------------------------------------------------
+  # Create the data
+  #----------------------------------------------------------------------------
+  # create a struct containing the title and the string of words list.
   data = TranscriptData.new(title: title[7], script: dialouge)
 
-  initial_table = Subtitle.all.uniq{|t| t[:title]}
-  transcript.build_bd(data.script, data.title)
-  title_list = Subtitle.all.uniq{|t| t[:title]}
+  #----------------------------------------------------------------------------
+  # count titles
+  #----------------------------------------------------------------------------
+  # group returns the first of each title
+  initial_table = Subtitle.group(:title)
+
+  #----------------------------------------------------------------------------
+  # creates the subtitles
+  #----------------------------------------------------------------------------
+  # passes the string of space sperated words and the title in.
+  transcript.create_subtitle_words(data.script, data.title)
+  transcript.count_subtitles(data)
   transcript.word_length
   transcript.sylables
+  transcript.remove_subtitle_words(data)
+
+  #----------------------------------------------------------------------------
+  # checks whether the Subtitle.title.count has increased
+  #----------------------------------------------------------------------------
+  # group returns the first of each title
+  title_list = Subtitle.group(:title)
 
   if title_list.count > initial_table.count
     puts green("database now contains #{title_list.count} title(s)")
   else
-    puts red("database already contains #{title[7]}")
+    puts red("database has not increased")
   end
 end

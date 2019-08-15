@@ -59,7 +59,8 @@ class GenerateTranscript
   # finds all the subtitles with title then does a where.not and passes in an
   # array of ids, excluding them from the destroy_all clause.
   def remove_subtitle_words(arg)
-    Subtitle.where(title: arg.title).where.not(id: Subtitle.group(:word).select("min(id)")).destroy_all
+    my_sub = Subtitle.where(title: arg.title)
+    my_sub.where.not(id: my_sub.group(:word).select("min(id)")).destroy_all
   end
 
   # TODO needs to get playlists of durations

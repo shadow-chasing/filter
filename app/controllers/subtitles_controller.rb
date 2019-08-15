@@ -30,22 +30,22 @@ class SubtitlesController < ApplicationController
         @subtitle = Subtitle.new(subtitle_params)
 
         respond_to do |format|
-        if @subtitle.save
-            format.html { redirect_to @subtitle, notice: 'Subtitle was successfully created.' }
-        else
-            format.html { render :new }
-        end
+            if @subtitle.save
+                format.html { redirect_to @subtitle, notice: 'Subtitle was successfully created.' }
+            else
+                format.html { render :new }
+            end
         end
     end
 
     # PATCH/PUT /subtitles/1
     def update
         respond_to do |format|
-        if @subtitle.update(subtitle_params)
-            format.html { redirect_to @subtitle, notice: 'Subtitle was successfully updated.' }
-        else
-            format.html { render :edit }
-        end
+            if @subtitle.update(subtitle_params)
+                format.html { redirect_to @subtitle, notice: 'Subtitle was successfully updated.' }
+            else
+                format.html { render :edit }
+            end
         end
     end
 
@@ -53,7 +53,7 @@ class SubtitlesController < ApplicationController
     def destroy
         @subtitle.destroy
         respond_to do |format|
-        format.html { redirect_to subtitles_url, notice: 'Subtitle was successfully destroyed.' }
+            format.html { redirect_to subtitles_url, notice: 'Subtitle was successfully destroyed.' }
         end
     end
 

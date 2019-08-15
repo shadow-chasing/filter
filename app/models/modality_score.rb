@@ -1,2 +1,0 @@
-class ModalityScore < ApplicationRecord
-end

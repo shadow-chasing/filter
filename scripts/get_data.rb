@@ -43,33 +43,27 @@ class GenerateTranscript
 
   # two arguments are passed, 
   # a string which it splits on a space as a delimiter, and a title.
-  # NOTE needs to skip of title exists from the start rather than try all the
-  # words.
   def create_subtitle_words(*args)
-      args[0].split.each {|word| Subtitle.create(word: word, title: args[1], category_id: @category_title.id) }
+    args[0].split.each {|word| Subtitle.create(word: word, title: args[1], category_id: @category_title.id) }
   end
 
   # build_db
   # iterates over a hash k,v pair. creating a word and its count of repatitions.
   def count_subtitles(arg)
-    sub_collection = Subtitle.where(title: arg.title)
-    sub_count = sub_collection.group(:word).count
+    sub_collection = Subtitle.where(title: arg.title).group(:word).count
 
     # add the count to the record 
-    sub_count.each {|k,v| sub_collection.find_by(word: k).update(counter: v) }
+    sub_collection.each {|k,v| Subtitle.find_by(title: arg.title, word: k).update(counter: v) }
   end
 
   def remove_subtitle_words(arg)
-      binding.pry
-    sub_collection = Subtitle.where(title: arg.title)
-    binding.pry
-    sub_collection.where.not(id: Subtitle.group(:word).select("min(id)")).destroy_all
+    Subtitle.where(title: arg.title).where.not(id: Subtitle.group(:word).select("min(id)")).destroy_all
   end
 
   # TODO needs to get playlists of durations
   def duration(url)
-      system("youtube-dl --get-duration --skip-download \'#{url}\' | grep -e ETA -e \"[0-9]*\" >duration.txt")
-      File.open('duration.txt').read.chomp
+    system("youtube-dl --get-duration --skip-download \'#{url}\' | grep -e ETA -e \"[0-9]*\" >duration.txt")
+    File.open('duration.txt').read.chomp
   end
 
   # plucks the id and word of each subtitle item
@@ -106,7 +100,7 @@ end
 # create category first, this is because subtitles expects the foreign key to
 # be added to which category it belongs, the rest are used by the
 # cross-refernce.
-cat = ["subtitles", "filter", "word group", "predicate"]
+cat = ["subtitles", "filters", "wordgroups", "predicates"]
 
 cat.each do |c|
     Category.find_or_create_by(name: c)
@@ -165,30 +159,22 @@ transcript.dir_list.each do |video|
   data = TranscriptData.new(title: title[7], script: dialouge)
 
   #----------------------------------------------------------------------------
-  # count titles
-  #----------------------------------------------------------------------------
-  # group returns the first of each title
-  initial_table = Subtitle.group(:title)
-
-  #----------------------------------------------------------------------------
   # creates the subtitles
   #----------------------------------------------------------------------------
-  # passes the string of space sperated words and the title in.
-  transcript.create_subtitle_words(data.script, data.title)
-  transcript.count_subtitles(data)
-  transcript.word_length
-  transcript.sylables
-  transcript.remove_subtitle_words(data)
+  # unless subtitle.title is already created enter the condition.
+  unless Subtitle.find_by(title: data.title).present?
 
-  #----------------------------------------------------------------------------
-  # checks whether the Subtitle.title.count has increased
-  #----------------------------------------------------------------------------
-  # group returns the first of each title
-  title_list = Subtitle.group(:title)
+    # passes the string of space sperated words and the title in.
+    transcript.create_subtitle_words(data.script, data.title)
 
-  if title_list.count > initial_table.count
-    puts green("database now contains #{title_list.count} title(s)")
-  else
-    puts red("database has not increased")
+    # if subtitle is now created run the other methods
+    if Subtitle.find_by(title: data.title).present?
+        transcript.count_subtitles(data)
+        transcript.word_length
+        transcript.sylables
+        transcript.remove_subtitle_words(data)
+    end
+      
   end
+
 end

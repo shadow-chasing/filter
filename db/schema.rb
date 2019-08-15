@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_13_115329) do
+ActiveRecord::Schema.define(version: 2019_08_05_132400) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -61,17 +61,6 @@ ActiveRecord::Schema.define(version: 2019_08_13_115329) do
     t.index ["filter_group_rank_two_id"], name: "index_filter_rank_two_records_on_filter_group_rank_two_id"
   end
 
-  create_table "nodes", force: :cascade do |t|
-    t.integer "node"
-    t.integer "sentence_id"
-    t.index ["sentence_id"], name: "index_nodes_on_sentence_id"
-  end
-
-  create_table "paragraphs", force: :cascade do |t|
-    t.integer "paragraph"
-    t.string "title"
-  end
-
   create_table "personality_datasets", force: :cascade do |t|
     t.string "word"
     t.integer "personality_group_id"
@@ -109,31 +98,16 @@ ActiveRecord::Schema.define(version: 2019_08_13_115329) do
     t.index ["subtitle_id"], name: "index_predicate_results_on_subtitle_id"
   end
 
-  create_table "sentences", force: :cascade do |t|
-    t.integer "sentence"
-    t.integer "paragraph_id"
-    t.index ["paragraph_id"], name: "index_sentences_on_paragraph_id"
-  end
-
   create_table "subtitles", force: :cascade do |t|
     t.string "word"
     t.string "title"
-    t.integer "counter"
+    t.string "syllable"
     t.integer "length", default: 0
+    t.integer "counter"
     t.integer "category_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "syllable", default: 0
-    t.string "duration"
-    t.float "dur"
     t.index ["category_id"], name: "index_subtitles_on_category_id"
-  end
-
-  create_table "syntaxes", force: :cascade do |t|
-    t.integer "paragraph"
-    t.integer "sentence"
-    t.integer "node"
-    t.string "word"
   end
 
   create_table "word_datasets", force: :cascade do |t|

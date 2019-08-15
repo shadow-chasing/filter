@@ -56,6 +56,8 @@ class GenerateTranscript
     sub_collection.each {|k,v| Subtitle.find_by(title: arg.title, word: k).update(counter: v) }
   end
 
+  # finds all the subtitles with title then does a where.not and passes in an
+  # array of ids, excluding them from the destroy_all clause.
   def remove_subtitle_words(arg)
     Subtitle.where(title: arg.title).where.not(id: Subtitle.group(:word).select("min(id)")).destroy_all
   end

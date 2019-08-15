@@ -3,8 +3,6 @@ require File.expand_path('../../config/environment', __FILE__)
 require 'pry'
 require 'json'
 
-
-
 #-------------------------------------------------------------------------------
 # Color
 #-------------------------------------------------------------------------------
@@ -49,7 +47,6 @@ class GenerateTranscript
   # creating and array of words then iterating over the array, and a title.
   # lastly it adds the subtitles category id so the foreign key constraint is satisfied
   def create_subtitle_words(*args)
-    binding.pry
     args[0].split.each {|word| Subtitle.create(word: word, title: args[1], duration: args[2], category_id: @category_title.id) }
   end
 
@@ -95,8 +92,6 @@ class GenerateTranscript
       $arry << sanatised
     end
   end
-
-
 end
 
 #------------------------------------------------------------------------------
@@ -124,7 +119,6 @@ location = gets
 #------------------------------------------------------------------------------
 transcript = GenerateTranscript.new(user_input.chomp)
 
-
 if transcript.youtube_playlist.present? 
     transcript.youtube_playlist
 else
@@ -132,7 +126,6 @@ else
 end
 
 $arry = []
-$title_and_info = []
 
 #------------------------------------------------------------------------------
 # iterates over the dir_list method, which when called creates an arrray of
@@ -144,7 +137,6 @@ initial_array = transcript.dir_list(location.chomp)
 subtitle = initial_array.select {|i| /\.en\.vtt/ =~ i }
 json_data = initial_array.select {|i| /\.json/ =~ i }
 
-
 # a half assed zip chancing that they are paired up. no more thourgh then the
 # initial duration.
 subtitle.zip(json_data).each do |video, json_info|
@@ -152,7 +144,6 @@ subtitle.zip(json_data).each do |video, json_info|
     #----------------------------------------------------------------------------
     # json file
     #----------------------------------------------------------------------------
-    binding.pry
     data = JSON.parse(File.read(json_info))
 
     # get the json attributes from the info.json file

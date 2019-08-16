@@ -99,13 +99,13 @@ end
 # Global arrays
 #------------------------------------------------------------------------------
 $arry = []
-$title = []
 
 #------------------------------------------------------------------------------
 # build categorys
 #------------------------------------------------------------------------------
 # create category first, this is because subtitles expects the foreign key to
 # be added to which category it belongs, the rest are used by the cross-refernce.
+#------------------------------------------------------------------------------
 category_titles = ["subtitles", "filters", "wordgroups", "predicates"]
 
 category_titles.each do |category_name|
@@ -148,15 +148,16 @@ filepaths_array = transcript.dir_list("/Users/shadow_chaser/Downloads/Youtube")
 #------------------------------------------------------------------------------
 synced = Hash.new { |h, k| h[k] = [] }
 
+#------------------------------------------------------------------------------
 # create a hash key from the title and add to the array value each file, .json
 # and .vtt, this is done so i can count the array of each key, if there are two
 # items i know both subtitles and json information where correctly downloaded.
+#------------------------------------------------------------------------------
 filepaths_array.each do |item|
 
     # get just the title to use as the key from the file path.
     title = item.split("/")[7]
 
-    unless $title.include?(title) then $title.push(title) end
     # create a key based on the title.
     synced["#{title}"]
 
@@ -164,14 +165,17 @@ filepaths_array.each do |item|
     (synced["#{title}"] ||=[]) << item
 end
 
-binding.pry
 
+#------------------------------------------------------------------------------
 # remove any k,v pairs that do not have 2 items.
+#------------------------------------------------------------------------------
 synced.delete_if {|key, value| value.count != 2 }
 
 
+#------------------------------------------------------------------------------
 # key = title, value = []
 # iterate over the datastruct each key, value pair.
+#------------------------------------------------------------------------------
 synced.each do |key, value|
 
     # json file
@@ -180,9 +184,9 @@ synced.each do |key, value|
     # subtitles
     subtitle_auto_captions = value[1]
 
-    #----------------------------------------------------------------------------
+    #--------------------------------------------------------------------------
     # json file
-    #----------------------------------------------------------------------------
+    #--------------------------------------------------------------------------
     data = JSON.parse(File.read(json_info))
 
     # get the json attributes from the info.json file
@@ -190,29 +194,29 @@ synced.each do |key, value|
 
     duration = data["duration"]
 
-    #----------------------------------------------------------------------------
+    #--------------------------------------------------------------------------
     # remove tags
-    #----------------------------------------------------------------------------
+    #--------------------------------------------------------------------------
     # read in the subtitle and strip out the bad tags.
     transcript.read_file(subtitle_auto_captions)
 
-    #----------------------------------------------------------------------------
+    #--------------------------------------------------------------------------
     # create a words list
-    #----------------------------------------------------------------------------
+    #--------------------------------------------------------------------------
     # join all lines then split the lines on the \n character, rejoining to create a
     # string containing individual words separated by space. This is important
     # because they will later be separated on that space.
     dialouge = $arry.uniq.join.split("\n").join(" ")
 
-    #----------------------------------------------------------------------------
+    #--------------------------------------------------------------------------
     # Create the data
-    #----------------------------------------------------------------------------
+    #--------------------------------------------------------------------------
     # create a struct containing the title and the string of words list.
     data = TranscriptData.new(title: title, script: dialouge, duration: duration)
 
-    #----------------------------------------------------------------------------
+    #--------------------------------------------------------------------------
     # creates the subtitles
-    #----------------------------------------------------------------------------
+    #--------------------------------------------------------------------------
     # unless subtitle.title is already created enter the condition.
     unless Subtitle.find_by(title: data.title).present?
 

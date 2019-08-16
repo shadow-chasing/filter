@@ -111,9 +111,9 @@ puts "Enter URL:\n"
 
 user_input = gets
 
-puts "enter the pwd of the subtitles dir:\n"
+# puts "enter the pwd of the subtitles dir:\n"
 
-location = gets
+# location = gets
 #------------------------------------------------------------------------------
 # create the initial subtitle downloads
 #------------------------------------------------------------------------------
@@ -126,20 +126,48 @@ else
 end
 
 $arry = []
+$title = []
+
+# when called creates an arrray of absolute file paths.
+filepaths_array = transcript.dir_list("/Users/shadow_chaser/Downloads/Youtube")
 
 #------------------------------------------------------------------------------
-# iterates over the dir_list method, which when called creates an arrray of
-# absolute  file paths. spliting the path on the / creating a array.
+# make sure the subtitles and the json information are both there
 #------------------------------------------------------------------------------
-# NOTE: this did loopthrough just the subtitles
-initial_array = transcript.dir_list(location.chomp)
+# create a hash with arrays as values.
+synced = Hash.new { |h, k| h[k] = [] }
 
-subtitle = initial_array.select {|i| /\.en\.vtt/ =~ i }
-json_data = initial_array.select {|i| /\.json/ =~ i }
+# create a hash key from the title and add to the array value each file, .json
+# and .vtt, this is done so i can count the array of each key, if there are two
+# items i know both subtitles and json information where correctly downloaded.
+filepaths_array.each do |item|
 
-# a half assed zip chancing that they are paired up. no more thourgh then the
-# initial duration.
-subtitle.zip(json_data).each do |video, json_info|
+    # get just the title to use as the key from the file path.
+    title = item.split("/")[7]
+
+    unless $title.include?(title) then $title.push(title) end
+    # create a key based on the title.
+    synced["#{title}"]
+
+    # find the hash key and append to the array.
+    (synced["#{title}"] ||=[]) << item
+end
+
+binding.pry
+
+# remove any k,v pairs that do not have 2 items.
+synced.delete_if {|key, value| value.count != 2 }
+
+
+# key = title, value = []
+# iterate over the datastruct each key, value pair.
+synced.each do |key, value|
+
+    # json file
+    json_info = value[0]
+
+    # subtitles
+    subtitle_auto_captions = value[1]
 
     #----------------------------------------------------------------------------
     # json file
@@ -148,19 +176,21 @@ subtitle.zip(json_data).each do |video, json_info|
 
     # get the json attributes from the info.json file
     title = data["title"]
+
     duration = data["duration"]
+
     #----------------------------------------------------------------------------
     # remove tags
     #----------------------------------------------------------------------------
     # read in the subtitle and strip out the bad tags.
-    transcript.read_file(video)
+    transcript.read_file(subtitle_auto_captions)
 
     #----------------------------------------------------------------------------
     # create a words list
     #----------------------------------------------------------------------------
-    # join all lines then split the lines on the \n charactor, rejoining to create a
-    # string containing indevidual words seperated by space. This is important
-    # because they will later be seperated on that space.
+    # join all lines then split the lines on the \n character, rejoining to create a
+    # string containing individual words separated by space. This is important
+    # because they will later be separated on that space.
     dialouge = $arry.uniq.join.split("\n").join(" ")
 
     #----------------------------------------------------------------------------
@@ -175,7 +205,7 @@ subtitle.zip(json_data).each do |video, json_info|
     # unless subtitle.title is already created enter the condition.
     unless Subtitle.find_by(title: data.title).present?
 
-        # passes the string of space sperated words and the title in.
+        # passes the string of space separated words and the title in.
         transcript.create_subtitle_words(data.script, data.title, data.duration)
 
         # if subtitle is now created run the other methods

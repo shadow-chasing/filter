@@ -1,4 +1,7 @@
-# Data
+# YouTube Filter
+
+This app downloads youtube single url or playlist subtitles and categorises the
+words.
 
 ### scripts
 

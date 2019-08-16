@@ -94,6 +94,13 @@ class GenerateTranscript
   end
 end
 
+
+#------------------------------------------------------------------------------
+# Global arrays
+#------------------------------------------------------------------------------
+$arry = []
+$title = []
+
 #------------------------------------------------------------------------------
 # build categorys
 #------------------------------------------------------------------------------
@@ -104,6 +111,7 @@ category_titles = ["subtitles", "filters", "wordgroups", "predicates"]
 category_titles.each do |category_name|
     Category.find_or_create_by(name: category_name)
 end
+
 #------------------------------------------------------------------------------
 # Take a user input
 #------------------------------------------------------------------------------
@@ -111,30 +119,33 @@ puts "Enter URL:\n"
 
 user_input = gets
 
-# puts "enter the pwd of the subtitles dir:\n"
-
-# location = gets
 #------------------------------------------------------------------------------
-# create the initial subtitle downloads
+# validate address is beginning with the youtube address.
 #------------------------------------------------------------------------------
-transcript = GenerateTranscript.new(user_input.chomp)
+if user_input.chomp =~ /^(https|http)\:(\/\/)[w]{3}\.(youtube)\.(com)/
 
-if transcript.youtube_playlist.present? 
+    # instansiate GenerateTranscript.
+    # pass in the url which sets the @address instance variable, used by the
+    # youtube_playlist method.
+    transcript = GenerateTranscript.new(user_input.chomp)
+
+    # download the single url or playlist, 
     transcript.youtube_playlist
-else
+
+else 
+    puts "Invalid URL: please enter a valid URL" 
     exit
 end
 
-$arry = []
-$title = []
-
-# when called creates an arrray of absolute file paths.
+#------------------------------------------------------------------------------
+# Creates an arrray of absolute file paths. 
+# Returns .json and .vtt files 
+#------------------------------------------------------------------------------
 filepaths_array = transcript.dir_list("/Users/shadow_chaser/Downloads/Youtube")
 
 #------------------------------------------------------------------------------
-# make sure the subtitles and the json information are both there
-#------------------------------------------------------------------------------
 # create a hash with arrays as values.
+#------------------------------------------------------------------------------
 synced = Hash.new { |h, k| h[k] = [] }
 
 # create a hash key from the title and add to the array value each file, .json

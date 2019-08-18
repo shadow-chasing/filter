@@ -31,20 +31,6 @@ def build_predicate_result(arg)
   end
 end
 
-# DataStruct is used as a options hash for sensory predicates.
-class DataStruct
-  attr_accessor :visual, :auditory, :gustatory, :kinesthetic, :olfactory
-
-  def initialize(options={})
-    @visual = options[:visual] || "visual"
-    @auditory =  options[:auditory] || "auditory"
-    @gustatory = options[:gustatory] || "gustatory"
-    @kinesthetic = options[:kinesthetic] || "kinesthic"
-    @olfactory = options[:olfactory] || "olfactor"
-  end
-end
-
-
 #------------------------------------------------------------------------------
 # Build Subtitle PredicateResult
 #------------------------------------------------------------------------------

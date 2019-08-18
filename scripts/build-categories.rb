@@ -1,61 +1,42 @@
 #!/usr/bin/env ruby
+$LOAD_PATH.push("/Users/shadow_chaser/Code/Ruby/Projects/filter/scripts")
 require File.expand_path('../../config/environment', __FILE__)
 require 'pry'
 
-#-------------------------------------------------------------------------------
-# classes
-#-------------------------------------------------------------------------------
+# require youtube-filter classes
+require 'classes-category'
 
-class DataStruct
-  attr_accessor :first, :second, :third, :fourth, :full_path, :words_list
-
-  def initialize(arg={})
-    @first = arg[:first]
-    @second = arg[:second]
-    @third = arg[:third] || nil
-    @fourth = arg[:fourth] || nil
-    @full_path = arg[:full_path]
-    @words_list = arg[:words_list]
-  end
-
-end
-
-def green(mytext) ; "\e[32m#{mytext}\e[0m" ; end
-def blue(mytext) ; "\e[36m#{mytext}\e[0m" ; end
-def red(mytext) ; "\e[31m#{mytext}\e[0m" ; end
-
-
-#-------------------------------------------------------------------------------
-# Global arrays
-#-------------------------------------------------------------------------------
 $data_array = []
 $all_file = []
-#-------------------------------------------------------------------------------
-# methods
-#-------------------------------------------------------------------------------
-# creates and array of absolute filepaths.
-def full_path_array(arg)
-  Dir.glob("#{arg}/**/*").select{ |f| File.file? f }
-end
 
-# get all in dir seperate by wether it has sub dir or not.
+category_data = CategoryStructure.new
 
-full_path_array("data").each do |item|
-  path = item.split("/")
-  if path.count == 3
-    data = DataStruct.new(first: path[1], second: path[2], third: path[3], full_path: item)
-  elsif path.count == 4
-    data = DataStruct.new(first: path[1], second: path[2], third: path[3], fourth: path[4], full_path: item)
-  elsif path.count == 5
-    data = DataStruct.new(first: path[1], second: path[2], third: path[3], fourth: path[4], fifth: path[5], full_path: item)
-  end
-  $data_array << data
+category_data.full_path_array("data").each do |item|
+
+    # new instance of CategoryStructure
+    data = CategoryStructure.new
+
+    # split the path different data categorys.
+    path = item.split("/")
+
+    if path.count == 3
+        data.build_categorys(first: path[1], second: path[2], third: path[3], full_path: item)
+    elsif path.count == 4
+        data.build_categorys(first: path[1], second: path[2], third: path[3], fourth: path[4], full_path: item)
+    elsif path.count == 5
+        data.build_categorys(first: path[1], second: path[2], third: path[3], fourth: path[4], fifth: path[5], full_path: item)
+    end
+
+    # push each data struct to the data array.
+    $data_array << data
+
 end
 
 #-------------------------------------------------------------------------------
 # predicate
 #-------------------------------------------------------------------------------
 $data_array.each do |struct|
+    binding.pry
   if struct.first == "predicate-group"
       PredicateGroup.find_or_create_by(category: struct.second)
   end
@@ -70,9 +51,9 @@ $data_array.each do |struct|
   end
 end
 
-# #-------------------------------------------------------------------------------
-# # filter group rank one
-# #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+# filter group rank one
+#-------------------------------------------------------------------------------
 $data_array.each do |struct|
   if struct.first == "filter" && struct.third != nil
     FilterGroupRankOne.find_or_create_by(category: struct.third)
@@ -80,9 +61,9 @@ $data_array.each do |struct|
   end
 end
 
-# #-------------------------------------------------------------------------------
-# # filter group rank two
-# #-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+# filter group rank two
+#-------------------------------------------------------------------------------
 $data_array.each do |struct|
   if struct.first == "filter" && struct.fourth != nil
     FilterGroupRankTwo.find_or_create_by(category: struct.fourth)
@@ -120,6 +101,12 @@ $data_array.each do |struct|
   end
 end
 
+# --------end
+#
+#
+#
+#
+#
 #-------------------------------------------------------------------------------
 # Get words from files and add to DirStruct
 #-------------------------------------------------------------------------------

@@ -1,8 +1,12 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
+#------------------------------------------------------------------------------
+# build categorys
+#------------------------------------------------------------------------------
+# create category first, this is because subtitles expects the foreign key to
+# be added to which category it belongs, the rest are used by the cross-refernce.
+#------------------------------------------------------------------------------
+category_titles = ["subtitles", "filters", "wordgroups", "predicates"]
 
-cats = ["filters", "predicates", "wordgroups"]
-
-cats.each do |cat|
-    Category.find_or_create_by(name: cat)
+category_titles.each do |category_name|
+    Category.find_or_create_by(name: category_name)
 end
+

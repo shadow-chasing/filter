@@ -19,6 +19,10 @@ def word_group_ranks(option)
   end
 end
 
+# category wordgroups id
+def wordgroup_id
+    Category.find_by(name: :wordgroups).id
+end
 #-------------------------------------------------------------------------------
 # rank one
 #-------------------------------------------------------------------------------
@@ -31,12 +35,14 @@ word_group_ranks("one").each do |results|
   results.word_datasets.each do |file_contents|
     Subtitle.where(word: file_contents.word).each do |word|
       unless Subtitle.find(word.id).word_group_results.present?
+
         group_title = WordGroup.find(results.word_group_id).category
         Subtitle.find(word.id).word_group_results.find_or_create_by(group: group_title, rank_one: results.category)
 
-        mysub = Subtitle.find(word.id)
-        myid = Category.find_or_create_by(name: :wordgroups).id
-        mysub.update(category_id: myid)
+        # find subtitle by id and update adding the category id for the
+        # wordgroup category.
+        Subtitle.find(word.id).update(category_id: wordgroup_id)
+
       end
     end
   end
@@ -56,12 +62,13 @@ word_group_ranks("two").each do |results|
     sub_files.word_datasets.each do |file_contents|
       Subtitle.where(word: file_contents.word).each do |word|
         unless Subtitle.find(word.id).word_group_results.present?
+
           group_title = WordGroup.find(results.word_group_id).category
           Subtitle.find(word.id).word_group_results.find_or_create_by(group: group_title, rank_one: results.category, rank_two: sub_files.category)
 
-          mysub = Subtitle.find(word.id)
-          myid = Category.find_or_create_by(name: :wordgroups).id
-          mysub.update(category_id: myid)
+          # find subtitle by id and update adding the category id for the
+          # wordgroup category.
+          Subtitle.find(word.id).update(category_id: wordgroup_id)
         end
       end
     end

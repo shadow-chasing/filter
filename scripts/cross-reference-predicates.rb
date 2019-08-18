@@ -12,6 +12,11 @@ def get_title(arg)
   PredicateGroup.find_by(id: arg).category
 end
 
+def predicates_id
+    binding.pry
+    Category.find_by(name: :predicates).id
+end
+
 # Takes one argument a modality and returns a dataset which is then iterated over.
 # Subtitle is then searched for the dataset words and if present a record is created
 # between Subtitle and PredicateResults.
@@ -23,36 +28,25 @@ def build_predicate_result(arg)
       word_array.each do |subtitle_word|
         subtitle_word.predicate_results.find_or_create_by(group: :predicate, predicate: get_title(dataset.predicate_group_id))
 
-        mycat = Category.find_or_create_by(name: :predicates)
+        binding.pry
         # add the new category id to the spercific predicate group
-        subtitle_word.update(category_id: mycat.id)
+        subtitle_word.update(category_id: predicates_id)
+        binding.pry
       end
     end
   end
 end
+
 
 #------------------------------------------------------------------------------
 # Build Subtitle PredicateResult
 #------------------------------------------------------------------------------
 # Searches subtitle for word contained in PredicateGroup.dataset and creates a
 # record if its found.
+
 #------------------------------------------------------------------------------
-# Auditory
+# sensory predicates
 #------------------------------------------------------------------------------
-build_predicate_result("auditory")
-#------------------------------------------------------------------------------
-# Visual
-#------------------------------------------------------------------------------
-build_predicate_result("visual")
-#------------------------------------------------------------------------------
-# Kinesthetic
-#------------------------------------------------------------------------------
-build_predicate_result("kinesthetic")
-#------------------------------------------------------------------------------
-# Olfactory
-#------------------------------------------------------------------------------
-build_predicate_result("olfactory")
-#------------------------------------------------------------------------------
-# Gustatory
-#------------------------------------------------------------------------------
-build_predicate_result("gustatory")
+sp = ["auditory", "visual", "kinesthetic", "olfactory", "gustatory"]
+
+sp.each {|sense| build_predicate_result("#{sense}") }

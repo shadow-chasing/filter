@@ -36,7 +36,6 @@ end
 # predicate
 #-------------------------------------------------------------------------------
 $data_array.each do |struct|
-    binding.pry
   if struct.first == "predicate-group"
       PredicateGroup.find_or_create_by(category: struct.second)
   end

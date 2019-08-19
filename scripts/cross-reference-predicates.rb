@@ -13,7 +13,6 @@ def get_title(arg)
 end
 
 def predicates_id
-    binding.pry
     Category.find_by(name: :predicates).id
 end
 
@@ -28,10 +27,8 @@ def build_predicate_result(arg)
       word_array.each do |subtitle_word|
         subtitle_word.predicate_results.find_or_create_by(group: :predicate, predicate: get_title(dataset.predicate_group_id))
 
-        binding.pry
         # add the new category id to the spercific predicate group
         subtitle_word.update(category_id: predicates_id)
-        binding.pry
       end
     end
   end

@@ -3,7 +3,6 @@ $LOAD_PATH.push("/Users/shadow_chaser/Code/Ruby/Projects/filter/scripts")
 require File.expand_path('../../config/environment', __FILE__)
 require 'pry'
 require 'json'
-binding.pry
 require 'classes-youtube-filter'
 
 #------------------------------------------------------------------------------
@@ -24,7 +23,6 @@ if user_input.chomp =~ /^(https|http)\:(\/\/)[w]{3}\.(youtube)\.(com)/
     # instansiate GenerateTranscript.
     # pass in the url which sets the @address instance variable, used by the
     # youtube_playlist method.
-    binding.pry
     transcript = YoutubeFilter::GenerateTranscript.new(user_input.chomp)
 
     # download the single url or playlist, 

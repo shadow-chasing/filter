@@ -3,7 +3,8 @@ $LOAD_PATH.push("/Users/shadow_chaser/Code/Ruby/Projects/filter/scripts")
 require File.expand_path('../../config/environment', __FILE__)
 require 'pry'
 require 'json'
-require 'classes-subtitle'
+binding.pry
+require 'classes-youtube-filter'
 
 #------------------------------------------------------------------------------
 # SEED DB
@@ -23,7 +24,8 @@ if user_input.chomp =~ /^(https|http)\:(\/\/)[w]{3}\.(youtube)\.(com)/
     # instansiate GenerateTranscript.
     # pass in the url which sets the @address instance variable, used by the
     # youtube_playlist method.
-    transcript = GenerateTranscript.new(user_input.chomp)
+    binding.pry
+    transcript = YoutubeFilter::GenerateTranscript.new(user_input.chomp)
 
     # download the single url or playlist, 
     transcript.youtube_playlist
@@ -112,7 +114,7 @@ synced.each do |key, value|
     # Create the data
     #--------------------------------------------------------------------------
     # create a struct containing the title and the string of words list.
-    data = TranscriptData.new(title: title, script: dialouge, duration: duration)
+    data = YoutubeFilter::TranscriptData.new(title: title, script: dialouge, duration: duration)
 
     #--------------------------------------------------------------------------
     # creates the subtitles

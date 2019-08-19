@@ -3,18 +3,18 @@ $LOAD_PATH.push("/Users/shadow_chaser/Code/Ruby/Projects/filter/scripts")
 require File.expand_path('../../config/environment', __FILE__)
 require 'pry'
 
-# require youtube-filter classes
-require 'classes-category'
+# require classes-youtube-filter
+require 'classes-youtube-filter'
 
 $data_array = []
 $all_file = []
 
-category_data = CategoryStructure.new
+category_data = YoutubeFilter::CategoryStructure.new
 
 category_data.full_path_array("data").each do |item|
 
     # new instance of CategoryStructure
-    data = CategoryStructure.new
+    data = YoutubeFilter::CategoryStructure.new
 
     # split the path different data categorys.
     path = item.split("/")

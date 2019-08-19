@@ -9,103 +9,81 @@ require 'classes-youtube-filter'
 $data_array = []
 $all_file = []
 
+# absolute path to the data dir.
+data_directory = "/Users/shadow_chaser/Code/Ruby/Projects/filter/scripts/data"
+
+# create a new instance of category_data.
 category_data = YoutubeFilter::CategoryStructure.new
 
-category_data.full_path_array("data").each do |item|
+#-----------------------------------------------------------------------------
+#
+#-----------------------------------------------------------------------------
+# pass in the location of the data directory containg all the datasets.
+category_data.full_path_array(data_directory).each do |item|
 
     # new instance of CategoryStructure
     data = YoutubeFilter::CategoryStructure.new
 
-    # split the path different data categorys.
-    path = item.split("/")
+    # split the path seperating the path after data and all sub directorys.
+    path = item.split("data/")
 
-    if path.count == 3
-        data.build_categorys(first: path[1], second: path[2], third: path[3], full_path: item)
-    elsif path.count == 4
-        data.build_categorys(first: path[1], second: path[2], third: path[3], fourth: path[4], full_path: item)
-    elsif path.count == 5
-        data.build_categorys(first: path[1], second: path[2], third: path[3], fourth: path[4], fifth: path[5], full_path: item)
-    end
+    # split on / 
+    dataset = path[1].split("/")
 
-    # push each data struct to the data array.
-    $data_array << data
+    case dataset.count
+      when 1
+        data.build_categorys(first: dataset[0], full_path: item)
+      when 2
+        data.build_categorys(first: dataset[0], second: dataset[1], full_path: item)
+      when 3
+        data.build_categorys(first: dataset[0], second: dataset[1], third: dataset[2],  full_path: item)
+      end
+
+    # push each data struct containing a value to the data array 
+    if data.first.present? then $data_array.push(data) end
 
 end
 
 #-------------------------------------------------------------------------------
-# predicate
+# predicate, filter and wordgroup
 #-------------------------------------------------------------------------------
 $data_array.each do |struct|
+
   if struct.first == "predicate-group"
-      PredicateGroup.find_or_create_by(category: struct.second)
-  end
-end
-
-#-------------------------------------------------------------------------------
-# filter group
-#-------------------------------------------------------------------------------
-$data_array.each do |struct|
-  if struct.first == "filter"
+    PredicateGroup.find_or_create_by(category: struct.second)
+  elsif struct.first == "filter"
     FilterGroup.find_or_create_by(category: struct.second)
+  elsif struct.first == "word-group"
+    WordGroup.find_or_create_by(category: struct.second)
   end
+
 end
 
 #-------------------------------------------------------------------------------
-# filter group rank one
+# 
 #-------------------------------------------------------------------------------
 $data_array.each do |struct|
+
   if struct.first == "filter" && struct.third != nil
     FilterGroupRankOne.find_or_create_by(category: struct.third)
     FilterGroup.find_by(category: struct.second).filter_group_rank_ones.find_or_create_by(category: struct.third)
-  end
-end
 
-#-------------------------------------------------------------------------------
-# filter group rank two
-#-------------------------------------------------------------------------------
-$data_array.each do |struct|
-  if struct.first == "filter" && struct.fourth != nil
+  elsif struct.first == "filter" && struct.fourth != nil
     FilterGroupRankTwo.find_or_create_by(category: struct.fourth)
     FilterGroupRankOne.find_by(category: struct.third).filter_group_rank_twos.find_or_create_by(category: struct.fourth)
-  end
-end
 
 
-#-------------------------------------------------------------------------------
-# word group
-#-------------------------------------------------------------------------------
-$data_array.each do |struct|
-  if struct.first == "word-group"
-    WordGroup.find_or_create_by(category: struct.second)
-  end
-end
-
-#-------------------------------------------------------------------------------
-# word group rank one
-#-------------------------------------------------------------------------------
-$data_array.each do |struct|
-  if struct.first == "word-group" && struct.third != nil
+  elsif struct.first == "word-group" && struct.third != nil
     WordGroupRankOne.find_or_create_by(category: struct.third)
     WordGroup.find_by(category: struct.second).word_group_rank_ones.find_or_create_by(category: struct.third)
-  end
-end
 
-#-------------------------------------------------------------------------------
-# word group rank two
-#-------------------------------------------------------------------------------
-$data_array.each do |struct|
-  if struct.first == "word-group" && struct.fourth != nil
+  elsif struct.first == "word-group" && struct.fourth != nil
     WordGroupRankTwo.find_or_create_by(category: struct.fourth)
     WordGroupRankOne.find_by(category: struct.third).word_group_rank_twos.find_or_create_by(category: struct.fourth)
   end
+
 end
 
-# --------end
-#
-#
-#
-#
-#
 #-------------------------------------------------------------------------------
 # Get words from files and add to DirStruct
 #-------------------------------------------------------------------------------
@@ -114,6 +92,7 @@ def neat(arg)
 end
 
 $per_file = []
+
 $data_array.each do |item|
   File.foreach(item.full_path) do |line|
     $per_file << line
@@ -125,55 +104,33 @@ $data_array.each do |item|
 end
 
 #-------------------------------------------------------------------------------
-# predicate
+# Add each word to the individual categories
 #-------------------------------------------------------------------------------
 $all_file.each do |struct|
+
   if struct.first == "predicate-group"
     struct.words_list.split(",").each do |word|
       PredicateGroup.find_or_create_by(category: struct.second).predicate_datasets.find_or_create_by(word: word.squish)
     end
-  end
-end
 
-#-------------------------------------------------------------------------------
-# filter group rank one
-#-------------------------------------------------------------------------------
-$all_file.each do |struct|
-  if struct.first == "filter" && struct.third != nil
+  elsif struct.first == "filter" && struct.third != nil
     struct.words_list.split(",").each do |word|
       FilterGroupRankOne.find_by(category: struct.third).filter_datasets.find_or_create_by(word: word.squish)
     end
-  end
-end
 
-#-------------------------------------------------------------------------------
-# filter word group rank two
-#-------------------------------------------------------------------------------
-$all_file.each do |struct|
-  if struct.first == "filter" && struct.fourth != nil
+  elsif struct.first == "filter" && struct.fourth != nil
     struct.words_list.split(",").each do |word|
       FilterGroupRankTwo.find_by(category: struct.fourth).filter_datasets.find_or_create_by(word: word.squish)
     end
-  end
-end
-#-------------------------------------------------------------------------------
-# word group rank one
-#-------------------------------------------------------------------------------
-$all_file.each do |struct|
-  if struct.first == "word-group" && struct.third != nil
+  elsif struct.first == "word-group" && struct.third != nil
     struct.words_list.split(",").each do |word|
       WordGroupRankOne.find_by(category: struct.third).word_datasets.find_or_create_by(word: word.squish)
     end
-  end
-end
 
-#-------------------------------------------------------------------------------
-# word group rank two
-#-------------------------------------------------------------------------------
-$all_file.each do |struct|
-  if struct.first == "word-group" && struct.fourth != nil
+  elsif struct.first == "word-group" && struct.fourth != nil
     struct.words_list.split(",").each do |word|
       WordGroupRankTwo.find_by(category: struct.fourth).word_datasets.find_or_create_by(word: word.squish)
     end
   end
+
 end

@@ -13,7 +13,7 @@ Rails.application.load_seed
 #------------------------------------------------------------------------------
 # Take a user input
 #------------------------------------------------------------------------------
-user_input = "https://www.youtube.com/watch?v=F9qr43KwNPo"
+user_input = "https://www.youtube.com/playlist?list=PLiDq3dp9FcFaq1D1b-dNRsbr1J-SuTqJg"
 
 #------------------------------------------------------------------------------
 # validate address is beginning with the youtube address.
@@ -51,8 +51,9 @@ synced = Hash.new { |h, k| h[k] = [] }
 #------------------------------------------------------------------------------
 filepaths_array.each do |item|
 
+    binding.pry
     # get just the title to use as the key from the file path.
-    title = item.split("/")[7]
+    title = item.split("/")[-2]
 
     # create a key based on the title.
     synced["#{title}"]

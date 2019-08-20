@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-$LOAD_PATH.push("/Users/shadow_chaser/Code/Ruby/Projects/filter/scripts")
 require File.expand_path('../../config/environment', __FILE__)
 require 'pry'
 
@@ -87,20 +86,31 @@ end
 #-------------------------------------------------------------------------------
 # Get words from files and add to DirStruct
 #-------------------------------------------------------------------------------
-def neat(arg)
-  arg.gsub(/(\[|\"|\\n|\\|\])/, "")
-end
-
 $per_file = []
 
+# iterate over each ablolute path file.
 $data_array.each do |item|
+
   File.foreach(item.full_path) do |line|
-    $per_file << line
+      $per_file << line.chomp
   end
-  word_string = $per_file.to_s
-  item.words_list = neat(word_string)
+
+  # create an empty string to avoid the string being created localy in the each
+  # loop.
+  list = ""
+
+  # iterate over the $per_file array appending each word to the list.
+  $per_file.each {|word| list << "#{word} " }
+
+  # add list to the word list.
+  item.words_list = list
+
+  # append each item to the all_file array then pop all items in the per_file
+  # array by how many item are in it.
   $all_file << item
+
   $per_file.pop($per_file.count)
+
 end
 
 #-------------------------------------------------------------------------------

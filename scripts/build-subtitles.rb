@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-$LOAD_PATH.push("/Users/shadow_chaser/Code/Ruby/Projects/filter/scripts")
 require File.expand_path('../../config/environment', __FILE__)
 require 'pry'
 require 'json'
@@ -13,7 +12,9 @@ Rails.application.load_seed
 #------------------------------------------------------------------------------
 # Take a user input
 #------------------------------------------------------------------------------
-user_input = "https://www.youtube.com/playlist?list=PLiDq3dp9FcFaq1D1b-dNRsbr1J-SuTqJg"
+puts "Please Enter URL:\n"
+
+user_input = gets
 
 #------------------------------------------------------------------------------
 # validate address is beginning with the youtube address.
@@ -51,8 +52,10 @@ synced = Hash.new { |h, k| h[k] = [] }
 #------------------------------------------------------------------------------
 filepaths_array.each do |item|
 
-    binding.pry
-    # get just the title to use as the key from the file path.
+    # item is split and the second to the last array index is used.
+    # the last item from the array is the file name the preceding one to
+    # that is the name of the directory, the dir is used as the key ( title ) 
+    # as it negates having to remove the extentions.
     title = item.split("/")[-2]
 
     # create a key based on the title.

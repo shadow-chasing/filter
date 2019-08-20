@@ -21,14 +21,14 @@ If you do not have curl, you can alternatively use a recent wget:
 
 `sudo chmod a+rx /usr/local/bin/youtube-dl`
 
-It is best to have a template for youtube-dl so  the downloads are formated
-correctly the youtube-filter expects a named dir based on the title. 
+It is best to have a template for youtube-dl so the downloads are formated
+correctly the youtube-filter expects a named Dir based on the title. 
 
 `~/.config/youtube-dl/config`
 
-add these lines, create the file if you have not already got one. This is to
-format the playlist, the default single video download is fine and is already
-set with out you needing to change anything.
+Create a config file if you have not already got one and add these lines, this 
+is to format the playlist, the single video download has a default already set 
+which is fine for this purpose.
 
 
     # Format

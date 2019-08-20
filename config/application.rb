@@ -8,9 +8,11 @@ Bundler.require(*Rails.groups)
 
 module FilterSubtitles
   class Application < Rails::Application
+
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.2
-	config.generators.test_framework false
+    config.generators.test_framework false
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
@@ -18,5 +20,8 @@ module FilterSubtitles
     
     # add images dir tot he load path
     config.assets.paths << Rails.root.join('app/assets/images')
+
+    # append the scripts dir to the paths
+    config.autoload_paths << Rails.root.join('scripts').to_s
   end
 end

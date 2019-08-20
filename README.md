@@ -6,7 +6,7 @@ The primary purpose of this app is to download Youtube subtitles and categorize
 each individual word into word classifications. 
 
 
-### youtube-dl
+### Youtube-dl
 
 To download the subtitles youtube-dl is needed, to install it right away for 
 all UNIX users (Linux, OS X, etc.), type:
@@ -16,6 +16,7 @@ all UNIX users (Linux, OS X, etc.), type:
 `sudo chmod a+rx /usr/local/bin/youtube-dl`
 
 If you do not have curl, you can alternatively use a recent wget:
+
 `sudo wget https://yt-dl.org/downloads/latest/youtube-dl -O /usr/local/bin/youtube-dl`
 
 `sudo chmod a+rx /usr/local/bin/youtube-dl`
@@ -25,7 +26,9 @@ correctly the youtube-filter expects a named dir based on the title.
 
 `~/.config/youtube-dl/config`
 
-add these lines, create the file if you have not already got one.
+add these lines, create the file if you have not already got one. This is to
+format the playlist, the default single video download is fine and is already
+set with out you needing to change anything.
 
 
     # Format
@@ -36,6 +39,7 @@ add these lines, create the file if you have not already got one.
 
 
 
+### Youtube Filter
 
 The primary groups are:
 

@@ -81,14 +81,6 @@ ActiveRecord::Schema.define(version: 2019_08_21_130041) do
 
   create_table "predicate_datasets", force: :cascade do |t|
     t.string "word"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "predicate_group_rank_ones", force: :cascade do |t|
-    t.string "category"
-    t.integer "predicate_group_id"
-    t.index ["predicate_group_id"], name: "index_predicate_group_rank_ones_on_predicate_group_id"
   end
 
   create_table "predicate_groups", force: :cascade do |t|

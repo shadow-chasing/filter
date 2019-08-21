@@ -61,6 +61,7 @@ module YoutubeFilter
             @category_title = Category.find_by(name: :subtitles)
         end
 
+
         # Creates and array of absolute filepaths.
         def subtitles_root_directory(directory_location)
             Dir.glob(directory_location + "/**/*").select{ |f| File.file? f }
@@ -121,6 +122,11 @@ module YoutubeFilter
             end
         end
 
-        end
+    end
+
+
+    def self.base_directory(base_download)
+        @base_download_dir = base_download 
+    end
 
 end

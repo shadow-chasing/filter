@@ -38,7 +38,10 @@ end
 # Creates an arrray of absolute file paths. 
 # Returns .json and .vtt files 
 #------------------------------------------------------------------------------
-filepaths_array = transcript.subtitles_root_directory("/Users/shadow_chaser/Downloads/Youtube")
+# base directory
+base_downloads = YoutubeFilter.base_directory("/Users/shadow_chaser/Downloads/Youtube")
+
+filepaths_array = transcript.subtitles_root_directory(base_downloads)
 
 #------------------------------------------------------------------------------
 # create a hash with arrays as values.

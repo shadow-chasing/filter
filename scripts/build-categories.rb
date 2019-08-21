@@ -79,6 +79,7 @@ $all_file.each do |struct|
   words_array = struct.words_list.split
 
   if struct.first == "predicate-group"
+    PredicateGroup.find_or_create_by(category: struct.first).predicate_group_rank_ones.find_or_create_by(category: struct.second)
 
     words_array.each do |word|
       PredicateGroup.find_or_create_by(category: struct.second).predicate_datasets.find_or_create_by(word: word.squish)

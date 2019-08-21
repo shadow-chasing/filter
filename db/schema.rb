@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_21_134727) do
+ActiveRecord::Schema.define(version: 2019_08_21_145301) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -71,6 +71,17 @@ ActiveRecord::Schema.define(version: 2019_08_21_134727) do
     t.index ["predicate_group_id"], name: "index_predicate_group_rank_ones_on_predicate_group_id"
   end
 
+  create_table "predicate_group_results", force: :cascade do |t|
+    t.string "rank_one"
+    t.string "rank_two"
+    t.string "group"
+    t.string "predicate"
+    t.integer "word_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["word_id"], name: "index_predicate_group_results_on_word_id"
+  end
+
   create_table "predicate_groups", force: :cascade do |t|
     t.string "category"
   end
@@ -79,7 +90,7 @@ ActiveRecord::Schema.define(version: 2019_08_21_134727) do
     t.integer "predicate_group_rank_one_id"
     t.integer "predicate_dataset_id"
     t.index ["predicate_dataset_id"], name: "index_predicate_rank_one_records_on_predicate_dataset_id"
-    t.index ["predicate_group_rank_one_id"], name: "pre_group_rank_one"
+    t.index ["predicate_group_rank_one_id"], name: "index_pre_rank_one_records_on_predicate_group_rank_one_id"
   end
 
   create_table "subtitles", force: :cascade do |t|

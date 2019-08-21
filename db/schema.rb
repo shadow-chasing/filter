@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_21_130041) do
+ActiveRecord::Schema.define(version: 2019_08_21_134727) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -61,39 +61,25 @@ ActiveRecord::Schema.define(version: 2019_08_21_130041) do
     t.index ["filter_group_rank_two_id"], name: "index_filter_rank_two_records_on_filter_group_rank_two_id"
   end
 
-  create_table "personality_datasets", force: :cascade do |t|
-    t.string "word"
-    t.integer "personality_group_id"
-    t.index ["personality_group_id"], name: "index_personality_datasets_on_personality_group_id"
-  end
-
-  create_table "personality_groups", force: :cascade do |t|
-    t.string "category"
-  end
-
-  create_table "personality_results", force: :cascade do |t|
-    t.string "rank_one"
-    t.string "rank_two"
-    t.string "group"
-    t.integer "subtitle_id"
-    t.index ["subtitle_id"], name: "index_personality_results_on_subtitle_id"
-  end
-
   create_table "predicate_datasets", force: :cascade do |t|
     t.string "word"
+  end
+
+  create_table "predicate_group_rank_ones", force: :cascade do |t|
+    t.string "category"
+    t.integer "predicate_group_id"
+    t.index ["predicate_group_id"], name: "index_predicate_group_rank_ones_on_predicate_group_id"
   end
 
   create_table "predicate_groups", force: :cascade do |t|
     t.string "category"
   end
 
-  create_table "predicate_results", force: :cascade do |t|
-    t.string "rank_one"
-    t.string "rank_two"
-    t.string "group"
-    t.string "predicate"
-    t.integer "subtitle_id"
-    t.index ["subtitle_id"], name: "index_predicate_results_on_subtitle_id"
+  create_table "predicate_rank_one_records", force: :cascade do |t|
+    t.integer "predicate_group_rank_one_id"
+    t.integer "predicate_dataset_id"
+    t.index ["predicate_dataset_id"], name: "index_predicate_rank_one_records_on_predicate_dataset_id"
+    t.index ["predicate_group_rank_one_id"], name: "pre_group_rank_one"
   end
 
   create_table "subtitles", force: :cascade do |t|

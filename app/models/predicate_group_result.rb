@@ -1,3 +1,3 @@
 class PredicateGroupResult < ApplicationRecord
-  belongs_to :word
+  belongs_to :subtitle
 end

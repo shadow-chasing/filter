@@ -76,10 +76,10 @@ ActiveRecord::Schema.define(version: 2019_08_21_145301) do
     t.string "rank_two"
     t.string "group"
     t.string "predicate"
-    t.integer "word_id"
+    t.integer "subtitle_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["word_id"], name: "index_predicate_group_results_on_word_id"
+    t.index ["subtitle_id"], name: "index_predicate_group_results_on_subtitle_id"
   end
 
   create_table "predicate_groups", force: :cascade do |t|

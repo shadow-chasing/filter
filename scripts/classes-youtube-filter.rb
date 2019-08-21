@@ -69,7 +69,7 @@ module YoutubeFilter
 
         # Uses youtube-dl's auto sub generate downloader. downloads to ~/Downloads/Youtube
         def youtube_playlist
-            system("youtube-dl --write-auto-sub --sub-lang en --skip-download --write-info-json \'#{@address}\'")
+            system("youtube-dl --write-auto-sub --sub-format best --sub-lang en --skip-download --write-info-json \'#{@address}\'")
         end
 
         # Two arguments are passed, a string which it splits using space as a delimiter

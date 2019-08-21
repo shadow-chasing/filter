@@ -31,7 +31,7 @@ category_data.full_path_array(data_directory).each do |item|
     dataset = path[1].split("/")
 
     # build the data struct 
-    data.build_categorys(first: dataset[0], second: dataset[1], third: dataset[2], four: dataset[3],  full_path: item)
+    data.build_categorys(first: dataset[0], second: dataset[1], third: dataset[2], fourth: dataset[3],  full_path: item)
 
     # push each data struct containing a value to the array 
     if data.first.present? then $data_array.push(data) end
@@ -82,7 +82,7 @@ $all_file.each do |struct|
     PredicateGroup.find_or_create_by(category: struct.first).predicate_group_rank_ones.find_or_create_by(category: struct.second)
 
     words_array.each do |word|
-      PredicateGroup.find_or_create_by(category: struct.second).predicate_datasets.find_or_create_by(word: word.squish)
+      PredicateGroupRankOne.find_by(category: struct.second).predicate_datasets.find_or_create_by(word: word.squish)
     end
   end
 

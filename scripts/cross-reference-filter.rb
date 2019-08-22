@@ -3,73 +3,52 @@ require File.expand_path('../../config/environment', __FILE__)
 require 'pry'
 
 
-#-------------------------------------------------------------------------------
-# select level by rank one or two
-#-------------------------------------------------------------------------------
-# one: finds all filterGroupRankTwo records plucks the ids then passes them as an array
-# to the filterGroupRankOne where not method.
+# base group title
+@filter_title = FilterGroup.first
 
-# two: finds the filterGroupRankTwo records plucks the uniq ids generated from the group method
-# then passes them to the where filterGroupRankOne id:
-def filter_group_ranks(option)
-  case option
-  when "one"
-    return FilterGroupRankOne.where.not(id: FilterGroupRankTwo.group(:filter_group_rank_one_id).pluck(:filter_group_rank_one_id))
-  when "two"
-    return FilterGroupRankOne.where(id: FilterGroupRankTwo.group(:filter_group_rank_one_id).pluck(:filter_group_rank_one_id))
-  end
-end
+#------------------------------------------------------------------------------
+# FilterGRoupRankOne
+#------------------------------------------------------------------------------
+#
+# Find all FilterGroupRankOne records, pluck the words from the assosiated data
+# set and pass them in to the Subtitle.where, this returns a collection of
+# words contained in both lists then iterate over the individual words adding a
+# FilterGroupRecord containgin group, rank_one and rank_to.
+#
+#
+FilterGroupRankOne.all.each do |rank_one|
+    @data_one = rank_one.filter_datasets.pluck(:word)
+    Subtitle.where(word: @data_one).each do |word|
+      unless word.filter_group_results.present?
 
-def filters_id
-    Category.find_by(name: :filters).id
-end
+        # add results to the subtitle.filter_group_results assosiation.
+        word.filter_group_results.find_or_create_by(group: @filter_title.category, rank_one: rank_one.category)
 
-#-------------------------------------------------------------------------------
-# rank one
-#-------------------------------------------------------------------------------
-# Produces all filter_group_rank_one records without a filter_group_rank_two_id,
-# iterates over them then gets the dataset attached to the record. The dataset
-# is then iterated over through the filter_proccess method which creates the record.
-# Subtitle.filter_group_results
-
-filter_group_ranks("one").each do |results|
-  results.filter_datasets.each do |file_contents|
-    Subtitle.where(word: file_contents.word).each do |word|
-      unless Subtitle.find(word.id).filter_group_results.present?
-
-        group_title = FilterGroup.find(results.filter_group_id).category
-        Subtitle.find(word.id).filter_group_results.find_or_create_by(group: group_title, rank_one: results.category)
-
-        # add new foreign key
-        Subtitle.find(word.id).update(category_id: filters_id)
       end
     end
-  end
 end
 
-#-------------------------------------------------------------------------------
-# rank two
-#-------------------------------------------------------------------------------
-# Produces all filter_group_rank_one with a filter_group_rank_two_id, iterates over them
-# gets the associated record via filter_group_rank_twos, iterates over them then
-# gets the dataset attached to the record. The dataset
-# is then iterated over through the filter_proccess method which creates the record.
-# Subtitle.filter_group_results
+#------------------------------------------------------------------------------
+# FilterGRoupRankTwo
+#------------------------------------------------------------------------------
+#
+# Find all FilterGroupRankTwo records, pluck the words from the assosiated data
+# set and pass them in to the Subtitle.where, this returns a collection of
+# words contained in both lists then iterate over the individual words adding a
+# FilterGroupRecord containgin group, rank_one and rank_to.
+#
+#
+FilterGroupRankTwo.all.each do |rank_two|
+    @data_two = rank_one.filter_datasets.pluck(:word)
+    Subtitle.where(word: @data_two).each do |word|
+      unless word.filter_group_results.present?
 
-filter_group_ranks("two").each do |results|
-  results.filter_group_rank_twos.each do |sub_files|
-    sub_files.filter_datasets.each do |file_contents|
-      Subtitle.where(word: file_contents.word).each do |word|
-          binding.pry
-        unless Subtitle.find(word.id).filter_group_results.present?
+        # find the filter group rank one category name
+        rank_one_title = FilterGroupRankOne.find_by(id: rank_two.filter_group_rank_one_id).category
 
-          group_title = FilterGroup.find(results.filter_group_id).category
-          Subtitle.find(word.id).filter_group_results.find_or_create_by(group: group_title, rank_one: results.category, rank_two: sub_files.category)
+        # add results to the subtitle.filter_group_results assosiation.
+        word.filter_group_results.find_or_create_by(group: @filter_title.category, rank_one: rank_one_title, rank_two: rank_two.category)
 
-          # add new foreign key
-          Subtitle.find(word.id).update(category_id: filters_id)
-        end
       end
     end
-  end
 end

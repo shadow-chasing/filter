@@ -129,4 +129,10 @@ module YoutubeFilter
         @base_download_dir = base_download 
     end
 
+
+    # category wordgroups id
+    def self.cat_id(cat_name)
+        Category.find_by(name: cat_name).id
+    end
+
 end

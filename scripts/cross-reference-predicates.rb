@@ -2,13 +2,14 @@
 require File.expand_path('../../config/environment', __FILE__)
 require 'pry'
 
-# Find predicate by named category and return assosiated dataset.
+# Find predicate by named category and return associated dataset.
 def predicate_category(arg)
-  PredicateGroup.find_by(category: arg).predicate_datasets
+  PredicateGroupRankOne.find_by(category: arg).predicate_datasets
 end
 
 # Get predicate by id and return the category name.
 def get_title(arg)
+    binding.pry
   PredicateGroup.find_by(id: arg).category
 end
 
@@ -25,9 +26,12 @@ def build_predicate_result(arg)
       word_array = Subtitle.where(word: dataset.word)
     if word_array.present?
       word_array.each do |subtitle_word|
-        subtitle_word.predicate_results.find_or_create_by(group: :predicate, predicate: get_title(dataset.predicate_group_id))
+          binding.pry
+        # TODO fix this predicate_group_id does not exist. Cannot them find
+        # hierarchical groups category's for the results.
+        subtitle_word.predicate_group_results.find_or_create_by(group: :predicate, predicate: get_title(dataset.predicate_group_id))
 
-        # add the new category id to the spercific predicate group
+        # add the new category id to the specific predicate group
         subtitle_word.update(category_id: predicates_id)
       end
     end

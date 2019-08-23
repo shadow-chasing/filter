@@ -3,6 +3,7 @@ require File.expand_path('../../config/environment', __FILE__)
 require 'pry'
 require 'classes-youtube-filter'
 
+# word group title
 @group_title = WordGroup.all.first.category
 
 # retrive the datsets from the passed in rank category and pass in that array
@@ -16,7 +17,7 @@ end
 # rank one
 #-------------------------------------------------------------------------------
 #
-# Poduces all word_group_rank_one records without a word_group_rank_two_id,
+# Produces all word_group_rank_one records without a word_group_rank_two_id,
 # iterates over them then gets the dataset attached to the record. The dataset
 # is then iterated over through the word_proccess method which creates the record.
 #
@@ -40,7 +41,7 @@ end
 # rank two
 #-------------------------------------------------------------------------------
 #
-# Poduces all word_group_rank_one with a word_group_rank_two_id, iterates over them
+# Produces all word_group_rank_one with a word_group_rank_two_id, iterates over them
 # gets the assosiated record via word_group_rank_twos, iterates over them then
 # gets the dataset attached to the record. The dataset
 # is then iterated over through the word_proccess method which creates the record.
@@ -68,7 +69,7 @@ end
 # rank three
 #-------------------------------------------------------------------------------
 #
-# Poduces all word_group_rank_one with a word_group_rank_two_id, iterates over them
+# Produces all word_group_rank_one with a word_group_rank_two_id, iterates over them
 # gets the assosiated record via word_group_rank_twos, iterates over them then
 # gets the dataset attached to the record. The dataset
 # is then iterated over through the word_proccess method which creates the record.

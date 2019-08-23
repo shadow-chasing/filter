@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_23_120619) do
+ActiveRecord::Schema.define(version: 2019_08_23_090437) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -24,8 +24,6 @@ ActiveRecord::Schema.define(version: 2019_08_23_120619) do
 
   create_table "filter_group_rank_ones", force: :cascade do |t|
     t.string "category"
-    t.integer "filter_group_id"
-    t.index ["filter_group_id"], name: "index_filter_group_rank_ones_on_filter_group_id"
   end
 
   create_table "filter_group_rank_twos", force: :cascade do |t|
@@ -67,8 +65,6 @@ ActiveRecord::Schema.define(version: 2019_08_23_120619) do
 
   create_table "predicate_group_rank_ones", force: :cascade do |t|
     t.string "category"
-    t.integer "predicate_group_id"
-    t.index ["predicate_group_id"], name: "index_predicate_group_rank_ones_on_predicate_group_id"
   end
 
   create_table "predicate_group_results", force: :cascade do |t|
@@ -112,8 +108,6 @@ ActiveRecord::Schema.define(version: 2019_08_23_120619) do
 
   create_table "word_group_rank_ones", force: :cascade do |t|
     t.string "category"
-    t.integer "word_group_id"
-    t.index ["word_group_id"], name: "index_word_group_rank_ones_on_word_group_id"
   end
 
   create_table "word_group_rank_threes", force: :cascade do |t|
@@ -131,10 +125,10 @@ ActiveRecord::Schema.define(version: 2019_08_23_120619) do
   create_table "word_group_results", force: :cascade do |t|
     t.string "rank_one"
     t.string "rank_two"
+    t.string "rank_three"
     t.string "group"
     t.string "predicate"
     t.integer "subtitle_id"
-    t.string "rank_three"
     t.index ["subtitle_id"], name: "index_word_group_results_on_subtitle_id"
   end
 

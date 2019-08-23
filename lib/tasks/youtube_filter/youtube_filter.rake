@@ -28,14 +28,12 @@ namespace :yt do
   end
 
   desc "Build cross-reference: adds the categories predicate, wordgroup and filter to subtitle.word"
-  task build_cross_reference: :environment do
+  task build_predicate: :environment do
       log = ActiveSupport::Logger.new('log/youtube-filter.log')
       start_time = Time.now
       log.info "Task started at #{start_time} build cross references"
 
       ruby "/Users/shadow_chaser/Code/Ruby/Projects/filter/scripts/cross-reference-predicates.rb"
-      ruby "/Users/shadow_chaser/Code/Ruby/Projects/filter/scripts/cross-reference-wordgroup.rb"
-      ruby "/Users/shadow_chaser/Code/Ruby/Projects/filter/scripts/cross-reference-filter.rb"
 
       end_time = Time.now
       duration = (start_time - end_time) / 1.minute
@@ -43,4 +41,31 @@ namespace :yt do
       log.close
   end
 
+  desc "Build cross-reference: adds the categories predicate, wordgroup and filter to subtitle.word"
+  task build_wordgroup: :environment do
+      log = ActiveSupport::Logger.new('log/youtube-filter.log')
+      start_time = Time.now
+      log.info "Task started at #{start_time} build cross references"
+
+      ruby "/Users/shadow_chaser/Code/Ruby/Projects/filter/scripts/cross-reference-wordgroup.rb"
+
+      end_time = Time.now
+      duration = (start_time - end_time) / 1.minute
+      log.info "Task finished at #{end_time} and last #{duration} minutes."
+      log.close
+  end
+
+  desc "Build cross-reference: adds the categories predicate, wordgroup and filter to subtitle.word"
+  task build_filter: :environment do
+      log = ActiveSupport::Logger.new('log/youtube-filter.log')
+      start_time = Time.now
+      log.info "Task started at #{start_time} build cross references"
+
+      ruby "/Users/shadow_chaser/Code/Ruby/Projects/filter/scripts/cross-reference-filter.rb"
+
+      end_time = Time.now
+      duration = (start_time - end_time) / 1.minute
+      log.info "Task finished at #{end_time} and last #{duration} minutes."
+      log.close
+  end
 end

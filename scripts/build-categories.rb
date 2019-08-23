@@ -19,8 +19,10 @@ category_data = YoutubeFilter::CategoryStructure.new
 #-----------------------------------------------------------------------------
 # build the data
 #-----------------------------------------------------------------------------
-
+#
 # pass in the location of the data directory containg all the datasets.
+#
+#
 category_data.full_path_array(data_directory).each do |item|
 
     # new instance of CategoryStructure
@@ -41,8 +43,19 @@ category_data.full_path_array(data_directory).each do |item|
 end
 
 #-------------------------------------------------------------------------------
-# Get words from files and add to DirStruct
+# Read in words
 #-------------------------------------------------------------------------------
+#
+# This dataset is the words list that belong to each class of words. Each
+# subtitle individual word will be referenced agaist each dataset, which is
+# essentialy an array of words.
+# Open the absolute file path, read in the list of words. Push each word to a
+# string seperated by space then add the string of words to the datastruct finaly
+# pushing each datastruct to the $all_file global array.
+#
+#
+
+# Global Array
 $per_file = []
 
 # iterate over each ablolute path file.
@@ -70,27 +83,14 @@ $data_array.each do |item|
 
 end
 
-
 #-------------------------------------------------------------------------------
-# Create Groups
+#
 #-------------------------------------------------------------------------------
-# Create predicate group
-PredicateGroup.find_or_create_by(category: :"predicate-group")
-
-# Create filter group
-FilterGroup.find_or_create_by(category: :filter) 
-
-# Create word group
-WordGroup.find_or_create_by(category: :"word-group")
-
-
-#-------------------------------------------------------------------------------
+#
 # build the initial category, FilterGroup WordGroup and PredicateGroup.
 # As these are made so are the assosiations rank one and two.
 # finaly adding each word to the individual categories
-#-------------------------------------------------------------------------------
 #
-# TODO: add a rank three now i have needlessly added the group name.
 #
 $all_file.each do |struct|
 

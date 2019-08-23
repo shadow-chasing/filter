@@ -13,7 +13,6 @@ class SubtitlesController < ApplicationController
         @subtitles = category_subtitles.paginate(page: params[:page], per_page: 12).order('counter DESC')
         @wordgroups = category_filter(WordGroupResult).where(title: category_title)
         @filters = category_filter(FilterGroupResult).where(title: category_title)
-        @predicates = category_filter(PredicateResult).where(title: category_title)
     end
 
     # GET /subtitles/new

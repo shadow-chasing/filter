@@ -6,10 +6,14 @@ require 'classes-youtube-filter'
 #------------------------------------------------------------------------------
 # sensory predicates
 #------------------------------------------------------------------------------
-# get category attributes from PredicateGroupRankOne
-@sensory_predicate = PredicateGroupRankOne.select(:category).pluck(:category)
+#
+# Get PredicateGroupRankOne attribute category by plucking category returning
+# an array of just the category attribute values.
+#
+#
+@sensory_predicate = PredicateGroupRankOne.all.pluck(:category)
 
-# iterate over each predicate. Use the individual predicate to retrive the
+# Iterate over each predicate. Use the individual predicate to retrive the
 # PredicateGroupRankOne Dataset, pluck each word into an array and pass in the
 # array of words to the Subitle.where which can take an array returning the
 # matching words.

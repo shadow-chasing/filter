@@ -8,10 +8,10 @@ require 'pry'
 # retrive the datsets from the passed in rank category and pass in that array
 # to the subtitle.where which takes an array returning the words that match.
 def rank_collection(arg)
-    binding.pry
     @data = arg.filter_datasets.pluck(:word)
     Subtitle.where(word: @data)
 end
+
 #------------------------------------------------------------------------------
 # FilterGRoupRankOne
 #------------------------------------------------------------------------------
@@ -44,7 +44,7 @@ end
 #
 #
 FilterGroupRankTwo.all.each do |rank_two|
-    rank_collection(rank_one).each do |word|
+    rank_collection(rank_two).each do |word|
       unless word.filter_group_results.present?
 
         # find the filter group rank one category name

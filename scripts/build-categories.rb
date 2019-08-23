@@ -5,7 +5,9 @@ require 'pry'
 # require shared youtube-filer classes
 require 'classes-youtube-filter'
 
+# global arrays
 $data_array = []
+
 $all_file = []
 
 # absolute path to the data dir.
@@ -70,31 +72,50 @@ end
 
 
 #-------------------------------------------------------------------------------
+# Create Groups
+#-------------------------------------------------------------------------------
+# Create predicate group
+PredicateGroup.find_or_create_by(category: :"predicate-group")
+
+# Create filter group
+FilterGroup.find_or_create_by(category: :filter) 
+
+# Create word group
+WordGroup.find_or_create_by(category: :"word-group")
+
+
+#-------------------------------------------------------------------------------
 # build the initial category, FilterGroup WordGroup and PredicateGroup.
 # As these are made so are the assosiations rank one and two.
 # finaly adding each word to the individual categories
 #-------------------------------------------------------------------------------
+#
+# TODO: add a rank three now i have needlessly added the group name.
+#
 $all_file.each do |struct|
 
+  # split the words list into an array of words.
   words_array = struct.words_list.split
 
-  if struct.first == "predicate-group"
-    PredicateGroup.find_or_create_by(category: struct.first).predicate_group_rank_ones.find_or_create_by(category: struct.second)
-
+  #----------------------------------------------------------------------------
+  # predicate group - 1 level, rank one
+  #----------------------------------------------------------------------------
+  if struct.first == "predicate-group" && struct.third == nil
     words_array.each do |word|
-      PredicateGroupRankOne.find_by(category: struct.second).predicate_datasets.find_or_create_by(word: word.squish)
+      PredicateGroupRankOne.find_or_create_by(category: struct.second).predicate_datasets.find_or_create_by(word: word.squish)
     end
   end
 
-  if struct.first == "filter" && struct.second != nil
-    FilterGroup.find_or_create_by(category: struct.first).filter_group_rank_ones.find_or_create_by(category: struct.second)
-
+  #----------------------------------------------------------------------------
+  # filter group - 2 levels, rank one and rank two
+  #----------------------------------------------------------------------------
+  if struct.first == "filter" && struct.third == nil
     words_array.each do |word|
-      FilterGroupRankOne.find_by(category: struct.second).filter_datasets.find_or_create_by(word: word.squish)
+      FilterGroupRankOne.find_or_create_by(category: struct.second).filter_datasets.find_or_create_by(word: word.squish)
     end
   end
 
-  if struct.first == "filter" && struct.third != nil
+  if struct.first == "filter" && struct.fourth == nil
     FilterGroupRankOne.find_or_create_by(category: struct.second).filter_group_rank_twos.find_or_create_by(category: struct.third)
 
     words_array.each do |word|
@@ -102,20 +123,29 @@ $all_file.each do |struct|
     end
   end
 
-  if struct.first == "word-group" && struct.second != nil
-    WordGroup.find_or_create_by(category: struct.first).word_group_rank_ones.find_or_create_by(category: struct.second)
-
+  #----------------------------------------------------------------------------
+  # word group - 2 levels, rank one and rank two
+  #----------------------------------------------------------------------------
+  if struct.first == "word-group" && struct.third == nil
     words_array.each do |word|
-      WordGroupRankOne.find_by(category: struct.second).word_datasets.find_or_create_by(word: word.squish)
+      WordGroupRankOne.find_or_create_by(category: struct.second).word_datasets.find_or_create_by(word: word.squish)
     end
-
   end
 
-  if struct.first == "word-group" && struct.third != nil
+  if struct.first == "word-group" && struct.fourth == nil
     WordGroupRankOne.find_or_create_by(category: struct.second).word_group_rank_twos.find_or_create_by(category: struct.third)
 
     words_array.each do |word|
       WordGroupRankTwo.find_by(category: struct.third).word_datasets.find_or_create_by(word: word.squish)
+    end
+  end
+
+  if struct.first == "word-group" && struct.fourth != nil
+      WordGroupRankOne.find_or_create_by(category: struct.second).word_group_rank_twos.find_or_create_by(category: struct.third)
+      WordGroupRankTwo.find_by(category: struct.third).word_group_rank_threes.find_or_create_by(category: struct.fourth)
+
+    words_array.each do |word|
+      WordGroupRankThree.find_by(category: struct.fourth).word_datasets.find_or_create_by(word: word.squish)
     end
   end
 

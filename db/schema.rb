@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_21_145301) do
+ActiveRecord::Schema.define(version: 2019_08_23_090437) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -116,6 +116,12 @@ ActiveRecord::Schema.define(version: 2019_08_21_145301) do
     t.index ["word_group_id"], name: "index_word_group_rank_ones_on_word_group_id"
   end
 
+  create_table "word_group_rank_threes", force: :cascade do |t|
+    t.string "category"
+    t.integer "word_group_rank_two_id"
+    t.index ["word_group_rank_two_id"], name: "index_word_group_rank_threes_on_word_group_rank_two_id"
+  end
+
   create_table "word_group_rank_twos", force: :cascade do |t|
     t.string "category"
     t.integer "word_group_rank_one_id"
@@ -140,6 +146,15 @@ ActiveRecord::Schema.define(version: 2019_08_21_145301) do
     t.integer "word_dataset_id"
     t.index ["word_dataset_id"], name: "index_word_rank_one_records_on_word_dataset_id"
     t.index ["word_group_rank_one_id"], name: "index_word_rank_one_records_on_word_group_rank_one_id"
+  end
+
+  create_table "word_rank_three_records", force: :cascade do |t|
+    t.integer "word_dataset_id"
+    t.integer "word_group_rank_three_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["word_dataset_id"], name: "index_word_rank_three_records_on_word_dataset_id"
+    t.index ["word_group_rank_three_id"], name: "index_word_rank_three_records_on_word_group_rank_three_id"
   end
 
   create_table "word_rank_two_records", force: :cascade do |t|

@@ -42,10 +42,8 @@ GEM
       i18n (>= 0.7, < 2)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
-    acts_as_votable (0.11.1)
     arel (9.0.0)
     awesome_print (1.8.0)
-    bcrypt (3.1.12)
     better_errors (2.5.0)
       coderay (>= 1.0.0)
       erubi (>= 1.0.0)
@@ -68,12 +66,6 @@ GEM
     concurrent-ruby (1.1.4)
     crass (1.0.4)
     debug_inspector (0.0.3)
-    devise (4.6.0)
-      bcrypt (~> 3.0)
-      orm_adapter (~> 0.1)
-      railties (>= 4.1.0, < 6.0)
-      responders
-      warden (~> 1.2.3)
     erubi (1.8.0)
     execjs (2.7.0)
     ffi (1.10.0)
@@ -110,7 +102,6 @@ GEM
     nio4r (2.3.1)
     nokogiri (1.10.1)
       mini_portile2 (~> 2.4.0)
-    orm_adapter (0.5.0)
     pry (0.11.3)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
@@ -152,9 +143,6 @@ GEM
     rb-inotify (0.10.0)
       ffi (~> 1.0)
     redcarpet (3.4.0)
-    responders (2.4.1)
-      actionpack (>= 4.2.0, < 6.0)
-      railties (>= 4.2.0, < 6.0)
     ruby_dep (1.5.0)
     sass (3.4.25)
     sass-rails (5.0.7)
@@ -188,8 +176,6 @@ GEM
       thread_safe (~> 0.1)
     uglifier (4.1.20)
       execjs (>= 0.3.0, < 3)
-    warden (1.2.8)
-      rack (>= 2.0.6)
     web-console (3.7.0)
       actionview (>= 5.0)
       activemodel (>= 5.0)
@@ -204,14 +190,12 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  acts_as_votable (~> 0.11.1)
   awesome_print
   better_errors (~> 2.5)
   binding_of_caller (~> 0.8.0)
   bootsnap (>= 1.1.0)
   byebug
   coffee-rails (~> 4.2)
-  devise
   jbuilder (~> 2.5)
   jquery-rails
   json (~> 2.1.0)

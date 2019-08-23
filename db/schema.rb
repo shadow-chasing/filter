@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_23_090437) do
+ActiveRecord::Schema.define(version: 2019_08_23_120619) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -134,6 +134,7 @@ ActiveRecord::Schema.define(version: 2019_08_23_090437) do
     t.string "group"
     t.string "predicate"
     t.integer "subtitle_id"
+    t.string "rank_three"
     t.index ["subtitle_id"], name: "index_word_group_results_on_subtitle_id"
   end
 

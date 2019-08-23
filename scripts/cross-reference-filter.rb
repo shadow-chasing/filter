@@ -2,10 +2,16 @@
 require File.expand_path('../../config/environment', __FILE__)
 require 'pry'
 
-
 # base group title
 @filter_title = FilterGroup.first
 
+# retrive the datsets from the passed in rank category and pass in that array
+# to the subtitle.where which takes an array returning the words that match.
+def rank_collection(arg)
+    binding.pry
+    @data = arg.filter_datasets.pluck(:word)
+    Subtitle.where(word: @data)
+end
 #------------------------------------------------------------------------------
 # FilterGRoupRankOne
 #------------------------------------------------------------------------------
@@ -17,8 +23,7 @@ require 'pry'
 #
 #
 FilterGroupRankOne.all.each do |rank_one|
-    @data_one = rank_one.filter_datasets.pluck(:word)
-    Subtitle.where(word: @data_one).each do |word|
+    rank_collection(rank_one).each do |word|
       unless word.filter_group_results.present?
 
         # add results to the subtitle.filter_group_results assosiation.
@@ -39,8 +44,7 @@ end
 #
 #
 FilterGroupRankTwo.all.each do |rank_two|
-    @data_two = rank_one.filter_datasets.pluck(:word)
-    Subtitle.where(word: @data_two).each do |word|
+    rank_collection(rank_one).each do |word|
       unless word.filter_group_results.present?
 
         # find the filter group rank one category name

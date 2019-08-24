@@ -124,7 +124,24 @@ $all_file.each do |struct|
   end
 
   #----------------------------------------------------------------------------
-  # word group - 2 levels, rank one and rank two
+  # submodalities group - 2 levels, rank one and rank two
+  #----------------------------------------------------------------------------
+  if struct.first == "submodalities" && struct.third == nil
+    words_array.each do |word|
+      SubmodalitiesGroupRankOne.find_or_create_by(category: struct.second).submodalities_datasets.find_or_create_by(word: word.squish)
+    end
+  end
+
+  if struct.first == "submodalities" && struct.fourth == nil
+    SubmodalitiesGroupRankOne.find_or_create_by(category: struct.second).submodalities_group_rank_twos.find_or_create_by(category: struct.third)
+
+    words_array.each do |word|
+      SubmodalitiesGroupRankTwo.find_by(category: struct.third).submodalities_datasets.find_or_create_by(word: word.squish)
+    end
+  end
+
+  #----------------------------------------------------------------------------
+  # word group - 3 levels, rank one and rank two
   #----------------------------------------------------------------------------
   if struct.first == "word-group" && struct.third == nil
     words_array.each do |word|

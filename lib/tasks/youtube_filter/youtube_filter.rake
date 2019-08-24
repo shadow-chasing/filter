@@ -68,4 +68,18 @@ namespace :yt do
       log.info "Task finished at #{end_time} and last #{duration} minutes."
       log.close
   end
+
+  desc "Build cross-reference: adds the categories predicate, wordgroup and filter to subtitle.word"
+  task build_submodalities: :environment do
+      log = ActiveSupport::Logger.new('log/youtube-filter.log')
+      start_time = Time.now
+      log.info "Task started at #{start_time} build cross references"
+
+      ruby "/Users/shadow_chaser/Code/Ruby/Projects/filter/scripts/cross-reference-submodalities.rb"
+
+      end_time = Time.now
+      duration = (start_time - end_time) / 1.minute
+      log.info "Task finished at #{end_time} and last #{duration} minutes."
+      log.close
+  end
 end

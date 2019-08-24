@@ -5,12 +5,9 @@ class Subtitle < ApplicationRecord
 
   # has many
   has_many :predicate_group_results, dependent: :destroy
+  has_many :submodalities_group_results, dependent: :destroy
   has_many :word_group_results, dependent: :destroy
   has_many :filter_group_results, dependent: :destroy
-
-  def self.word_length(operand="==", size)
-    where("length" + operand + "?", size)
-  end
 
   def self.syllable_count
     pluck(:syllable).sum

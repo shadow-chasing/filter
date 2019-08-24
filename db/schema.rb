@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_24_104031) do
+ActiveRecord::Schema.define(version: 2019_08_24_114203) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -103,6 +103,15 @@ ActiveRecord::Schema.define(version: 2019_08_24_104031) do
     t.string "category"
     t.integer "submodalities_group_rank_one_id"
     t.index ["submodalities_group_rank_one_id"], name: "index_submod_group_rank_two_on_submod_group_rank_one_id"
+  end
+
+  create_table "submodalities_group_results", force: :cascade do |t|
+    t.string "rank_one"
+    t.string "rank_two"
+    t.string "group"
+    t.string "predicate"
+    t.integer "subtitle_id"
+    t.index ["subtitle_id"], name: "index_submodalities_group_results_on_subtitle_id"
   end
 
   create_table "submodalities_groups", force: :cascade do |t|

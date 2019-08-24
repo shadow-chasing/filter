@@ -22,4 +22,5 @@ FilterGroup.find_or_create_by(category: :filter)
 # Create word group
 WordGroup.find_or_create_by(category: :"word-group")
 
-
+# Create submodalities
+SubmodalitiesGroup.find_or_create_by(category: :submodalities) 

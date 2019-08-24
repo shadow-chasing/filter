@@ -25,10 +25,6 @@ ActiveRecord::Schema.define(version: 2019_08_24_184156) do
     t.index ["datable_type", "datable_id"], name: "index_datables_on_datable_type_and_datable_id"
   end
 
-  create_table "filter_datasets", force: :cascade do |t|
-    t.string "word"
-  end
-
   create_table "filter_group_rank_ones", force: :cascade do |t|
     t.string "category"
   end
@@ -52,24 +48,6 @@ ActiveRecord::Schema.define(version: 2019_08_24_184156) do
     t.string "category"
   end
 
-  create_table "filter_rank_one_records", force: :cascade do |t|
-    t.integer "filter_group_rank_one_id"
-    t.integer "filter_dataset_id"
-    t.index ["filter_dataset_id"], name: "index_filter_rank_one_records_on_filter_dataset_id"
-    t.index ["filter_group_rank_one_id"], name: "index_filter_rank_one_records_on_filter_group_rank_one_id"
-  end
-
-  create_table "filter_rank_two_records", force: :cascade do |t|
-    t.integer "filter_group_rank_two_id"
-    t.integer "filter_dataset_id"
-    t.index ["filter_dataset_id"], name: "index_filter_rank_two_records_on_filter_dataset_id"
-    t.index ["filter_group_rank_two_id"], name: "index_filter_rank_two_records_on_filter_group_rank_two_id"
-  end
-
-  create_table "predicate_datasets", force: :cascade do |t|
-    t.string "word"
-  end
-
   create_table "predicate_group_rank_ones", force: :cascade do |t|
     t.string "category"
   end
@@ -87,19 +65,6 @@ ActiveRecord::Schema.define(version: 2019_08_24_184156) do
 
   create_table "predicate_groups", force: :cascade do |t|
     t.string "category"
-  end
-
-  create_table "predicate_rank_one_records", force: :cascade do |t|
-    t.integer "predicate_group_rank_one_id"
-    t.integer "predicate_dataset_id"
-    t.index ["predicate_dataset_id"], name: "index_predicate_rank_one_records_on_predicate_dataset_id"
-    t.index ["predicate_group_rank_one_id"], name: "index_pre_rank_one_records_on_predicate_group_rank_one_id"
-  end
-
-  create_table "submodalities_datasets", force: :cascade do |t|
-    t.string "word"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "submodalities_group_rank_ones", force: :cascade do |t|
@@ -125,20 +90,6 @@ ActiveRecord::Schema.define(version: 2019_08_24_184156) do
     t.string "category"
   end
 
-  create_table "submodalities_rank_one_records", force: :cascade do |t|
-    t.integer "submodalities_group_rank_one_id"
-    t.integer "submodalities_dataset_id"
-    t.index ["submodalities_dataset_id"], name: "index_submod_rank_one_records_on_submod_dataset_id"
-    t.index ["submodalities_group_rank_one_id"], name: "index_submod_rank_one_records_on_submod_group_rank_one_id"
-  end
-
-  create_table "submodalities_rank_two_records", force: :cascade do |t|
-    t.integer "submodalities_group_rank_two_id"
-    t.integer "submodalities_dataset_id"
-    t.index ["submodalities_dataset_id"], name: "index_submod_rank_two_records_on_submod_dataset_id"
-    t.index ["submodalities_group_rank_two_id"], name: "index_submod_rank_two_records_on_submod_group_rank_two_id"
-  end
-
   create_table "subtitles", force: :cascade do |t|
     t.string "word"
     t.string "title"
@@ -150,10 +101,6 @@ ActiveRecord::Schema.define(version: 2019_08_24_184156) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_subtitles_on_category_id"
-  end
-
-  create_table "word_datasets", force: :cascade do |t|
-    t.string "word"
   end
 
   create_table "word_group_rank_ones", force: :cascade do |t|
@@ -184,29 +131,6 @@ ActiveRecord::Schema.define(version: 2019_08_24_184156) do
 
   create_table "word_groups", force: :cascade do |t|
     t.string "category"
-  end
-
-  create_table "word_rank_one_records", force: :cascade do |t|
-    t.integer "word_group_rank_one_id"
-    t.integer "word_dataset_id"
-    t.index ["word_dataset_id"], name: "index_word_rank_one_records_on_word_dataset_id"
-    t.index ["word_group_rank_one_id"], name: "index_word_rank_one_records_on_word_group_rank_one_id"
-  end
-
-  create_table "word_rank_three_records", force: :cascade do |t|
-    t.integer "word_dataset_id"
-    t.integer "word_group_rank_three_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["word_dataset_id"], name: "index_word_rank_three_records_on_word_dataset_id"
-    t.index ["word_group_rank_three_id"], name: "index_word_rank_three_records_on_word_group_rank_three_id"
-  end
-
-  create_table "word_rank_two_records", force: :cascade do |t|
-    t.integer "word_group_rank_two_id"
-    t.integer "word_dataset_id"
-    t.index ["word_dataset_id"], name: "index_word_rank_two_records_on_word_dataset_id"
-    t.index ["word_group_rank_two_id"], name: "index_word_rank_two_records_on_word_group_rank_two_id"
   end
 
 end

@@ -1,6 +1,13 @@
 class PredicateGroupRankOne < ApplicationRecord
+    #--------------------------------------------------------------------------
+    # assosiations
+    #--------------------------------------------------------------------------
+    # polymorphic assosiation
+    include Datable
 
-  has_many :predicate_rank_one_records, dependent: :destroy
-  has_many :predicate_datasets, through: :predicate_rank_one_records
-
+    # has many assosiation
+    has_many :predicate_group_rank_twos
+    #--------------------------------------------------------------------------
+    # 
+    #--------------------------------------------------------------------------
 end

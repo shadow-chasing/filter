@@ -1,8 +1,13 @@
 class WordGroupRankTwo < ApplicationRecord
-  belongs_to :word_group_rank_one
+    #--------------------------------------------------------------------------
+    # association
+    #--------------------------------------------------------------------------
+    # polymorphic association
+    include Datable
 
-  has_many :word_group_rank_threes, dependent: :destroy
+    # has many association
+    has_many :word_group_rank_threes, dependent: :destroy
 
-  has_many :word_rank_two_records, dependent: :destroy
-  has_many :word_datasets, through: :word_rank_two_records
+    # belong to association
+    belongs_to :word_group_rank_one
 end

@@ -1,6 +1,12 @@
 class SubmodalitiesGroupRankOne < ApplicationRecord
-  has_many :submodalities_group_rank_twos
+    #--------------------------------------------------------------------------
+    # association
+    #--------------------------------------------------------------------------
+    # polymorphic association
+    include Datable
 
-  has_many :submodalities_rank_one_records, dependent: :destroy
-  has_many :submodalities_datasets, through: :submodalities_rank_one_records
+    # has many association
+
+    # belongs to association
+    has_many :submodalities_group_rank_twos
 end

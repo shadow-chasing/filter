@@ -1,3 +1,10 @@
 class PredicateGroupResult < ApplicationRecord
-  belongs_to :subtitle
+    #--------------------------------------------------------------------------
+    # assosiations
+    #--------------------------------------------------------------------------
+    # polymorphic assosiation
+    include Datable
+
+    # belongs to assosiation
+    belongs_to :subtitle
 end

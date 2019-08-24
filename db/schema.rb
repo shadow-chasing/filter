@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_23_090437) do
+ActiveRecord::Schema.define(version: 2019_08_24_104031) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -87,6 +87,40 @@ ActiveRecord::Schema.define(version: 2019_08_23_090437) do
     t.integer "predicate_dataset_id"
     t.index ["predicate_dataset_id"], name: "index_predicate_rank_one_records_on_predicate_dataset_id"
     t.index ["predicate_group_rank_one_id"], name: "index_pre_rank_one_records_on_predicate_group_rank_one_id"
+  end
+
+  create_table "submodalities_datasets", force: :cascade do |t|
+    t.string "word"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "submodalities_group_rank_ones", force: :cascade do |t|
+    t.string "category"
+  end
+
+  create_table "submodalities_group_rank_twos", force: :cascade do |t|
+    t.string "category"
+    t.integer "submodalities_group_rank_one_id"
+    t.index ["submodalities_group_rank_one_id"], name: "index_submod_group_rank_two_on_submod_group_rank_one_id"
+  end
+
+  create_table "submodalities_groups", force: :cascade do |t|
+    t.string "category"
+  end
+
+  create_table "submodalities_rank_one_records", force: :cascade do |t|
+    t.integer "submodalities_group_rank_one_id"
+    t.integer "submodalities_dataset_id"
+    t.index ["submodalities_dataset_id"], name: "index_submod_rank_one_records_on_submod_dataset_id"
+    t.index ["submodalities_group_rank_one_id"], name: "index_submod_rank_one_records_on_submod_group_rank_one_id"
+  end
+
+  create_table "submodalities_rank_two_records", force: :cascade do |t|
+    t.integer "submodalities_group_rank_two_id"
+    t.integer "submodalities_dataset_id"
+    t.index ["submodalities_dataset_id"], name: "index_submod_rank_two_records_on_submod_dataset_id"
+    t.index ["submodalities_group_rank_two_id"], name: "index_submod_rank_two_records_on_submod_group_rank_two_id"
   end
 
   create_table "subtitles", force: :cascade do |t|

@@ -1,0 +1,2 @@
+class SubmodalitiesGroup < ApplicationRecord
+end

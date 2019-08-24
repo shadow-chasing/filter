@@ -49,3 +49,5 @@ system("rake yt:build_filter")
 system("rake yt:build_predicate") 
 
 system("rake yt:build_wordgroup")
+
+system("rake yt:build_submodalities")

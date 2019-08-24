@@ -18,7 +18,7 @@ require 'classes-youtube-filter'
 # array of words to the Subitle.where which can take an array returning the
 # matching words.
 @sensory_predicate.each do |sense| 
-    @word_collection = PredicateGroupRankOne.find_by(category: sense).predicate_datasets.pluck(:word)
+    @word_collection = PredicateGroupRankOne.find_by(category: sense).datasets.pluck(:word)
     word_array = Subtitle.where(word: @word_collection)
 
     if word_array.present?

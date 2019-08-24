@@ -8,7 +8,7 @@ require 'pry'
 # retrieve the datsets from the passed in rank category and pass in that array
 # to the subtitle.where which takes an array returning the words that match.
 def rank_collection(arg)
-    @data = arg.filter_datasets.pluck(:word)
+    @data = arg.datasets.pluck(:word)
     Subtitle.where(word: @data)
 end
 

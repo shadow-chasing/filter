@@ -102,7 +102,7 @@ $all_file.each do |struct|
   #----------------------------------------------------------------------------
   if struct.first == "predicate-group" && struct.third == nil
     words_array.each do |word|
-      PredicateGroupRankOne.find_or_create_by(category: struct.second).predicate_datasets.find_or_create_by(word: word.squish)
+      PredicateGroupRankOne.find_or_create_by(category: struct.second).datasets.find_or_create_by(word: word.squish)
     end
   end
 
@@ -111,7 +111,7 @@ $all_file.each do |struct|
   #----------------------------------------------------------------------------
   if struct.first == "filter" && struct.third == nil
     words_array.each do |word|
-      FilterGroupRankOne.find_or_create_by(category: struct.second).filter_datasets.find_or_create_by(word: word.squish)
+      FilterGroupRankOne.find_or_create_by(category: struct.second).datasets.find_or_create_by(word: word.squish)
     end
   end
 
@@ -119,7 +119,7 @@ $all_file.each do |struct|
     FilterGroupRankOne.find_or_create_by(category: struct.second).filter_group_rank_twos.find_or_create_by(category: struct.third)
 
     words_array.each do |word|
-      FilterGroupRankTwo.find_by(category: struct.third).filter_datasets.find_or_create_by(word: word.squish)
+      FilterGroupRankTwo.find_by(category: struct.third).datasets.find_or_create_by(word: word.squish)
     end
   end
 
@@ -128,7 +128,7 @@ $all_file.each do |struct|
   #----------------------------------------------------------------------------
   if struct.first == "submodalities" && struct.third == nil
     words_array.each do |word|
-      SubmodalitiesGroupRankOne.find_or_create_by(category: struct.second).submodalities_datasets.find_or_create_by(word: word.squish)
+      SubmodalitiesGroupRankOne.find_or_create_by(category: struct.second).datasets.find_or_create_by(word: word.squish)
     end
   end
 
@@ -136,7 +136,7 @@ $all_file.each do |struct|
     SubmodalitiesGroupRankOne.find_or_create_by(category: struct.second).submodalities_group_rank_twos.find_or_create_by(category: struct.third)
 
     words_array.each do |word|
-      SubmodalitiesGroupRankTwo.find_by(category: struct.third).submodalities_datasets.find_or_create_by(word: word.squish)
+      SubmodalitiesGroupRankTwo.find_by(category: struct.third).datasets.find_or_create_by(word: word.squish)
     end
   end
 
@@ -145,7 +145,7 @@ $all_file.each do |struct|
   #----------------------------------------------------------------------------
   if struct.first == "word-group" && struct.third == nil
     words_array.each do |word|
-      WordGroupRankOne.find_or_create_by(category: struct.second).word_datasets.find_or_create_by(word: word.squish)
+      WordGroupRankOne.find_or_create_by(category: struct.second).datasets.find_or_create_by(word: word.squish)
     end
   end
 
@@ -153,7 +153,7 @@ $all_file.each do |struct|
     WordGroupRankOne.find_or_create_by(category: struct.second).word_group_rank_twos.find_or_create_by(category: struct.third)
 
     words_array.each do |word|
-      WordGroupRankTwo.find_by(category: struct.third).word_datasets.find_or_create_by(word: word.squish)
+      WordGroupRankTwo.find_by(category: struct.third).datasets.find_or_create_by(word: word.squish)
     end
   end
 
@@ -162,7 +162,7 @@ $all_file.each do |struct|
       WordGroupRankTwo.find_by(category: struct.third).word_group_rank_threes.find_or_create_by(category: struct.fourth)
 
     words_array.each do |word|
-      WordGroupRankThree.find_by(category: struct.fourth).word_datasets.find_or_create_by(word: word.squish)
+      WordGroupRankThree.find_by(category: struct.fourth).datasets.find_or_create_by(word: word.squish)
     end
   end
 

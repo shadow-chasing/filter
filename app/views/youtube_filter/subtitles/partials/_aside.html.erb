@@ -5,7 +5,7 @@
                 <li>
                 <i class="material-icons"> list </i>
                     <!--Active Link abit ropey-->
-                    <%= link_to category.name, subtitle_path(category: category.id), class: active_class(category: category.id) %>
+                    <%= link_to category.name, youtube_filter_subtitle_path(category: category.id), class: active_class(category: category.id) %>
                 </li>
             <% end %>
         </ul>

@@ -15,7 +15,7 @@
   <tbody>
     <% @titles.each do |subtitle| %>
         <tr> 
-            <td><%= link_to subtitle.title, subtitle_path(subtitle) %></td> 
+            <td><%= link_to subtitle.title, youtube_filter_subtitle_path(subtitle) %></td> 
         </tr>
     <% end %>
   <tbody>

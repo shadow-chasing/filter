@@ -1,22 +1,22 @@
-<%= render "subtitles/partials/aside" %>
+<%= render "youtube_filter/subtitles/partials/aside" %>
 
 <main class="small">
-    <!--begin category subtitles-->
+    <!--begin category youtube_filter_subtitles-->
       <% if params[:category] == "1" %>
         <tbody>
-          <%= render "subtitles/partials/subtitle" %>
+          <%= render "youtube_filter/subtitles/partials/subtitle" %>
         </tbody>
 
       <!--begin category filter-->
       <% elsif params[:category] == "2" %>
         <tbody>
-          <%= render "subtitles/partials/filter" %>
+          <%= render "youtube_filter/subtitles/partials/filter" %>
         </tbody>
 
       <!--begin category wordgroup-->
       <% elsif params[:category] == "3" %>
         <tbody>
-          <%= render "subtitles/partials/wordgroup" %>
+          <%= render "youtube_filter/subtitles/partials/wordgroup" %>
         </tbody>
 
       <% end %>

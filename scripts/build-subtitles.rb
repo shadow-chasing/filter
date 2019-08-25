@@ -128,9 +128,19 @@ synced.each do |key, value|
         # if subtitle is now created run the other methods
         if Subtitle.find_by(title: data.title).present?
             transcript.count_subtitles(data)
+
+            # count the length of each word
             transcript.word_length
+
+            # count how many syllables each word has 
             transcript.sylables
+
+            # remove all duplicate words other the the first occurence. 
             transcript.remove_subtitle_words(data)
+
+            # count the frequecy the word occurs
+            transcript.frequency(Subtitle.all)
+
         end
         
     end

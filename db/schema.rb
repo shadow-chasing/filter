@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_24_194600) do
+ActiveRecord::Schema.define(version: 2019_08_25_215511) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -100,6 +100,7 @@ ActiveRecord::Schema.define(version: 2019_08_24_194600) do
     t.integer "category_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.time "frequency"
     t.index ["category_id"], name: "index_subtitles_on_category_id"
   end
 
@@ -130,6 +131,34 @@ ActiveRecord::Schema.define(version: 2019_08_24_194600) do
   end
 
   create_table "word_groups", force: :cascade do |t|
+    t.string "category"
+  end
+
+  create_table "word_rankones", force: :cascade do |t|
+    t.string "category"
+  end
+
+  create_table "word_rankthrees", force: :cascade do |t|
+    t.string "category"
+    t.integer "word_ranktwo_id"
+  end
+
+  create_table "word_ranktwos", force: :cascade do |t|
+    t.string "category"
+    t.integer "word_rankone_id"
+  end
+
+  create_table "word_results", force: :cascade do |t|
+    t.string "rankone"
+    t.string "ranktwo"
+    t.string "rankthree"
+    t.integer "subtitle_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["subtitle_id"], name: "index_word_results_on_subtitle_id"
+  end
+
+  create_table "words", force: :cascade do |t|
     t.string "category"
   end
 

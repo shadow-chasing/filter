@@ -7,9 +7,8 @@ class CreateSubtitles < ActiveRecord::Migration[5.2]
       t.integer :length, default: 0
       t.integer :counter
       t.integer :duration
+      t.datetime :frequency
       t.references :category, foreign_key: true
-
-      t.timestamps
     end
   end
 end

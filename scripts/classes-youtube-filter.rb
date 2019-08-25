@@ -122,6 +122,11 @@ module YoutubeFilter
             end
         end
 
+        # devide the amout of occurences by the duration 
+        def frequency(subs)
+            subs.all.each { |sub| sub.update(frequency: Time.at(sub.duration / sub.counter).utc.strftime("%H"":""%M"":""%S")) }
+        end
+
     end
 
 

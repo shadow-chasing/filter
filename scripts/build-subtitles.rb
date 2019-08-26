@@ -33,9 +33,18 @@ end
 # Creates an arrray of absolute file paths. 
 # Returns .json and .vtt files 
 #------------------------------------------------------------------------------
-# base directory
-base_downloads = YoutubeFilter.base_directory("/Users/shadow_chaser/Downloads/Youtube")
 
+# Home directory established by the ENV Variable. Make sure that the script
+# runner is a signed in user or the ENV['HOME'] may not be set.
+home = ENV['HOME']
+
+# Join the home dir to the Downloads/Youtube directory.
+root = File.join(home, "Downloads/Youtube-Filter/Youtube")
+
+# base directory
+base_downloads = YoutubeFilter.base_directory(root)
+
+# return an array or each file from the descendent 
 filepaths_array = transcript.subtitles_root_directory(base_downloads)
 
 #------------------------------------------------------------------------------
@@ -96,6 +105,8 @@ synced.each do |key, value|
 
     duration = data["duration"]
 
+    uploader = data["uploader"]
+    binding.pry
     #--------------------------------------------------------------------------
     # remove tags
     #--------------------------------------------------------------------------
@@ -144,6 +155,36 @@ synced.each do |key, value|
         end
         
     end
+
+
+    #--------------------------------------------------------------------------
+    # move subtitles to complete when finished
+    #--------------------------------------------------------------------------
+    # join path to subtitle 
+    youtube_uploader = File.join(home, "Downloads/Youtube-Filter/Youtube/" + uploader)
+
+    # test the directory of the uploaded exists or make it.
+    complete_path = home + "/Downloads/Youtube-Filter/Complete/" + uploader
+
+    # title
+    title_path = complete_path + "/" + title
+
+    # make root dir of uploader
+    Dir.mkdir(complete_path) unless File.exists?(complete_path)
+    
+    # make dir of title
+    Dir.mkdir(title_path) unless File.exists?(title_path)
+
+    binding.pry
+    # create an array of decending files
+    files_array = Dir.glob(youtube_uploader + "/**/*")
+
+    # select none dirs
+    result = files_array.select {|f| unless File.directory?(f) then f end }
+
+    # iterate over the array moving each file in the array to the new location
+    result.each {|file| File.rename(file, complete_path + "/" + title + "/" + File.basename(file)) }
+
 
 end
 

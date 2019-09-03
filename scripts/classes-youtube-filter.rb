@@ -4,7 +4,31 @@ require 'pry'
 require 'json'
 
 #-------------------------------------------------------------------------------
-# setup 
+#   Module  
+#-------------------------------------------------------------------------------
+#
+#           YoutubeFilter               
+#               This modle contains three classes and two independent methods.
+#
+#
+#-------------------------------------------------------------------------------
+#   Classes   
+#-------------------------------------------------------------------------------
+#           CategoryStructure
+#               CategoryStructure is used by build-categorys
+#
+#           TranscriptData
+#               TranscriptData is used by setup
+#
+#           GenerateTranscript
+#               GenerateTranscipt is used by setup
+#
+#-------------------------------------------------------------------------------
+#   Methods
+#-------------------------------------------------------------------------------
+#           base_directory
+#           cat_id
+#
 #-------------------------------------------------------------------------------
 
 module YoutubeFilter
@@ -122,9 +146,15 @@ module YoutubeFilter
             end
         end
 
-        # devide the amout of occurences by the duration 
+        # divide the amout of occurences by the duration 
         def frequency(subs)
-            subs.all.each { |sub| sub.update(frequency: Time.at(sub.duration / sub.counter).utc.strftime("%H"":""%M"":""%S")) }
+            subs.all.each { |sub| 
+                begin
+                    sub.update(frequency: Time.at(sub.duration / sub.counter).utc.strftime("%H"":""%M"":""%S")) 
+                rescue TypeError => e
+                    puts "Rescued: #{e.inspect}"
+                end
+            }
         end
 
     end

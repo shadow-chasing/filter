@@ -103,10 +103,12 @@ synced.each do |key, value|
     # get the json attributes from the info.json file
     title = data["title"]
 
+    # duration of the video - integer
     duration = data["duration"]
 
+    # uploader information - string
     uploader = data["uploader"]
-    binding.pry
+
     #--------------------------------------------------------------------------
     # remove tags
     #--------------------------------------------------------------------------
@@ -130,12 +132,14 @@ synced.each do |key, value|
     #--------------------------------------------------------------------------
     # creates the subtitles
     #--------------------------------------------------------------------------
-    # unless subtitle.title is already created enter the condition.
+    # unless the title is present in the database.
     unless Subtitle.find_by(title: data.title).present?
 
+        binding.pry
         # passes the string of space separated words and the title in.
         transcript.create_subtitle_words(data.script, data.title, data.duration)
 
+        binding.pry
         # if subtitle is now created run the other methods
         if Subtitle.find_by(title: data.title).present?
             transcript.count_subtitles(data)
@@ -154,37 +158,57 @@ synced.each do |key, value|
 
         end
         
+        #----------------------------------------------------------------------
+        # move subtitles to complete when finished
+        #----------------------------------------------------------------------
+
+        fs = File::SEPARATOR
+
+        # Base name of the directory 
+        downloads = "Downloads/Youtube-Filter/"
+
+        # join path to $HOME/Downloads/Youtube-Filter/Youtube/$UPLOADER
+        youtube_uploader = File.join(home, downloads + "Youtube/" + uploader)
+
+        # join path to $HOME/Downloads/Youtube-Filter/Complete/$UPLOADER
+        complete_path = File.join(home, downloads + "Complete/" + uploader)
+
+        # join the complete path to the title of the video
+        title_path = complete_path + fs + title
+
+        # make root dir of uploader
+        Dir.mkdir(complete_path) unless File.exists?(complete_path)
+        
+        # make dir of title
+        Dir.mkdir(title_path) unless File.exists?(title_path)
+
+        # create an array of decending files from the video title.
+        files_array = Dir.glob(youtube_uploader + fs + key + "/**/*")
+
+        # select none dirs
+        result = files_array.select {|f| unless File.directory?(f) then f end }
+
+        # iterate over the array moving each file in the array to the new location
+        result.each {|file| 
+
+            # get just the extension name to test against in the condition.
+            extension_name = File.basename(file)
+
+            if File.extname(extension_name) == ".vtt"
+
+                # join paths to the exact file and move to the completed directory
+                File.rename(file, complete_path + fs + title + fs + File.basename(file)) 
+
+            elsif File.extname(extension_name) == ".json"
+
+                # join paths to the exact file and move to the completed directory
+                File.rename(file, complete_path + fs + title + fs + File.basename(file)) 
+
+            end
+
+        }
+
     end
-
-
-    #--------------------------------------------------------------------------
-    # move subtitles to complete when finished
-    #--------------------------------------------------------------------------
-    # join path to subtitle 
-    youtube_uploader = File.join(home, "Downloads/Youtube-Filter/Youtube/" + uploader)
-
-    # test the directory of the uploaded exists or make it.
-    complete_path = home + "/Downloads/Youtube-Filter/Complete/" + uploader
-
-    # title
-    title_path = complete_path + "/" + title
-
-    # make root dir of uploader
-    Dir.mkdir(complete_path) unless File.exists?(complete_path)
-    
-    # make dir of title
-    Dir.mkdir(title_path) unless File.exists?(title_path)
-
-    binding.pry
-    # create an array of decending files
-    files_array = Dir.glob(youtube_uploader + "/**/*")
-
-    # select none dirs
-    result = files_array.select {|f| unless File.directory?(f) then f end }
-
-    # iterate over the array moving each file in the array to the new location
-    result.each {|file| File.rename(file, complete_path + "/" + title + "/" + File.basename(file)) }
-
 
 end
 

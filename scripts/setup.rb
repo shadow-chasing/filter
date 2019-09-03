@@ -20,7 +20,7 @@ require 'pry'
 system("rake db:seed")
 
 # -----------------------------------------------------------------------------
-# Build Subtitles
+# Build Subtitles:
 # -----------------------------------------------------------------------------
 # 
 # Download subtitles and json information, then add each word to the db.
@@ -32,7 +32,7 @@ system("rake db:seed")
 system("rake yt:build_subtitles")
 
 # -----------------------------------------------------------------------------
-# Data
+# Data:
 # -----------------------------------------------------------------------------
 #
 # Builds the category infrastructure each word is then referenced against.
@@ -41,7 +41,7 @@ system("rake yt:build_subtitles")
 system("rake yt:build_categories")       
 
 # -----------------------------------------------------------------------------
-# Build Cross-references
+# Build Cross-references:
 # -----------------------------------------------------------------------------
 #
 system("rake yt:build_filter") 

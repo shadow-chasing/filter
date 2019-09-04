@@ -18,7 +18,7 @@
         <tr>
             <td class="sub-word"><%= subtitle.word %></td>
             <td><%= subtitle.counter %></td>
-            <td><%= Time.at(subtitle.duration / subtitle.counter).utc.strftime("%H"":""%M"":""%S")  %></td>
+            <td><%= subtitle.frequency.strftime("%H"":""%M"":""%S")  %></td>
             <td><%= subtitle.syllable %></td>
             <td><%= truncate(subtitle.filter_group_results.first.group, length: 12) %></td>
             <td><%= subtitle.filter_group_results.first.rank_one %></td>

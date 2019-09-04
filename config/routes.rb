@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
 
-    # filter namespace
+    # youtube_filter namespace
     namespace :youtube_filter do
 
         # root
-        root 'subtitles#index'
+        root 'youtube_filter/subtitles#index'
 
         # resources
         resources :categories

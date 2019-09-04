@@ -19,6 +19,18 @@
           <%= render "youtube_filter/subtitles/partials/wordgroup" %>
         </tbody>
 
+      <!--begin category predicates-->
+      <% elsif params[:category] == "4" %>
+        <tbody>
+          <%= render "youtube_filter/subtitles/partials/predicate" %>
+        </tbody>
+
+      <!--begin category wordgroup-->
+      <% elsif params[:category] == "5" %>
+        <tbody>
+          <%= render "youtube_filter/subtitles/partials/submodalities" %>
+        </tbody>
+
       <% end %>
 </main>
 

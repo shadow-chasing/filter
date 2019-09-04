@@ -16,20 +16,20 @@
     <tbody>
 
     <tbody>
-    <% @predicates.each do |subtitle| %>
+    <% @submodalities.each do |subtitle| %>
     <tr>
         <td class="sub-word"><%= subtitle.word %></td>
         <td><%= subtitle.counter %></td>
         <td><%= subtitle.frequency.strftime("%H"":""%M"":""%S")  %></td>
         <td><%= subtitle.syllable %></td>
-        <td><%= subtitle.predicate_group_results.first.group %></td>
-        <td><%= subtitle.predicate_group_results.first.rank_one %></td>
-        <td><%= subtitle.predicate_group_results.first.rank_two %></td>
-        <td><%= subtitle.predicate_group_results.first.predicate %></td>
+        <td><%= subtitle.submodalities_group_results.first.group %></td>
+        <td><%= subtitle.submodalities_group_results.first.rank_one %></td>
+        <td><%= subtitle.submodalities_group_results.first.rank_two %></td>
+        <td><%= subtitle.submodalities_group_results.first.predicate %></td>
     </tr>
     <% end %>
     </tbody>
 </table>
 
 
-<%= will_paginate @predicates, inner_window: 1, outer_window: 1 %>
+<%= will_paginate @submodalities, inner_window: 1, outer_window: 1 %>

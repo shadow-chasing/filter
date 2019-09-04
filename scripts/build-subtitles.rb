@@ -135,11 +135,9 @@ synced.each do |key, value|
     # unless the title is present in the database.
     unless Subtitle.find_by(title: data.title).present?
 
-        binding.pry
         # passes the string of space separated words and the title in.
         transcript.create_subtitle_words(data.script, data.title, data.duration)
 
-        binding.pry
         # if subtitle is now created run the other methods
         if Subtitle.find_by(title: data.title).present?
             transcript.count_subtitles(data)

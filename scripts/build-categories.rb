@@ -92,15 +92,13 @@ end
 # finaly adding each word to the individual categories
 #
 #
-
-  def build_rank_one(*args)
-    if args[0].first == args[0].first && args[0].third == nil
-        binding.pry
-        words_array.each do |word|
-            args[1].find_or_create_by(category: args[0].second).datasets.find_or_create_by(word: word.squish)
+def build_rank_one(*args)
+    if args[0].third == nil
+        args[2].each do |word|
+            args[1].constantize.find_or_create_by(category: args[0].second).datasets.find_or_create_by(word: word.squish)
         end
     end
-  end
+end
 
 $all_file.each do |struct|
 
@@ -113,12 +111,13 @@ $all_file.each do |struct|
   mod_name = struct.first.capitalize + "GroupRankOne"
 
   # 
-  build_rank_one(struct, mod_name)
+  build_rank_one(struct, mod_name, words_array)
 
   #----------------------------------------------------------------------------
   # filter group - 2 levels, rank one and rank two
   #----------------------------------------------------------------------------
   if struct.first == "filter" && struct.fourth == nil
+      binding.pry
     FilterGroupRankOne.find_or_create_by(category: struct.second).filter_group_rank_twos.find_or_create_by(category: struct.third)
 
     words_array.each do |word|

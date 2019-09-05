@@ -109,6 +109,7 @@ $all_file.each do |struct|
   #----------------------------------------------------------------------------
   # filter group - 2 levels, rank one and rank two
   #----------------------------------------------------------------------------
+
   if struct.first == "filter" && struct.third == nil
     words_array.each do |word|
       FilterGroupRankOne.find_or_create_by(category: struct.second).datasets.find_or_create_by(word: word.squish)

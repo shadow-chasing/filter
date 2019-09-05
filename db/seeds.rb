@@ -14,13 +14,13 @@ end
 # Create Groups
 #-------------------------------------------------------------------------------
 # Create predicate group
-PredicateGroup.find_or_create_by(category: :"predicate-group")
+PredicateGroup.find_or_create_by(category: :predicate)
 
 # Create filter group
-FilterGroup.find_or_create_by(category: :filter) 
+FiterGroup.find_or_create_by(category: :filter) 
 
 # Create word group
-WordGroup.find_or_create_by(category: :"word-group")
+WordGroup.find_or_create_by(category: :word)
 
 # Create submodalities
 SubmodalitiesGroup.find_or_create_by(category: :submodalities) 

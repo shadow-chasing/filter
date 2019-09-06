@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_06_075624) do
+ActiveRecord::Schema.define(version: 2019_09_06_081849) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -77,6 +77,28 @@ ActiveRecord::Schema.define(version: 2019_09_06_075624) do
     t.index ["category_id"], name: "index_subtitles_on_category_id"
   end
 
+  create_table "theme_group_rank_ones", force: :cascade do |t|
+    t.string "category"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "theme_group_rank_threes", force: :cascade do |t|
+    t.string "category"
+    t.integer "theme_group_rank_two_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["theme_group_rank_two_id"], name: "index_theme_group_rank_threes_on_theme_group_rank_two_id"
+  end
+
+  create_table "theme_group_rank_twos", force: :cascade do |t|
+    t.string "category"
+    t.integer "theme_group_rank_one_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["theme_group_rank_one_id"], name: "index_theme_group_rank_twos_on_theme_group_rank_one_id"
+  end
+
   create_table "theme_group_results", force: :cascade do |t|
     t.string "rankone"
     t.string "ranktwo"
@@ -91,22 +113,6 @@ ActiveRecord::Schema.define(version: 2019_09_06_075624) do
     t.string "category"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "theme_rank_ones", force: :cascade do |t|
-    t.string "category"
-  end
-
-  create_table "theme_rank_threes", force: :cascade do |t|
-    t.string "category"
-    t.integer "theme_rank_two_id"
-    t.index ["theme_rank_two_id"], name: "index_theme_rank_threes_on_theme_rank_two_id"
-  end
-
-  create_table "theme_rank_twos", force: :cascade do |t|
-    t.string "category"
-    t.integer "theme_rank_one_id"
-    t.index ["theme_rank_one_id"], name: "index_theme_rank_twos_on_theme_rank_one_id"
   end
 
   create_table "word_group_rank_ones", force: :cascade do |t|

@@ -86,12 +86,7 @@ end
 #-------------------------------------------------------------------------------
 #
 #-------------------------------------------------------------------------------
-#
-# build the initial category, FilterGroup WordGroup and PredicateGroup.
-# As these are made so are the assosiations rank one and two.
-# finaly adding each word to the individual categories
-#
-#
+# 
 def build_rank_one(*args)
     if args[0].third == nil
         args[2].each do |word|
@@ -117,11 +112,11 @@ $all_file.each do |struct|
   #----------------------------------------------------------------------------
   # filter group - 2 levels, rank one and rank two
   #----------------------------------------------------------------------------
-  if struct.first == "filter" && struct.fourth == nil
-    FilterGroupRankOne.find_or_create_by(category: struct.second).filter_group_rank_twos.find_or_create_by(category: struct.third)
+  if struct.first == "theme" && struct.fourth == nil
+    ThemeGroupRankOne.find_or_create_by(category: struct.second).theme_group_rank_twos.find_or_create_by(category: struct.third)
 
     words_array.each do |word|
-      FilterGroupRankTwo.find_by(category: struct.third).datasets.find_or_create_by(word: word.squish)
+      ThemeGroupRankTwo.find_by(category: struct.third).datasets.find_or_create_by(word: word.squish)
     end
   end
 

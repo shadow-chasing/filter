@@ -1,0 +1,2 @@
+class ThemeGroupRankOne < ApplicationRecord
+end

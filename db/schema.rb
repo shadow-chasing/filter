@@ -35,8 +35,6 @@ ActiveRecord::Schema.define(version: 2019_09_06_075624) do
     t.string "group"
     t.string "predicate"
     t.integer "subtitle_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.index ["subtitle_id"], name: "index_predicate_group_results_on_subtitle_id"
   end
 
@@ -109,14 +107,6 @@ ActiveRecord::Schema.define(version: 2019_09_06_075624) do
     t.string "category"
     t.integer "theme_rank_one_id"
     t.index ["theme_rank_one_id"], name: "index_theme_rank_twos_on_theme_rank_one_id"
-  end
-
-  create_table "theme_results", force: :cascade do |t|
-    t.string "rankone"
-    t.string "ranktwo"
-    t.string "rankthree"
-    t.integer "subtitle_id"
-    t.index ["subtitle_id"], name: "index_theme_results_on_subtitle_id"
   end
 
   create_table "word_group_rank_ones", force: :cascade do |t|

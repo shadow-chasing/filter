@@ -1,2 +1,0 @@
-class FilterRankTwo < ApplicationRecord
-end

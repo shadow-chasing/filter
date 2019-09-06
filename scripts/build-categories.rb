@@ -110,14 +110,14 @@ $all_file.each do |struct|
   #----------------------------------------------------------------------------
   mod_name = struct.first.capitalize + "GroupRankOne"
 
-  # 
+  # pass in struct and retrive the first leven data directory as struct.first
+  # secondly pass in the model_name and lastly the words array.
   build_rank_one(struct, mod_name, words_array)
 
   #----------------------------------------------------------------------------
   # filter group - 2 levels, rank one and rank two
   #----------------------------------------------------------------------------
   if struct.first == "filter" && struct.fourth == nil
-      binding.pry
     FilterGroupRankOne.find_or_create_by(category: struct.second).filter_group_rank_twos.find_or_create_by(category: struct.third)
 
     words_array.each do |word|

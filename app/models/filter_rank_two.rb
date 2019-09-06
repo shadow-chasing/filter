@@ -1,0 +1,2 @@
+class FilterRankTwo < ApplicationRecord
+end

@@ -1,2 +1,0 @@
-class ThemeRankOne < ApplicationRecord
-end

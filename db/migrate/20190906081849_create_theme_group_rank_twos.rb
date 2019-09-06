@@ -1,6 +1,6 @@
-class CreateFilterGroupRankTwos < ActiveRecord::Migration[5.2]
+class CreateThemeGroupRankTwos < ActiveRecord::Migration[5.2]
   def change
-    create_table :filter_group_rank_twos do |t|
+    create_table :theme_group_rank_twos do |t|
       t.string :category
       t.references :theme_group_rank_one, foreign_key: true
 

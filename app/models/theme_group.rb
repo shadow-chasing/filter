@@ -1,0 +1,2 @@
+class ThemeGroup < ApplicationRecord
+end

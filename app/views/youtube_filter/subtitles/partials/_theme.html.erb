@@ -14,7 +14,7 @@
         </tr> 
     </thead>
     <tbody>
-        <% @filters.each do |subtitle| %>
+        <% @themes.each do |subtitle| %>
         <tr>
             <td class="sub-word"><%= subtitle.word %></td>
             <td><%= subtitle.counter %></td>
@@ -29,4 +29,4 @@
     </tbody>
 </table>
 
-<%= will_paginate @filters, inner_window: 1, outer_window: 1 %>
+<%= will_paginate @themes, inner_window: 1, outer_window: 1 %>

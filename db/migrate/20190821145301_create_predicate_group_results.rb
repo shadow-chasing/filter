@@ -6,8 +6,6 @@ class CreatePredicateGroupResults < ActiveRecord::Migration[5.2]
       t.string :group
       t.string :predicate
       t.references :subtitle, foreign_key: true
-
-      t.timestamps
     end
   end
 end

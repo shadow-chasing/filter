@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_25_215511) do
+ActiveRecord::Schema.define(version: 2019_09_06_081849) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -25,29 +25,6 @@ ActiveRecord::Schema.define(version: 2019_08_25_215511) do
     t.index ["datable_type", "datable_id"], name: "index_datasets_on_datable_type_and_datable_id"
   end
 
-  create_table "filter_group_rank_ones", force: :cascade do |t|
-    t.string "category"
-  end
-
-  create_table "filter_group_rank_twos", force: :cascade do |t|
-    t.string "category"
-    t.integer "filter_group_rank_one_id"
-    t.index ["filter_group_rank_one_id"], name: "index_filter_group_rank_twos_on_filter_group_rank_one_id"
-  end
-
-  create_table "filter_group_results", force: :cascade do |t|
-    t.string "rank_one"
-    t.string "rank_two"
-    t.string "group"
-    t.string "predicate"
-    t.integer "subtitle_id"
-    t.index ["subtitle_id"], name: "index_filter_group_results_on_subtitle_id"
-  end
-
-  create_table "filter_groups", force: :cascade do |t|
-    t.string "category"
-  end
-
   create_table "predicate_group_rank_ones", force: :cascade do |t|
     t.string "category"
   end
@@ -58,8 +35,6 @@ ActiveRecord::Schema.define(version: 2019_08_25_215511) do
     t.string "group"
     t.string "predicate"
     t.integer "subtitle_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.index ["subtitle_id"], name: "index_predicate_group_results_on_subtitle_id"
   end
 
@@ -97,11 +72,47 @@ ActiveRecord::Schema.define(version: 2019_08_25_215511) do
     t.integer "length", default: 0
     t.integer "counter"
     t.integer "duration"
+    t.datetime "frequency"
     t.integer "category_id"
+    t.index ["category_id"], name: "index_subtitles_on_category_id"
+  end
+
+  create_table "theme_group_rank_ones", force: :cascade do |t|
+    t.string "category"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.time "frequency"
-    t.index ["category_id"], name: "index_subtitles_on_category_id"
+  end
+
+  create_table "theme_group_rank_threes", force: :cascade do |t|
+    t.string "category"
+    t.integer "theme_group_rank_two_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["theme_group_rank_two_id"], name: "index_theme_group_rank_threes_on_theme_group_rank_two_id"
+  end
+
+  create_table "theme_group_rank_twos", force: :cascade do |t|
+    t.string "category"
+    t.integer "theme_group_rank_one_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["theme_group_rank_one_id"], name: "index_theme_group_rank_twos_on_theme_group_rank_one_id"
+  end
+
+  create_table "theme_group_results", force: :cascade do |t|
+    t.string "rankone"
+    t.string "ranktwo"
+    t.string "rankthree"
+    t.integer "subtitle_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["subtitle_id"], name: "index_theme_group_results_on_subtitle_id"
+  end
+
+  create_table "theme_groups", force: :cascade do |t|
+    t.string "category"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "word_group_rank_ones", force: :cascade do |t|
@@ -131,34 +142,6 @@ ActiveRecord::Schema.define(version: 2019_08_25_215511) do
   end
 
   create_table "word_groups", force: :cascade do |t|
-    t.string "category"
-  end
-
-  create_table "word_rankones", force: :cascade do |t|
-    t.string "category"
-  end
-
-  create_table "word_rankthrees", force: :cascade do |t|
-    t.string "category"
-    t.integer "word_ranktwo_id"
-  end
-
-  create_table "word_ranktwos", force: :cascade do |t|
-    t.string "category"
-    t.integer "word_rankone_id"
-  end
-
-  create_table "word_results", force: :cascade do |t|
-    t.string "rankone"
-    t.string "ranktwo"
-    t.string "rankthree"
-    t.integer "subtitle_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["subtitle_id"], name: "index_word_results_on_subtitle_id"
-  end
-
-  create_table "words", force: :cascade do |t|
     t.string "category"
   end
 

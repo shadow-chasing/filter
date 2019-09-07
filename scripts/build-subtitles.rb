@@ -154,6 +154,9 @@ synced.each do |key, value|
             # count the frequecy the word occurs
             transcript.frequency(Subtitle.all)
 
+            # score the word by counter * (sub.length * sub.syllable)
+            transcript.word_rank
+
         end
         
         #----------------------------------------------------------------------

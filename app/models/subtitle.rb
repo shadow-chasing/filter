@@ -12,5 +12,5 @@ class Subtitle < ApplicationRecord
   def self.syllable_count
     pluck(:syllable).sum
   end
-  
+
 end

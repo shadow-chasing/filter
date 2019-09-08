@@ -1,0 +1,21 @@
+<% title controller_name + " " + action_name %>
+<table>
+    <thead>
+        <tr>
+            <th> word </th>
+            <th> counter </th>
+            <th> syllable </th>
+            
+        </tr> 
+    </thead>
+    <tbody>
+        <% uniq_words(@sub).each do |subtitle|  %>
+        <tr>
+            <td class="sub-word"><%= subtitle.word %></td>
+            <td><%= subtitle.counter %></td>
+            <td><%= subtitle.syllable  %></td>
+        </tr>
+        <% end %>
+    </tbody>
+</table>
+

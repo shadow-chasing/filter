@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_07_185408) do
+ActiveRecord::Schema.define(version: 2019_09_06_081849) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -73,8 +73,8 @@ ActiveRecord::Schema.define(version: 2019_09_07_185408) do
     t.integer "counter"
     t.integer "duration"
     t.datetime "frequency"
+    t.integer "word_rank"
     t.integer "category_id"
-    t.string "word_rank"
     t.index ["category_id"], name: "index_subtitles_on_category_id"
   end
 

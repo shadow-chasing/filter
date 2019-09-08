@@ -149,20 +149,26 @@ module YoutubeFilter
 
         # divide the amout of occurences by the duration 
         def frequency(subs)
-            subs.all.each { |sub| 
+            subs.all.each do |sub| 
                 begin
                     sub.update(frequency: Time.at(sub.duration / sub.counter).utc.strftime("%H"":""%M"":""%S")) 
                 rescue TypeError => e
                     puts "Rescued: #{e.inspect}"
                 end
-            }
+            end
         end
         
+        # times the word length by the sylable length, then times the result by 
+        # the number of occurences.
         def word_rank
-            Subtitle.each {|sub| 
-                rank = sub.counter * (sub.length * sub.syllable) 
-                sub.update(word_rank: rank)
-            }
+            Subtitle.all.each do |sub| 
+                begin
+                    rank = sub.counter * (sub.length * sub.syllable) 
+                    sub.update(word_rank: rank)
+                rescue "Exception => e"
+                    puts "Rescued: #{e.inspect}"
+                end
+            end
         end
 
     end

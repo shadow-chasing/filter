@@ -31,6 +31,12 @@
           <%= render "youtube_filter/subtitles/partials/submodalities" %>
         </tbody>
 
+      <!--begin category wordgroup-->
+      <% elsif params[:category] == "6" %>
+        <tbody>
+          <%= render "youtube_filter/subtitles/partials/uniqs" %>
+        </tbody>
+
       <% end %>
 </main>
 

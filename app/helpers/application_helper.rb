@@ -9,6 +9,11 @@ module ApplicationHelper
     end
   end
 
+
+  def uniq_words(*args)
+      args[0].where(counter: 1).where('syllable > 1')
+  end
+
   # active links for nav
   def active_class(link_path)
     current_page?(link_path) ? "active" : ""

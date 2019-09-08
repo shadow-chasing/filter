@@ -6,6 +6,7 @@
             <th> counter </th>
             <th> frequency </th>
             <th> syllable </th>
+            <th> rank </th>
             <th> group </th>
             <th> rank one </th>
             <th> rank two </th>
@@ -20,8 +21,9 @@
             <tr>
                 <td class="sub-word"><%= subtitle.word %></td>
                 <td><%= subtitle.counter %></td>
-                <td><%= Time.at(subtitle.duration / subtitle.counter).utc.strftime("%H"":""%M"":""%S")  %></td>
+                <td><%= subtitle.frequency.strftime("%H"":""%M"":""%S")  %></td>
                 <td><%= subtitle.syllable %></td>
+                <td><%= subtitle.word_rank %></td>
             </tr>
         <% end %>
     </tbody>

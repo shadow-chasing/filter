@@ -5,7 +5,7 @@ namespace :yt do
       start_time = Time.now
       log.info "Task started at #{start_time} build subtitles."
 
-      ruby "/Users/shadow_chaser/Code/Ruby/Projects/filter/scripts/build-subtitles.rb"
+      ruby "/Users/shadow_chaser/Code/Ruby/Projects/filter/scripts/build/build-subtitles.rb"
 
       end_time = Time.now
       duration = (start_time - end_time) / 1.minute
@@ -19,7 +19,7 @@ namespace :yt do
       start_time = Time.now
       log.info "Task started at #{start_time} build categories"
 
-      ruby "/Users/shadow_chaser/Code/Ruby/Projects/filter/scripts/build-categories.rb"
+      ruby "/Users/shadow_chaser/Code/Ruby/Projects/filter/scripts/build/build-categories.rb"
 
       end_time = Time.now
       duration = (start_time - end_time) / 1.minute

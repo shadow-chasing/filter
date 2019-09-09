@@ -7,24 +7,24 @@ class YoutubeFilterGenerator < Rails::Generators::NamedBase
     include Rails::Generators::ResourceHelpers
     include Generators::YoutubeGeneratorHelper
 
-    binding.pry
-    class_option :user, :type => :string, :default => false
+
+    puts "#{name}"
 
     binding.pry
     # build 
-    build_group()
+    build_group(name)
 
     # rank ones
-    build_group_rank_one()
+    build_group_rank_one(name)
 
     # rank twos
-    build_group_rank_two()
+    build_group_rank_two(name)
 
     # rank three
-    build_group_rank_three()
+    build_group_rank_three(name)
 
     # result
-    build_group_result()
+    build_group_result(name)
 
 
 end

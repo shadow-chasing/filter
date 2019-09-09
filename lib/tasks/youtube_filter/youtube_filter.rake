@@ -33,7 +33,7 @@ namespace :yt do
       start_time = Time.now
       log.info "Task started at #{start_time} build cross references"
 
-      ruby "/Users/shadow_chaser/Code/Ruby/Projects/filter/scripts/cross-reference-predicates.rb"
+      ruby "/Users/shadow_chaser/Code/Ruby/Projects/filter/scripts/cross-reference/cross-reference-predicates.rb"
 
       end_time = Time.now
       duration = (start_time - end_time) / 1.minute
@@ -47,7 +47,7 @@ namespace :yt do
       start_time = Time.now
       log.info "Task started at #{start_time} build cross references"
 
-      ruby "/Users/shadow_chaser/Code/Ruby/Projects/filter/scripts/cross-reference-wordgroup.rb"
+      ruby "/Users/shadow_chaser/Code/Ruby/Projects/filter/scripts/cross-reference/cross-reference-wordgroup.rb"
 
       end_time = Time.now
       duration = (start_time - end_time) / 1.minute
@@ -61,7 +61,7 @@ namespace :yt do
       start_time = Time.now
       log.info "Task started at #{start_time} build cross references"
 
-      ruby "/Users/shadow_chaser/Code/Ruby/Projects/filter/scripts/cross-reference-filter.rb"
+      ruby "/Users/shadow_chaser/Code/Ruby/Projects/filter/scripts/cross-reference/cross-reference-filter.rb"
 
       end_time = Time.now
       duration = (start_time - end_time) / 1.minute
@@ -75,7 +75,7 @@ namespace :yt do
       start_time = Time.now
       log.info "Task started at #{start_time} build cross references"
 
-      ruby "/Users/shadow_chaser/Code/Ruby/Projects/filter/scripts/cross-reference-submodalities.rb"
+      ruby "/Users/shadow_chaser/Code/Ruby/Projects/filter/scripts/cross-reference/cross-reference-submodalities.rb"
 
       end_time = Time.now
       duration = (start_time - end_time) / 1.minute

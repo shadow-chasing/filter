@@ -4,9 +4,40 @@ require File.expand_path('../../config/environment', __FILE__)
 require 'pry'
 
 # -----------------------------------------------------------------------------
-# Build subtitles
+# Build Directories
 # -----------------------------------------------------------------------------
 #
+# Build directories creates a youtube config file in
+# ~/.config/youtube-dl/config with a download template expected for the
+# youtube-filter it then creates the directory structure in downloads for
+# downloaded and complated directories.
+# 
+
+# set the value to true for the while loop.
+run = true
+
+# run loop until the run variable is change to false.
+while run == true
+
+    # user options
+    puts "Run Directory Setup?\n1.yes\n2.no\n"
+
+    # take user input
+    user = gets
+    answer = user.chomp
+
+    if answer == "yes"
+        system("ruby directorys.rb")
+        run = false
+    elsif answer == "no"
+        puts "in no"
+        run = false
+    else
+        puts "Please Enter yes or no."
+    end
+
+end
+
 # -----------------------------------------------------------------------------
 # Seed Categories:
 # -----------------------------------------------------------------------------
@@ -19,17 +50,6 @@ require 'pry'
 #
 system("rake db:seed")
 
-# -----------------------------------------------------------------------------
-# Build Subtitles:
-# -----------------------------------------------------------------------------
-# 
-# Download subtitles and json information, then add each word to the db.
-# Each word occurence, syllable and length is then counted as well as a
-# duration being added so the frequencey of the word over the course of the 
-# video can later be counted.
-#
-#
-system("rake yt:build_subtitles")
 
 # -----------------------------------------------------------------------------
 # Data:
@@ -39,15 +59,3 @@ system("rake yt:build_subtitles")
 #
 #
 system("rake yt:build_categories")       
-
-# -----------------------------------------------------------------------------
-# Build Cross-references:
-# -----------------------------------------------------------------------------
-#
-system("rake yt:build_filter") 
-
-system("rake yt:build_predicate") 
-
-system("rake yt:build_wordgroup")
-
-system("rake yt:build_submodalities")

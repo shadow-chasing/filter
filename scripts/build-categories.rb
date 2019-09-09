@@ -37,8 +37,9 @@ category_data.full_path_array(data_directory).each do |item|
     # build the data struct 
     data.build_categorys(first: dataset[0], second: dataset[1], third: dataset[2], fourth: dataset[3],  full_path: item)
 
+    # NOTE reversed the way this was writen
     # push each data struct containing a value to the array 
-    if data.first.present? then $data_array.push(data) end
+    $data_array.push(data) if data.first.present? 
 
 end
 

@@ -60,8 +60,10 @@ The primary groups are:
 3. word group
 4. filter
 
-![theme](https://github.com/shadow-chasing/filter/blob/master/scripts/screen-shots/Screenshot%202019-09-10%20at%2016.38.39.png)
 
 ###  Themes 
 
 Themes are easly created and added, filter on movies, songs anything you want. They come initialy with political, profanity, religion and spirituality. 
+![theme](https://github.com/shadow-chasing/filter/blob/master/scripts/screen-shots/Screenshot%202019-09-10%20at%2016.38.39.png)
+
+

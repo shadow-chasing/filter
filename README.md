@@ -41,13 +41,16 @@ which is fine for this purpose.
 
 ### Youtube Filter
 ![front end](https://github.com/shadow-chasing/filter/blob/master/scripts/screen-shots/Screenshot%202019-09-10%20at%2016.19.55.png)
-The subtitle word is processed and give a: 
+
+### subtitles
+
+Subtitle category is the whole collection of subtitle words. The subtitle word is processed and give a: 
 
 1. count (how many occurrences per video)
 2. syllable count (per word)
 3. length of word
 4. frequency (how often the word is used over the course of the video)
-5. group (each with sub group categories)
+5. and a word rank (a score based on length, syllable length and count.)
 
 
 The primary groups are:

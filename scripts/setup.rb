@@ -30,7 +30,6 @@ while run == true
         system("ruby directorys.rb")
         run = false
     elsif answer == "no"
-        puts "in no"
         run = false
     else
         puts "Please Enter yes or no."

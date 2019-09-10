@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_10_131348) do
+ActiveRecord::Schema.define(version: 2019_09_06_081849) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -73,7 +73,7 @@ ActiveRecord::Schema.define(version: 2019_09_10_131348) do
     t.integer "counter"
     t.integer "duration"
     t.datetime "frequency"
-    t.integer "word_rank"
+    t.integer "word_rank", default: 0
     t.integer "category_id"
     t.index ["category_id"], name: "index_subtitles_on_category_id"
   end
@@ -101,13 +101,11 @@ ActiveRecord::Schema.define(version: 2019_09_10_131348) do
   end
 
   create_table "theme_group_results", force: :cascade do |t|
-    t.string "rankone"
-    t.string "ranktwo"
-    t.string "rankthree"
-    t.integer "subtitle_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string "rank_one"
+    t.string "rank_two"
+    t.string "rank_three"
     t.string "group"
+    t.integer "subtitle_id"
     t.index ["subtitle_id"], name: "index_theme_group_results_on_subtitle_id"
   end
 

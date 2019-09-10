@@ -9,7 +9,6 @@
             <th> group </th>
             <th> rank one </th>
             <th> rank two </th>
-            <th> predicate </th>
             
         </tr> 
     </thead>
@@ -20,10 +19,9 @@
             <td><%= subtitle.counter %></td>
             <td><%= subtitle.frequency.strftime("%H"":""%M"":""%S")  %></td>
             <td><%= subtitle.syllable %></td>
-            <td><%= truncate(subtitle.filter_group_results.first.group, length: 12) %></td>
-            <td><%= subtitle.filter_group_results.first.rank_one %></td>
-            <td><%= subtitle.filter_group_results.first.rank_two %></td>
-            <td><%= subtitle.filter_group_results.first.predicate %></td>
+            <td><%= truncate(subtitle.theme_group_results.first.group, length: 12) %></td>
+            <td><%= subtitle.theme_group_results.first.rank_one %></td>
+            <td><%= subtitle.theme_group_results.first.rank_two %></td>
         </tr>
         <% end %>
     </tbody>

@@ -135,7 +135,7 @@ $all_file.each do |struct|
   #----------------------------------------------------------------------------
   # word group - 3 levels, rank one and rank two
   #----------------------------------------------------------------------------
-  if struct.first == "word-group" && struct.fourth == nil
+  if struct.first == "word" && struct.fourth == nil
     WordGroupRankOne.find_or_create_by(category: struct.second).word_group_rank_twos.find_or_create_by(category: struct.third)
 
     words_array.each do |word|
@@ -143,7 +143,7 @@ $all_file.each do |struct|
     end
   end
 
-  if struct.first == "word-group" && struct.fourth != nil
+  if struct.first == "word" && struct.fourth != nil
       WordGroupRankOne.find_or_create_by(category: struct.second).word_group_rank_twos.find_or_create_by(category: struct.third)
       WordGroupRankTwo.find_by(category: struct.third).word_group_rank_threes.find_or_create_by(category: struct.fourth)
 

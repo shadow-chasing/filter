@@ -7,8 +7,6 @@
             <th> frequency </th>
             <th> syllable </th>
             <th> group </th>
-            <th> rank one </th>
-            <th> rank two </th>
             <th> predicate </th>
             
         </tr> 
@@ -23,8 +21,6 @@
         <td><%= subtitle.frequency.strftime("%H"":""%M"":""%S")  %></td>
         <td><%= subtitle.syllable %></td>
         <td><%= subtitle.predicate_group_results.first.group %></td>
-        <td><%= subtitle.predicate_group_results.first.rank_one %></td>
-        <td><%= subtitle.predicate_group_results.first.rank_two %></td>
         <td><%= subtitle.predicate_group_results.first.predicate %></td>
     </tr>
     <% end %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_06_081849) do
+ActiveRecord::Schema.define(version: 2019_09_10_131348) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -107,6 +107,7 @@ ActiveRecord::Schema.define(version: 2019_09_06_081849) do
     t.integer "subtitle_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "group"
     t.index ["subtitle_id"], name: "index_theme_group_results_on_subtitle_id"
   end
 

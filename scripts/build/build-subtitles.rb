@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
-require File.expand_path('../../config/environment', __FILE__)
 require 'pry'
+binding.pry
+require File.expand_path('../../../config/environment', __FILE__)
 require 'json'
 require 'classes-youtube-filter'
 

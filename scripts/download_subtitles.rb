@@ -19,7 +19,7 @@ system("rake yt:build_subtitles")
 # Build Cross-references:
 # -----------------------------------------------------------------------------
 #
-system("rake yt:build_filter") 
+system("rake yt:build_theme") 
 
 system("rake yt:build_predicate") 
 

@@ -121,6 +121,14 @@ $all_file.each do |struct|
     end
   end
 
+  if struct.first == "theme" && struct.fourth != nil
+      ThemeGroupRankOne.find_or_create_by(category: struct.second).theme_group_rank_twos.find_or_create_by(category: struct.third)
+      ThemeGroupRankTwo.find_by(category: struct.third).theme_group_rank_threes.find_or_create_by(category: struct.fourth)
+
+    words_array.each do |word|
+      ThemeGroupRankThree.find_by(category: struct.fourth).datasets.find_or_create_by(word: word.squish)
+    end
+  end
   #----------------------------------------------------------------------------
   # submodalities group - 2 levels, rank one and rank two
   #----------------------------------------------------------------------------

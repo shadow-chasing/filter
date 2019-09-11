@@ -8,5 +8,5 @@ class ThemeGroupRankThree < ApplicationRecord
     # has many association
 
     # belongs to association
-    belongs_to :theme_group_rank_two
+    belongs_to :theme_group_rank_two, dependent: :destroy  
 end

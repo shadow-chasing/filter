@@ -9,6 +9,7 @@
             <th> group </th>
             <th> rank one </th>
             <th> rank two </th>
+            <th> rank three </th>
             
         </tr> 
     </thead>
@@ -22,6 +23,7 @@
             <td><%= truncate(subtitle.theme_group_results.first.group, length: 12) %></td>
             <td><%= subtitle.theme_group_results.first.rank_one %></td>
             <td><%= subtitle.theme_group_results.first.rank_two %></td>
+            <td><%= subtitle.theme_group_results.first.rank_three %></td>
         </tr>
         <% end %>
     </tbody>

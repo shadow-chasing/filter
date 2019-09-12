@@ -25,7 +25,7 @@ end
 
 WordGroupRankOne.all.each do |rank_one|
     rank_collection(rank_one).each do |word|
-      unless word.word_group_results.present?
+        unless word.word_group_results.find_by(rank_one: rank_one.category).present?
 
         word.word_group_results.find_or_create_by(group: @group_title, rank_one: rank_one.category)
 
@@ -50,18 +50,19 @@ end
 
 WordGroupRankTwo.all.each do |rank_two|
     rank_collection(rank_two).each do |word|
-      unless word.word_group_results.present?
 
         # rankone category
         rank_one = WordGroupRankOne.find_by(id: rank_two.word_group_rank_one_id)
 
-        word.word_group_results.find_or_create_by(group: @group_title, rank_one: rank_one.category, rank_two: rank_two.category)
+        unless word.word_group_results.find_by(rank_one: rank_one.category, rank_two: rank_two.category).present?
 
-        # find subtitle by id and update adding the category id for the
-        # wordgroup category.
-        word.update(category_id: YoutubeFilter::cat_id(:wordgroups))
+            word.word_group_results.find_or_create_by(group: @group_title, rank_one: rank_one.category, rank_two: rank_two.category)
 
-      end
+            # find subtitle by id and update adding the category id for the
+            # wordgroup category.
+            word.update(category_id: YoutubeFilter::cat_id(:wordgroups))
+
+        end
     end
 end
 
@@ -78,18 +79,19 @@ end
 
 WordGroupRankThree.all.each do |rank_three|
     rank_collection(rank_three).each do |word|
-      unless word.word_group_results.present?
 
         # ranktwo category and id for rank one
         rank_two = WordGroupRankTwo.find_by(id: rank_three.word_group_rank_two_id)
         rank_one = WordGroupRankOne.find_by(id: rank_two.word_group_rank_one_id)
 
-        word.word_group_results.find_or_create_by(group: @group_title, rank_one: rank_one.category, rank_two: rank_two.category, rank_three: rank_three.category)
+        unless word.word_group_results.find_by(rank_one: rank_one.category, rank_two: rank_two.category, rank_three: rank_three.category).present?
 
-        # find subtitle by id and update adding the category id for the
-        # wordgroup category.
-        word.update(category_id: YoutubeFilter::cat_id(:wordgroups))
+            word.word_group_results.find_or_create_by(group: @group_title, rank_one: rank_one.category, rank_two: rank_two.category, rank_three: rank_three.category)
 
-      end
+            # find subtitle by id and update adding the category id for the
+            # wordgroup category.
+            word.update(category_id: YoutubeFilter::cat_id(:wordgroups))
+
+        end
     end
 end

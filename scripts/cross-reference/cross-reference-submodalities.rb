@@ -24,12 +24,10 @@ end
 #
 SubmodalitiesGroupRankOne.all.each do |rank_one|
     rank_collection(rank_one).each do |word|
-      unless word.submodalities_group_results.present?
 
         # add results to the subtitle.submodalities_group_results assosiation.
         word.submodalities_group_results.find_or_create_by(group: @submodalities_title.category, rank_one: rank_one.category)
 
-      end
     end
 end
 
@@ -45,7 +43,6 @@ end
 #
 SubmodalitiesGroupRankTwo.all.each do |rank_two|
     rank_collection(rank_two).each do |word|
-      unless word.submodalities_group_results.present?
 
         # find the filter group rank one category name
         rank_one_title = SubmodalitiesGroupRankOne.find_by(id: rank_two.submodalities_group_rank_one_id).category
@@ -53,6 +50,5 @@ SubmodalitiesGroupRankTwo.all.each do |rank_two|
         # add results to the subtitle.submodalities_group_results assosiation.
         word.submodalities_group_results.find_or_create_by(group: @submodalities_title.category, rank_one: rank_one_title, rank_two: rank_two.category)
 
-      end
     end
 end

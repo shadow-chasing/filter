@@ -27,12 +27,10 @@ end
 #
 ThemeGroupRankOne.all.each do |rank_one|
     rank_collection(rank_one).each do |word|
-      unless word.theme_group_results.present?
 
         # add results to the subtitle.theme_group_results assosiation.
         word.theme_group_results.find_or_create_by(group: @theme_title.category, rank_one: rank_one.category)
 
-      end
     end
 end
 
@@ -48,7 +46,6 @@ end
 #
 ThemeGroupRankTwo.all.each do |rank_two|
     rank_collection(rank_two).each do |word|
-      unless word.theme_group_results.present?
 
         # find the theme group rank one category name
         rank_one_title = ThemeGroupRankOne.find_by(id: rank_two.theme_group_rank_one_id).category
@@ -56,7 +53,6 @@ ThemeGroupRankTwo.all.each do |rank_two|
         # add results to the subtitle.theme_group_results assosiation.
         word.theme_group_results.find_or_create_by(group: @theme_title.category, rank_one: rank_one_title, rank_two: rank_two.category)
 
-      end
     end
 end
 
@@ -74,7 +70,6 @@ end
 
 ThemeGroupRankThree.all.each do |rank_three|
     rank_collection(rank_three).each do |word|
-      unless word.theme_group_results.present?
 
         # ranktwo category and id for rank one
         rank_two = ThemeGroupRankTwo.find_by(id: rank_three.theme_group_rank_two_id)
@@ -86,6 +81,5 @@ ThemeGroupRankThree.all.each do |rank_three|
         # wordgroup category.
         word.update(category_id: YoutubeFilter::cat_id(:wordgroups))
 
-      end
     end
 end

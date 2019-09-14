@@ -34,7 +34,7 @@ complete = File.join(root, "Complete")
 # Config join to the root directory.
 config = File.join(home, ".config")
 
-# Join the config dir tot the youtube-dl directory.
+# Join the config dir to the youtube-dl directory.
 youtube_dl = File.join(config, "youtube-dl/")
 
 # Config file.

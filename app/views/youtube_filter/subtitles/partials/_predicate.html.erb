@@ -20,7 +20,10 @@
         <td><%= subtitle.counter %></td>
         <td><%= subtitle.frequency.strftime("%H"":""%M"":""%S")  %></td>
         <td><%= subtitle.syllable %></td>
-        <td><%= subtitle.predicate_group_results.first.group %></td>
+        <td><% for result in subtitle.predicate_group_results %></td>
+        <td><% result.group %></td>
+        <td><% end %></td>
+
         <td><%= subtitle.predicate_group_results.first.predicate %></td>
     </tr>
     <% end %>

@@ -1,9 +1,8 @@
 #!/usr/bin/env ruby
-require 'pry'
-binding.pry
 require File.expand_path('../../../config/environment', __FILE__)
 require 'json'
 require 'classes-youtube-filter'
+require 'pry'
 
 #------------------------------------------------------------------------------
 # Take a user input

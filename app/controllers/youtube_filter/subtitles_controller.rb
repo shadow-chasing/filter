@@ -8,9 +8,9 @@ class YoutubeFilter::SubtitlesController < ApplicationController
 
     # GET /subtitles/1
     def show
-        @sub = Subtitle.all
+      @sub = Subtitle.all.order('length DESC')
         @subtitles = category_subtitles.paginate(page: params[:page], per_page: 12).order('word_rank DESC')
-        @wordgroups = category_filter(WordGroupResult).where(title: category_title)
+        @wordgroups = category_filter(WordGroupResult).where(title: category_title).where("length > 4")
         @themes = category_filter(ThemeGroupResult).where(title: category_title)
         @predicates = category_filter(PredicateGroupResult).where(title: category_title)
         @submodalities = category_filter(SubmodalitiesGroupResult).where(title: category_title)

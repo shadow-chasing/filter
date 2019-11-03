@@ -46,8 +46,11 @@ Dir.mkdir(config) unless File.exists?(config)
 # Make the directory.
 Dir.mkdir(youtube_dl) unless File.exists?(youtube_dl)
 
+# TODO erroring???
 # Remove old config file.
-delete(conf) if File.exists?(conf)
+if File.exists?(conf)
+   delete(conf)
+end
 
 
 #--------------------------------------------------------------------------

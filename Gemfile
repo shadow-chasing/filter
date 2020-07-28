@@ -14,7 +14,7 @@ gem 'turbolinks', '~> 5'
 gem 'sass-rails', '~> 5.0'
 gem 'jquery-rails'
 gem 'jbuilder', '~> 2.5'
-gem 'json', '~> 2.1.0'
+gem 'json', '~> 2.3.0'
 gem 'bootsnap', '>= 1.1.0', require: false
 group :development, :test do
   gem 'pry-byebug', '~> 3.6.0'
